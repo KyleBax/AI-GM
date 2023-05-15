@@ -8,14 +8,30 @@ namespace AI_GM
 {
     internal class CharacterCreation
     {
-        static string CharacterName()
+        public static Character NewCharacter()
         {
-            Console.WriteLine("What would you like to be called?");
+            Character character = new Character();
+            character.Name = GetCharacterName();
+            character.Class = SelectCharacterClass();
+            return character;
+        }
+        public static string GetCharacterName()
+        {
+            Console.WriteLine("Enter Character Name.");
             string name= Console.ReadLine();
 
             return name;
         }
-        //name
+
+        public static string SelectCharacterClass()
+        {
+            //change so it prints the classes list as selectable options
+            Console.WriteLine("select a class");
+            Console.WriteLine("Cleric, Fighter, Rogue, Wizard");
+            string className = Console.ReadLine();
+            return className;
+        }
+        
         //stat point distribution
         //class
         //species
