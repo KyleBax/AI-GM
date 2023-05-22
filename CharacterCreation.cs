@@ -13,6 +13,7 @@ namespace AI_GM
             Character character = new Character();
             character.Name = GetCharacterName();
             character.Class = SelectCharacterClass();
+            character.Species = SelectCharacterSpecies();
             return character;
         }
         public static string GetCharacterName()
@@ -31,9 +32,16 @@ namespace AI_GM
             string className = Console.ReadLine();
             return className;
         }
+
+        public static string SelectCharacterSpecies()
+        {
+            Console.WriteLine("Select a species");
+            Console.WriteLine("Human, Elf, Dwarf");
+            string species = Console.ReadLine();
+            return species;
+        }
         
         //stat point distribution
-        //class
         //species
     }
 }

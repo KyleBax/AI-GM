@@ -14,5 +14,19 @@ namespace AI_GM
             get { return _classList; }
             set { _classList = value; }
         }
+
+        private string _className;
+        public string ClassName
+        {
+            get { return _className; }
+            set { _className = value; }
+        }
+
+        private string _hitDice;
+        public string HitDice
+        {
+            get { return _hitDice; }
+            set { _hitDice = value; }
+        }
     }
 }
