@@ -56,18 +56,11 @@
             set { _charisma = value; }
         }
 
-        private string _class;
-        public string Class
+        private Classes _class;
+        public Classes Class
         {
             get { return _class; }
             set { _class = value; }
-        }
-
-        private int _classLevel;
-        public int ClassLevel
-        {
-            get { return _classLevel; }
-            set { _classLevel = value; }
         }
 
         private Species _species;

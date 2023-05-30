@@ -12,7 +12,7 @@ namespace AI_GM
         {
             Character character = new Character();
             character.Name = GetCharacterName();
-            character.Class = SelectCharacterClass();
+            character = SelectCharacterClass(character);
             character = SelectCharacterSpecies(character);
             character = StatPointDistribution(character);
             return character;
@@ -25,13 +25,15 @@ namespace AI_GM
             return name;
         }
 
-        public static string SelectCharacterClass()
+        public static Character SelectCharacterClass(Character character)
         {
+            Classes classes = new Classes();
             //change so it prints the classes list as selectable options
             Console.WriteLine("select a class");
             Console.WriteLine("Cleric, Fighter, Rogue, Wizard");
-            string className = Console.ReadLine();
-            return className;
+            classes.Name = Console.ReadLine();
+            character.Class = classes;
+            return character;
         }
 
         public static Character SelectCharacterSpecies(Character character)
