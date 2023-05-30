@@ -70,15 +70,15 @@
             set { _classLevel = value; }
         }
 
-        private string _species;
-        public string Species
+        private Species _species;
+        public Species Species
         {
             get { return _species; }
             set { _species = value; }
         }
 
-        private string _hitDice;
-        public string HitDice
+        private int _hitDice;
+        public int HitDice
         {
             get { return _hitDice; }
             set { _hitDice = value; }

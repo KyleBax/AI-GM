@@ -13,7 +13,7 @@ namespace AI_GM
             Character character = new Character();
             character.Name = GetCharacterName();
             character.Class = SelectCharacterClass();
-            character.Species = SelectCharacterSpecies();
+            character = SelectCharacterSpecies(character);
             character = StatPointDistribution(character);
             return character;
         }
@@ -34,12 +34,14 @@ namespace AI_GM
             return className;
         }
 
-        public static string SelectCharacterSpecies()
+        public static Character SelectCharacterSpecies(Character character)
         {
+            Species species = new Species();
             Console.WriteLine("Select a species");
             Console.WriteLine("Human, Elf, Dwarf");
-            string species = Console.ReadLine();
-            return species;
+            species.Name = Console.ReadLine();
+            character.Species = species;
+            return character;
         }
 
         public static Character StatPointDistribution(Character character)
