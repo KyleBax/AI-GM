@@ -1,32 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AI_GM
+﻿namespace AI_GM
 {
     internal class Classes
     {
-        private List<string> _classList;
-        public List<string> ClassList
+        private string _name;
+        public string Name
         {
-            get { return _classList; }
-            set { _classList = value; }
+            get { return _name; }
+            set { _name = value; }
         }
 
-        private string _className;
-        public string ClassName
-        {
-            get { return _className; }
-            set { _className = value; }
-        }
 
-        private string _hitDice;
-        public string HitDice
-        {
-            get { return _hitDice; }
-            set { _hitDice = value; }
-        }
     }
 }

@@ -77,6 +77,21 @@
             set { _species = value; }
         }
 
-        
+        private string _hitDice;
+        public string HitDice
+        {
+            get { return _hitDice; }
+            set { _hitDice = value; }
+        }
+
+        private int _proficeincyModifier;
+        public int ProficeincyModifier
+        {
+            get { return _proficeincyModifier; }
+            set { _proficeincyModifier = value;}
+        }
+
+
+
     }
 }

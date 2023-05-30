@@ -14,6 +14,7 @@ namespace AI_GM
             character.Name = GetCharacterName();
             character.Class = SelectCharacterClass();
             character.Species = SelectCharacterSpecies();
+            character = StatPointDistribution(character);
             return character;
         }
         public static string GetCharacterName()
@@ -40,8 +41,14 @@ namespace AI_GM
             string species = Console.ReadLine();
             return species;
         }
-        
-        //stat point distribution
-        //species
+
+        public static Character StatPointDistribution(Character character)
+        {
+            Console.WriteLine("you have 25 stat points to distribute");
+            Console.WriteLine("current stats: Strength 10, Dexterity 10, Constitution 10, Intelligence 10, Wisdom 10, Charisma 10");
+            Console.WriteLine("How would you like to distribute your points?");
+
+            return character;
+        }
     }
 }
