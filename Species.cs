@@ -24,7 +24,7 @@
         }
 
         private string _proficiency;
-        public string Prociciency
+        public string Proficiency
         {
             get { return _proficiency; }
             set { _proficiency = value; }
