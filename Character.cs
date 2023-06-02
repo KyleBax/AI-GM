@@ -84,6 +84,13 @@
             set { _proficeincyModifier = value;}
         }
 
+        private int _level;
+        public int Level
+        {
+            get { return _level; }
+            set { _level = value; }
+        }
+
 
 
     }

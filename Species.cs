@@ -23,13 +23,6 @@
             set { _languages = value; }
         }
 
-        private int _darkvisionRange;
-        public int DarkvisionRange
-        {
-            get { return _darkvisionRange; }
-            set { _darkvisionRange = value; }
-        }
-
         private string _proficiency;
         public string Prociciency
         {
@@ -42,6 +35,27 @@
         {
             get { return _description; }
             set { _description = value; }
+        }
+
+        private int _darkvisionRange;
+        public int DarkvisionRange
+        {
+            get { return _darkvisionRange; }
+            set { _darkvisionRange = value; }
+        }
+
+        private bool _cauterize;
+        public bool Cauterize
+        {
+            get { return _cauterize; }
+            set { _cauterize = value; }
+        }
+
+        private bool _strongMind;
+        public bool SstrongMind
+        {
+            get { return _strongMind; }
+            set { _strongMind = value; }
         }
 
 

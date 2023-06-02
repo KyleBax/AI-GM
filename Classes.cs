@@ -9,6 +9,15 @@
             set { _name = value; }
         }
 
+        private int _spellSlots;
+        public int SpellSlots
+        {
+            get { return _spellSlots; }
+            set { _spellSlots = value; }
+        }
+
+
+
         
 
 
