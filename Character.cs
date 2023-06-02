@@ -70,13 +70,6 @@
             set { _species = value; }
         }
 
-        private int _hitDice;
-        public int HitDice
-        {
-            get { return _hitDice; }
-            set { _hitDice = value; }
-        }
-
         private int _proficeincyModifier;
         public int ProficeincyModifier
         {
@@ -91,7 +84,19 @@
             set { _level = value; }
         }
 
+        private int _speed;
+        public int Speed
+        {
+            get { return _speed; }
+            set { _speed = value; }
+        }
 
+        private List<string> _proficiencies;
+        public List<string> Proficiencies
+        {
+            get { return _proficiencies; }
+            set { _proficiencies = value; }
+        }
 
     }
 }

@@ -23,11 +23,18 @@
             set { _abilities = value; }
         }
 
-        private List<string> _proficiencies;
-        public List<string> Proficiencies
+        private string _skillProficiency1;
+        public string SkillProficiency1
         {
-            get { return _proficiencies; }
-            set { _proficiencies = value; }
+            get { return _skillProficiency1; }
+            set { _skillProficiency1 = value; }
+        }
+
+        private string _skillProficiency2;
+        public string SkillProficiency2
+        {
+            get { return _skillProficiency2; }
+            set { _skillProficiency2 = value; }
         }
 
         private List<string> _proficiencyWeapons;
@@ -35,6 +42,13 @@
         {
             get { return _proficiencyWeapons; }
             set { _proficiencyWeapons = value; }
+        }
+
+        private int _hitDice;
+        public int HitDice
+        {
+            get { return _hitDice; }
+            set { _hitDice = value; }
         }
     }
 }

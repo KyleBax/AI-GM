@@ -52,7 +52,7 @@
         }
 
         private bool _strongMind;
-        public bool SstrongMind
+        public bool StrongMind
         {
             get { return _strongMind; }
             set { _strongMind = value; }
