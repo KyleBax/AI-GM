@@ -8,6 +8,7 @@ namespace AI_GM
 {
     internal class CharacterCreation
     {
+
         public static Character NewCharacter()
         {
             Character character = new Character();
@@ -27,10 +28,14 @@ namespace AI_GM
 
         public static Character SelectCharacterClass(Character character)
         {
+            List<string> classNames = NameLists.GetClassNames();
             Classes classes = new Classes();
             //change so it prints the classes list as selectable options
             Console.WriteLine("select a class");
-            Console.WriteLine("Cleric, Fighter, Rogue, Wizard");
+            for(int i = 0; i < classNames.Count; i++)
+            {
+                Console.WriteLine((i+1) + ": " + classNames[i]);
+            }
             classes.Name = Console.ReadLine();
             character.Class = classes;
             return character;
