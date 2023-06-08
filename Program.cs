@@ -6,9 +6,16 @@
         {
             Character character = new Character();
 
-            character = CharacterCreation.NewCharacter();
+            string newCharacter = UI.LoadCampaign();
+            if(newCharacter == "y")
+            {
+                character = CharacterCreation.NewCharacter();
+            }
+            else
+            {
 
-            Console.WriteLine($"{character.Name}, {character.Class.Name}, {character.Species.Name}, {character.Strength}, {character.Dexterity}, {character.Constitution}, {character.Wisdom}, {character.Intelligence}, {character.Charisma}");
+            }
+
 
 
         }

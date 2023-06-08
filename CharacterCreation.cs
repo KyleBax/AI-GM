@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AI_GM
+﻿namespace AI_GM
 {
     internal class CharacterCreation
     {
@@ -12,28 +6,22 @@ namespace AI_GM
         public static Character NewCharacter()
         {
             Character character = new Character();
-            character.Name = GetCharacterName();
+            character.Name = CharacterCreationUI.GetCharacterName();
             character = SelectCharacterClass(character);
             character = SelectCharacterSpecies(character);
             character = StatPointDistribution(character);
             return character;
         }
-        public static string GetCharacterName()
-        {
-            Console.WriteLine("Enter Character Name.");
-            string name= Console.ReadLine();
 
-            return name;
-        }
 
         public static Character SelectCharacterClass(Character character)
         {
             List<string> classNames = NameLists.GetClassNames();
             Classes classes = new Classes();
             Console.WriteLine("select a class");
-            for(int i = 0; i < classNames.Count; i++)
+            for (int i = 0; i < classNames.Count; i++)
             {
-                Console.WriteLine((i+1) + ": " + classNames[i]);
+                Console.WriteLine((i + 1) + ": " + classNames[i]);
             }
             classes.Name = Console.ReadLine();
             character.Class = classes;
