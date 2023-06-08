@@ -54,15 +54,6 @@ namespace AI_GM
             return character;
         }
 
-/*        public static Character StatPointDistribution(Character character)
-        {
-            Console.WriteLine("you have 25 stat points to distribute");
-            Console.WriteLine("current stats: Strength 10, Dexterity 10, Constitution 10, Intelligence 10, Wisdom 10, Charisma 10");
-            Console.WriteLine("How would you like to distribute your points?");
-
-            return character;
-        }*/
-
         public static Character StatPointDistribution(Character character)
         {
             character.Strength = 10;
