@@ -8,7 +8,7 @@
 
             character = CharacterCreation.NewCharacter();
 
-            Console.WriteLine($"{character.Name}, {character.Class}, {character.Species}");
+            Console.WriteLine($"{character.Strength}, {character.Dexterity}, {character.Constitution}, {character.Wisdom}, {character.Intelligence}, {character.Charisma}");
 
 
         }
