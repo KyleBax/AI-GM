@@ -10,10 +10,11 @@
             if(newCharacter == "y")
             {
                 character = CharacterCreation.NewCharacter();
+                Logic.SerializeCharacter(character);
             }
             else
             {
-
+                character = Logic.DeserializeCharacter();
             }
 
 

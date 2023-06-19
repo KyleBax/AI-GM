@@ -2,45 +2,28 @@
 {
     internal class CharacterCreation
     {
-
+        /// <summary>
+        /// runs the methods for character creation
+        /// </summary>
+        /// <returns></returns>
         public static Character NewCharacter()
         {
-            Character character = new Character();
-            character.Name = CharacterCreationUI.GetCharacterName();
-            character = SelectCharacterClass(character);
-            character = SelectCharacterSpecies(character);
-            character = StatPointDistribution(character);
-            return character;
-        }
-
-
-        public static Character SelectCharacterClass(Character character)
-        {
-            List<string> classNames = NameLists.GetClassNames();
-            Classes classes = new Classes();
-            Console.WriteLine("select a class");
-            for (int i = 0; i < classNames.Count; i++)
+            while (true)
             {
-                Console.WriteLine((i + 1) + ": " + classNames[i]);
+                Character character = new Character();
+                character.Name = CharacterCreationUI.GetCharacterName();
+                character = CharacterCreationUI.SelectCharacterClass(character);
+                character = CharacterCreationUI.SelectCharacterSpecies(character);
+                character = StatPointDistribution(character);
+                bool characterComplete = CharacterCreationUI.CharacterComplete(character);
+                if (characterComplete)
+                {
+                    return character;
+                }
             }
-            classes.Name = Console.ReadLine();
-            character.Class = classes;
-            return character;
         }
 
-        public static Character SelectCharacterSpecies(Character character)
-        {
-            List<string> speciesNames = NameLists.GetSpeciesNames();
-            Species species = new Species();
-            Console.WriteLine("Select a species");
-            for (int i = 0; i < speciesNames.Count; i++)
-            {
-                Console.WriteLine((i + 1) + ": " + speciesNames[i]);
-            }
-            species.Name = Console.ReadLine();
-            character.Species = species;
-            return character;
-        }
+
 
         public static Character StatPointDistribution(Character character)
         {

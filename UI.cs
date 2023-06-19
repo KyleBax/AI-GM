@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AI_GM
+﻿namespace AI_GM
 {
     internal class UI
     {
+        public static string LoadCampaign()
+        {
+            Console.WriteLine("press Y to start a new campaign");
+            string input = Console.ReadLine().ToLower();
+            return input;
+        }
     }
 }
