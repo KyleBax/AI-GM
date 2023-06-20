@@ -1,6 +1,6 @@
 ﻿namespace AI_GM
 {
-    internal class Classes
+    public class Classes
     {
         private string _name;
         public string Name

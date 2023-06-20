@@ -3,7 +3,7 @@
     /// <summary>
     /// Holds the information of the characters
     /// </summary>
-    internal class Character
+    public class Character
     {
         private string _name;
 

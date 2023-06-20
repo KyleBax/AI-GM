@@ -15,6 +15,7 @@
             else
             {
                 character = Logic.DeserializeCharacter();
+                CharacterCreationUI.CharacterComplete(character, false);
             }
 
 
