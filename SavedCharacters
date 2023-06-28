@@ -8,7 +8,7 @@
   <Wisdom>10</Wisdom>
   <Charisma>10</Charisma>
   <Class>
-    <Name>Fighter</Name>
+    <Name>Cleric</Name>
     <SpellSlots>0</SpellSlots>
     <HitDice>0</HitDice>
   </Class>
