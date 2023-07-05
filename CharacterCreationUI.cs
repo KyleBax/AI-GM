@@ -1,4 +1,6 @@
-﻿namespace AI_GM
+﻿using System.ComponentModel;
+
+namespace AI_GM
 {
     internal class CharacterCreationUI
     {
@@ -35,7 +37,76 @@
                     Console.WriteLine("Invalid selection. Please try again.");
                 }
             }
+        }
 
+        public static Character SelectClassProficiencies(Character character)
+        {
+            List<string> proficiencies = new();
+            int proficiencyCount;
+            switch (character.Class.Name)
+            {
+                case "Cleric":
+                    proficiencies = NameLists.GetClericProficiencies();
+                    proficiencyCount = 2;
+                    break;
+
+                case "Fighter":
+                    proficiencies = NameLists.GetFighterProficiencies();
+                    proficiencyCount = 2;
+                    break;
+
+                case "Wizard":
+                    proficiencies = NameLists.GetWizardProficiencies();
+                    proficiencyCount = 2;
+                    break;
+
+                case "Rogue":
+                    proficiencies = NameLists.GetRogueProficiencies();
+                    proficiencyCount = 3;
+                    break;
+
+                default:
+                    return character;
+            }
+            while (proficiencyCount >= 1)
+            {
+                Console.WriteLine("Select your proficiencies");
+                Console.WriteLine("enter the number that corresponds to the proficiencies you would like to choose");
+                bool selectProficiency = true;
+                while (selectProficiency)
+                {
+                    for (int i = 0; i < proficiencies.Count; i++)
+                    {
+                        Console.WriteLine((i + 1) + ": " + proficiencies[i]);
+                    }
+                    int selectedProficiencyIndex;
+                    if (int.TryParse(Console.ReadLine(), out selectedProficiencyIndex) && selectedProficiencyIndex >= 1 && selectedProficiencyIndex <= proficiencies.Count)
+                    {
+                        switch (proficiencyCount)
+                        {
+                            case 1:
+                                character.Class.SkillProficiency1 = proficiencies[selectedProficiencyIndex - 1];
+                                Console.WriteLine("Proficiency selected: " + character.Class.SkillProficiency1);
+                                break;
+                            case 2:
+                                character.Class.SkillProficiency2 = proficiencies[selectedProficiencyIndex - 1];
+                                Console.WriteLine("Proficiency selected: " + character.Class.SkillProficiency2);
+                                break;
+                            case 3:
+                                character.Class.SkillProficiency3 = proficiencies[selectedProficiencyIndex - 1];
+                                Console.WriteLine("Proficiency selected: " + character.Class.SkillProficiency3);
+                                break;
+                        }
+                        selectProficiency = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid selection. Please try again.");
+                    }
+                }
+                proficiencyCount -= 1;
+            }
+            return character;
         }
 
         public static Character SelectCharacterSpecies(Character character)
@@ -69,7 +140,7 @@
         {
             Console.WriteLine($"Name:{character.Name}, Class: {character.Class.Name}, Species: {character.Species.Name}");
             Console.WriteLine($"STR:{character.Strength}, DEX: {character.Dexterity}, CON: {character.Constitution}, INT: {character.Intelligence}, WIS: {character.Wisdom}, CHA: {character.Charisma}");
-            if ( newCharacter )
+            if (newCharacter)
             {
                 Console.WriteLine("Are you happy with your character? Y/N?");
                 if (Console.ReadLine().ToLower() == "y")

@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Character xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Name>kyle</Name>
-  <Strength>35</Strength>
-  <Dexterity>10</Dexterity>
+  <Name>k</Name>
+  <Strength>10</Strength>
+  <Dexterity>35</Dexterity>
   <Constitution>10</Constitution>
   <Intelligence>10</Intelligence>
   <Wisdom>10</Wisdom>
   <Charisma>10</Charisma>
   <Class>
-    <Name>Cleric</Name>
+    <Name>Rogue</Name>
     <SpellSlots>0</SpellSlots>
+    <SkillProficiency1>Acrobatics</SkillProficiency1>
+    <SkillProficiency2>Sleight of Hand</SkillProficiency2>
+    <SkillProficiency3>Stealth</SkillProficiency3>
     <HitDice>0</HitDice>
+    <Level>0</Level>
   </Class>
   <Species>
-    <Name>Elf</Name>
+    <Name>Dwarf</Name>
     <Size>0</Size>
     <DarkvisionRange>0</DarkvisionRange>
     <Cauterize>false</Cauterize>
