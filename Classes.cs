@@ -58,6 +58,13 @@
             set { _hitDice = value; }
         }
 
+        private int _hitDiceCount;
+        public int HitDiceCount
+        {
+            get { return _hitDiceCount; }
+            set { _hitDiceCount = value; }
+        }
+
         private int _level;
         public int Level
         {

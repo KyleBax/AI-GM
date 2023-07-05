@@ -30,6 +30,7 @@
 
             //add class specific abilities here
             //add class specific weapon proficiencies here
+            //add class specific hit dice here
 
 
             return character;
