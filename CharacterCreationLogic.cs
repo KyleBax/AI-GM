@@ -4,7 +4,7 @@
     {
         public static Character AddClassFeatures(Character character)
         {
-            //add class level here
+            character.Class.Level = 1;
 
             switch (character.Class.Name)
             {
