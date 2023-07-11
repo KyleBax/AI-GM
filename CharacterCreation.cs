@@ -5,7 +5,7 @@
         /// <summary>
         /// runs the methods for character creation
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Character</returns>
         public static Character NewCharacter()
         {
             while (true)

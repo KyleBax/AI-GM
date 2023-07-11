@@ -9,18 +9,22 @@
             switch (character.Class.Name)
             {
                 case "Cleric":
+                    character.Class.HitDice = 8;
                     character.Class.SpellSlots = 3;
                     break;
 
                 case "Fighter":
+                    character.Class.HitDice = 10;
                     character.Class.SpellSlots = 0;
                     break;
 
                 case "Wizard":
+                    character.Class.HitDice = 6;
                     character.Class.SpellSlots = 3;
                     break;
 
                 case "Rogue":
+                    character.Class.HitDice = 8;
                     character.Class.SpellSlots = 0;
                     break;
 
@@ -28,9 +32,11 @@
                     return character;
             }
 
+            character.Class.HitDiceCount = (int)Math.Ceiling((double)character.Class.Level / 3);
+            Console.WriteLine(character.Class.HitDiceCount);
+
             //add class specific abilities here
             //add class specific weapon proficiencies here
-            //add class specific hit dice here
 
 
             return character;
