@@ -51,6 +51,13 @@
             set { _proficiencyWeapons = value; }
         }
 
+        private List<string> _proficiencyArmour;
+        public List<string> ProficiencyArmour
+        {
+            get { return _proficiencyArmour; }
+            set { _proficiencyArmour = value; }
+        }
+
         private int _hitDice;
         public int HitDice
         {
