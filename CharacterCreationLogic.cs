@@ -71,23 +71,29 @@
 
         public static Character AddSpeciesFeatures(Character character)
         {
+            character.Species.Languages = new List<string>();
+
+
             switch (character.Species.Name)
             {
                 case "Human":
                     character.Species.Size = 3;
                     character.Species.Languages.Add("Common");
+                    character.Species.DarkvisionRange = 0;
                     break;
 
                 case "Elf":
                     character.Species.Size = 3;
                     character.Species.Languages.Add("Common");
                     character.Species.Languages.Add("Elvish");
+                    character.Species.DarkvisionRange = 60;
                     break;
 
                 case "Dwarf":
                     character.Species.Size = 3;
                     character.Species.Languages.Add("Common");
                     character.Species.Languages.Add("Dwarvish");
+                    character.Species.DarkvisionRange = 60;
                     break;
 
                 default:
