@@ -92,6 +92,31 @@
             return rogueProficiencies;
         }
 
-       
+
+        public static List<string> GetOptionalElvenLanguages()
+        {
+            List<string> elvenLanguages = new List<string>();
+
+            elvenLanguages.Add("");
+            return elvenLanguages;
+        }
+
+        public static List<string> GetOptionalDwarvenLanguages()
+        {
+            List<string> dwarvenLanguages = new List<string>();
+
+            dwarvenLanguages.Add("");
+            return dwarvenLanguages;
+        }
+
+        public static List<string> GetOptionalHumanLanguages()
+        {
+            List<string> humanLanguages = new List<string>();
+
+            humanLanguages.Add("");
+            return humanLanguages;
+        }
+
+
     }
 }

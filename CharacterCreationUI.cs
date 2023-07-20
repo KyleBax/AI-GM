@@ -135,6 +135,33 @@ namespace AI_GM
                 }
             }
         }
+        
+/*        public static Character SelectSpeciesFeatures(Character character)
+        {
+            List<string> languages = new();
+            switch (character.Species.Name)
+            {
+                case "Human":
+                    languages = NameLists.GetClericProficiencies();
+                    languageCount = 2;
+                    break;
+
+                case "Elf":
+                    proficiencies = NameLists.GetFighterProficiencies();
+                    proficiencyCount = 2;
+                    break;
+
+                case "Dwarf":
+                    proficiencies = NameLists.GetWizardProficiencies();
+                    proficiencyCount = 2;
+                    break;
+
+                default:
+                    return character;
+            }
+
+            return character;
+        }*/
 
         public static bool CharacterComplete(Character character, bool newCharacter)
         {

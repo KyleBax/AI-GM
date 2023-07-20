@@ -75,15 +75,19 @@
             {
                 case "Human":
                     character.Species.Size = 3;
-
+                    character.Species.Languages.Add("Common");
                     break;
 
                 case "Elf":
                     character.Species.Size = 3;
+                    character.Species.Languages.Add("Common");
+                    character.Species.Languages.Add("Elvish");
                     break;
 
                 case "Dwarf":
                     character.Species.Size = 3;
+                    character.Species.Languages.Add("Common");
+                    character.Species.Languages.Add("Dwarvish");
                     break;
 
                 default:
