@@ -71,6 +71,24 @@
 
         public static Character AddSpeciesFeatures(Character character)
         {
+            switch (character.Species.Name)
+            {
+                case "Human":
+                    character.Species.Size = 3;
+
+                    break;
+
+                case "Elf":
+                    character.Species.Size = 3;
+                    break;
+
+                case "Dwarf":
+                    character.Species.Size = 3;
+                    break;
+
+                default:
+                    return character;
+            }
             return character;
         }
     }
