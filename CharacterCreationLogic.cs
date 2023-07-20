@@ -6,6 +6,7 @@
         {
             character.Class.ProficiencyWeapons = new();
             character.Class.ProficiencyArmour = new();
+            character.Class.Abilities = new();
             character.Class.Level = 1;
 
             switch (character.Class.Name)
@@ -16,6 +17,9 @@
                     character.Class.ProficiencyWeapons.Add("Simple Weapons");
                     character.Class.ProficiencyArmour.Add("Light Armour");
                     character.Class.ProficiencyArmour.Add("Medium Armour");
+                    //this is a place holder until I work out exactly what they should be
+                    character.Class.Abilities.Add("Ability 1");
+                    character.Class.Abilities.Add("Ability 2");
                     break;
 
                 case "Fighter":
@@ -26,6 +30,9 @@
                     character.Class.ProficiencyArmour.Add("Heavy Armour");
                     character.Class.ProficiencyArmour.Add("Light Armour");
                     character.Class.ProficiencyArmour.Add("Medium Armour");
+                    //this is a place holder until I work out exactly what they should be
+                    character.Class.Abilities.Add("Ability 1");
+                    character.Class.Abilities.Add("Ability 2");
                     break;
 
                 case "Wizard":
@@ -35,6 +42,9 @@
                     character.Class.ProficiencyWeapons.Add("Darts");
                     character.Class.ProficiencyWeapons.Add("Quarterstaffs");
                     character.Class.ProficiencyArmour.Add("Light Armour");
+                    //this is a place holder until I work out exactly what they should be
+                    character.Class.Abilities.Add("Ability 1");
+                    character.Class.Abilities.Add("Ability 2");
                     break;
 
                 case "Rogue":
@@ -45,6 +55,9 @@
                     character.Class.ProficiencyWeapons.Add("Rapiers");
                     character.Class.ProficiencyWeapons.Add("Shortswords");
                     character.Class.ProficiencyArmour.Add("Light Armour");
+                    //this is a place holder until I work out exactly what they should be
+                    character.Class.Abilities.Add("Ability 1");
+                    character.Class.Abilities.Add("Ability 2");
                     break;
 
                 default:
@@ -53,17 +66,11 @@
 
             character.Class.HitDiceCount = (int)Math.Ceiling((double)character.Class.Level / 3);
             Console.WriteLine(character.Class.HitDiceCount);
-
-            //add class specific abilities here
-
-
             return character;
         }
 
         public static Character AddSpeciesFeatures(Character character)
         {
-
-
             return character;
         }
     }
