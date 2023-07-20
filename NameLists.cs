@@ -97,7 +97,8 @@
         {
             List<string> elvenLanguages = new List<string>();
 
-            elvenLanguages.Add("");
+            elvenLanguages.Add("Dwarvish");
+            elvenLanguages.Add("Giant");
             return elvenLanguages;
         }
 
@@ -105,7 +106,8 @@
         {
             List<string> dwarvenLanguages = new List<string>();
 
-            dwarvenLanguages.Add("");
+            dwarvenLanguages.Add("Elvish");
+            dwarvenLanguages.Add("Giant");
             return dwarvenLanguages;
         }
 
@@ -113,7 +115,9 @@
         {
             List<string> humanLanguages = new List<string>();
 
-            humanLanguages.Add("");
+            humanLanguages.Add("Elvish");
+            humanLanguages.Add("Dwarvish");
+            humanLanguages.Add("Giant");
             return humanLanguages;
         }
 
