@@ -80,6 +80,8 @@
                     character.Species.Size = 3;
                     character.Species.Languages.Add("Common");
                     character.Species.DarkvisionRange = 0;
+                    character.Species.Cauterize = true;
+                    character.Species.StrongMind = true;
                     break;
 
                 case "Elf":
@@ -87,6 +89,8 @@
                     character.Species.Languages.Add("Common");
                     character.Species.Languages.Add("Elvish");
                     character.Species.DarkvisionRange = 60;
+                    character.Species.Cauterize = false;
+                    character.Species.StrongMind = true; 
                     break;
 
                 case "Dwarf":
@@ -94,6 +98,8 @@
                     character.Species.Languages.Add("Common");
                     character.Species.Languages.Add("Dwarvish");
                     character.Species.DarkvisionRange = 60;
+                    character.Species.Cauterize = true;
+                    character.Species.StrongMind = false;
                     break;
 
                 default:
