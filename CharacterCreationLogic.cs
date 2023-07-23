@@ -82,6 +82,7 @@
                     character.Species.DarkvisionRange = 0;
                     character.Species.Cauterize = true;
                     character.Species.StrongMind = true;
+                    character.Species.Description = NameLists.HumanDescription();
                     break;
 
                 case "Elf":
@@ -91,6 +92,7 @@
                     character.Species.DarkvisionRange = 60;
                     character.Species.Cauterize = false;
                     character.Species.StrongMind = true; 
+                    character.Species.Description = NameLists.ElfDescription();
                     break;
 
                 case "Dwarf":
@@ -100,6 +102,7 @@
                     character.Species.DarkvisionRange = 60;
                     character.Species.Cauterize = true;
                     character.Species.StrongMind = false;
+                    character.Species.Description = NameLists.DwarfDescription();
                     break;
 
                 default:

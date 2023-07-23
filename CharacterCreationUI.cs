@@ -135,33 +135,56 @@ namespace AI_GM
                 }
             }
         }
-        
-/*        public static Character SelectSpeciesFeatures(Character character)
+
+        public static Character SelectSpeciesFeatures(Character character)
         {
             List<string> languages = new();
+            int languageCount;
             switch (character.Species.Name)
             {
                 case "Human":
-                    languages = NameLists.GetClericProficiencies();
+                    languages = NameLists.GetOptionalHumanLanguages();
                     languageCount = 2;
                     break;
 
                 case "Elf":
-                    proficiencies = NameLists.GetFighterProficiencies();
-                    proficiencyCount = 2;
+                    languages = NameLists.GetOptionalElvenLanguages();
+                    languageCount = 1;
                     break;
 
                 case "Dwarf":
-                    proficiencies = NameLists.GetWizardProficiencies();
-                    proficiencyCount = 2;
+                    languages = NameLists.GetOptionalDwarvenLanguages();
+                    languageCount = 1;
                     break;
 
                 default:
                     return character;
             }
 
+            while (languageCount >= 1)
+            {
+                Console.WriteLine("Select your languages");
+                Console.WriteLine("enter the number that corresponds to the languages you would like to choose");
+
+                for (int i = 0; i < languages.Count; i++)
+                {
+                    Console.WriteLine((i + 1) + ": " + languages[i]);
+                }
+                int selectedLanguageIndex;
+                if (int.TryParse(Console.ReadLine(), out selectedLanguageIndex) && selectedLanguageIndex >= 1 && selectedLanguageIndex <= languages.Count)
+                {
+                    character.Species.Languages.Add(languages[selectedLanguageIndex - 1]);
+                }
+                else
+                {
+                    Console.WriteLine("Invalid selection. Please try again.");
+                }
+
+                languageCount -= 1;
+            }
+
             return character;
-        }*/
+        }
 
         public static bool CharacterComplete(Character character, bool newCharacter)
         {
