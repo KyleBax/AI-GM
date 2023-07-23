@@ -136,6 +136,42 @@
             return "insert description here";
         }
 
+        public static List<string> HumanProficiencies()
+        {
+            List<string> humanProficiencies = new List<string>();
+
+            humanProficiencies.Add("Atheletics");
+            humanProficiencies.Add("Perception");
+            humanProficiencies.Add("Religion");
+            humanProficiencies.Add("Survival");
+
+            return humanProficiencies;
+        }
+
+        public static List<string> ElfProficiencies()
+        {
+            List<string> elfProficiencies = new List<string>();
+
+            elfProficiencies.Add("Acrobatics");
+            elfProficiencies.Add("Perception");
+            elfProficiencies.Add("Medicine");
+            elfProficiencies.Add("Nature");
+
+            return elfProficiencies;
+        }
+
+        public static List<string> DwarfProficiencies()
+        {
+            List<string> humanProficiencies = new List<string>();
+
+            humanProficiencies.Add("Atheletics");
+            humanProficiencies.Add("Intimidation");
+            humanProficiencies.Add("History");
+            humanProficiencies.Add("Survival");
+
+            return humanProficiencies;
+        }
+
 
     }
 }

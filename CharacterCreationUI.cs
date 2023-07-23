@@ -139,22 +139,30 @@ namespace AI_GM
         public static Character SelectSpeciesFeatures(Character character)
         {
             List<string> languages = new();
+            List<string> proficiencies = new List<string>();
             int languageCount;
+            int proficiencyCount;
             switch (character.Species.Name)
             {
                 case "Human":
                     languages = NameLists.GetOptionalHumanLanguages();
                     languageCount = 2;
+                    proficiencyCount = 2;
+                    proficiencies = NameLists.HumanProficiencies();
                     break;
 
                 case "Elf":
                     languages = NameLists.GetOptionalElvenLanguages();
                     languageCount = 1;
+                    proficiencyCount = 1;
+                    proficiencies = NameLists.ElfProficiencies();
                     break;
 
                 case "Dwarf":
                     languages = NameLists.GetOptionalDwarvenLanguages();
                     languageCount = 1;
+                    proficiencyCount = 1;
+                    proficiencies = NameLists.DwarfProficiencies();
                     break;
 
                 default:
@@ -181,6 +189,45 @@ namespace AI_GM
                 }
 
                 languageCount -= 1;
+            }
+
+            while (proficiencyCount >= 1)
+            {
+                Console.WriteLine("Select your proficiencies");
+                Console.WriteLine("enter the number that corresponds to the proficiencies you would like to choose");
+                bool selectProficiency = true;
+                while (selectProficiency)
+                {
+                    for (int i = 0; i < proficiencies.Count; i++)
+                    {
+                        Console.WriteLine((i + 1) + ": " + proficiencies[i]);
+                    }
+                    int selectedProficiencyIndex;
+                    if (int.TryParse(Console.ReadLine(), out selectedProficiencyIndex) && selectedProficiencyIndex >= 1 && selectedProficiencyIndex <= proficiencies.Count)
+                    {
+                        switch (proficiencyCount)
+                        {
+                            case 1:
+                                character.Class.SkillProficiency1 = proficiencies[selectedProficiencyIndex - 1];
+                                Console.WriteLine("Proficiency selected: " + character.Class.SkillProficiency1);
+                                break;
+                            case 2:
+                                character.Class.SkillProficiency2 = proficiencies[selectedProficiencyIndex - 1];
+                                Console.WriteLine("Proficiency selected: " + character.Class.SkillProficiency2);
+                                break;
+                            case 3:
+                                character.Class.SkillProficiency3 = proficiencies[selectedProficiencyIndex - 1];
+                                Console.WriteLine("Proficiency selected: " + character.Class.SkillProficiency3);
+                                break;
+                        }
+                        selectProficiency = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid selection. Please try again.");
+                    }
+                }
+                proficiencyCount -= 1;
             }
 
             return character;
