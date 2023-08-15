@@ -11,7 +11,7 @@
 
             switch (character.Class.Name)
             {
-                case "Cleric":
+                case Class.Cleric:
                     character.Class.HitDice = 8;
                     character.Class.SpellSlots = 3;
                     character.Class.ProficiencyWeapons.Add("Simple Weapons");
@@ -22,7 +22,7 @@
                     character.Class.Abilities.Add("Ability 2");
                     break;
 
-                case "Fighter":
+                case  Class.Fighter:
                     character.Class.HitDice = 10;
                     character.Class.SpellSlots = 0;
                     character.Class.ProficiencyWeapons.Add("Simple Weapons");
@@ -35,7 +35,7 @@
                     character.Class.Abilities.Add("Ability 2");
                     break;
 
-                case "Wizard":
+                case Class.Wizard:
                     character.Class.HitDice = 6;
                     character.Class.SpellSlots = 3;
                     character.Class.ProficiencyWeapons.Add("Daggers");
@@ -47,7 +47,7 @@
                     character.Class.Abilities.Add("Ability 2");
                     break;
 
-                case "Rogue":
+                case Class.Rogue:
                     character.Class.HitDice = 8;
                     character.Class.SpellSlots = 0;
                     character.Class.ProficiencyWeapons.Add("Simple Weapons");
@@ -71,38 +71,38 @@
 
         public static Character AddSpeciesFeatures(Character character)
         {
-            character.Species.Languages = new List<string>();
+            character.Species.Languages = new List<Language>();
 
 
             switch (character.Species.Name)
             {
-                case "Human":
+                case Specie.Human:
                     character.Species.Size = 3;
-                    character.Species.Languages.Add("Common");
+                    character.Species.Languages.Add(Language.Common);
                     character.Species.DarkvisionRange = 0;
                     character.Species.Cauterize = true;
                     character.Species.StrongMind = true;
-                    character.Species.Description = NameLists.HumanDescription();
+                    character.Species.Description = SpecieDescriptions.HumanDescription();
                     break;
 
-                case "Elf":
+                case Specie.Elf:
                     character.Species.Size = 3;
-                    character.Species.Languages.Add("Common");
-                    character.Species.Languages.Add("Elvish");
+                    character.Species.Languages.Add(Language.Common);
+                    character.Species.Languages.Add(Language.Elvish);
                     character.Species.DarkvisionRange = 60;
                     character.Species.Cauterize = false;
                     character.Species.StrongMind = true; 
-                    character.Species.Description = NameLists.ElfDescription();
+                    character.Species.Description = SpecieDescriptions.ElfDescription();
                     break;
 
-                case "Dwarf":
+                case Specie.Dwarf:
                     character.Species.Size = 3;
-                    character.Species.Languages.Add("Common");
-                    character.Species.Languages.Add("Dwarvish");
+                    character.Species.Languages.Add(Language.Common);
+                    character.Species.Languages.Add(Language.Dwarvish);
                     character.Species.DarkvisionRange = 60;
                     character.Species.Cauterize = true;
                     character.Species.StrongMind = false;
-                    character.Species.Description = NameLists.DwarfDescription();
+                    character.Species.Description = SpecieDescriptions.DwarfDescription();
                     break;
 
                 default:

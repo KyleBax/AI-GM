@@ -2,8 +2,8 @@
 {
     public class Species
     {
-        private string _name;
-        public string Name
+        private Specie _name;
+        public Specie Name
         {
             get { return _name; }
             set { _name = value; }
@@ -16,18 +16,11 @@
             set { _size = value; }
         }
 
-        private List<string> _languages;
-        public List<string> Languages
+        private List<Language> _languages;
+        public List<Language> Languages
         {
             get { return _languages; }
             set { _languages = value; }
-        }
-
-        private string _proficiency;
-        public string Proficiency
-        {
-            get { return _proficiency; }
-            set { _proficiency = value; }
         }
 
         private string _description;

@@ -1,9 +1,11 @@
-﻿namespace AI_GM
+﻿using static AI_GM.SpecieDescriptions;
+
+namespace AI_GM
 {
     public class Classes
     {
-        private string _name;
-        public string Name
+        private Class _name;
+        public Class Name
         {
             get { return _name; }
             set { _name = value; }
@@ -23,29 +25,8 @@
             set { _abilities = value; }
         }
 
-        private string _skillProficiency1;
-        public string SkillProficiency1
-        {
-            get { return _skillProficiency1; }
-            set { _skillProficiency1 = value; }
-        }
-
-        private string _skillProficiency2;
-        public string SkillProficiency2
-        {
-            get { return _skillProficiency2; }
-            set { _skillProficiency2 = value; }
-        }
-
-        private string _skillProficiency3;
-        public string SkillProficiency3
-        {
-            get { return _skillProficiency3; }
-            set { _skillProficiency3 = value; }
-        }
-
         private List<string> _proficiencyWeapons;
-        public List<string> ProficiencyWeapons
+        public List<string> ProficiencyWeapons //TODO: enum
         {
             get { return _proficiencyWeapons; }
             set { _proficiencyWeapons = value; }

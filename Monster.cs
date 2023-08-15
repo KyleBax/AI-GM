@@ -16,6 +16,9 @@ namespace AI_GM
             set { _name = value; }
         }
 
+        /// <summary>
+        /// Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma each have a range of 0-50
+        /// </summary>
         private int _strength;
         public int Strength
         {
@@ -81,7 +84,7 @@ namespace AI_GM
         }
 
         private List<string> _attacks;
-        public List<string> Attacks
+        public List<string> Attacks //TODO: attack class?
         {
             get { return _attacks; }
             set { _attacks = value; }

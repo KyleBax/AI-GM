@@ -14,20 +14,20 @@ namespace AI_GM
 
         public static Character SelectCharacterClass(Character character)
         {
-            List<string> classNames = NameLists.GetClassNames();
+            string[] classNames = Enum.GetNames(typeof(Class));
             Classes classes = new Classes();
             Console.WriteLine("select a class");
             Console.WriteLine("enter the number that corresponds to the class you would like to choose");
             while (true)
             {
-                for (int i = 0; i < classNames.Count; i++)
+                for (int i = 0; i < classNames.Length; i++)
                 {
                     Console.WriteLine((i + 1) + ": " + classNames[i]);
                 }
                 int selectedClassIndex;
-                if (int.TryParse(Console.ReadLine(), out selectedClassIndex) && selectedClassIndex >= 1 && selectedClassIndex <= classNames.Count)
+                if (int.TryParse(Console.ReadLine(), out selectedClassIndex) && selectedClassIndex >= 1 && selectedClassIndex <= classNames.Length)
                 {
-                    classes.Name = classNames[selectedClassIndex - 1];
+                    classes.Name = (Class)Enum.Parse(typeof(Class), classNames[selectedClassIndex - 1]);
                     character.Class = classes;
                     Console.WriteLine("Class selected: " + classes.Name);
                     return character;
@@ -41,27 +41,27 @@ namespace AI_GM
 
         public static Character SelectClassProficiencies(Character character)
         {
-            List<string> proficiencies = new();
+            List<Skill> proficiencies = new();
             int proficiencyCount;
             switch (character.Class.Name)
             {
-                case "Cleric":
-                    proficiencies = NameLists.GetClericProficiencies();
+                case Class.Cleric:
+                    proficiencies = new List<Skill> { Skill.Survival, Skill.Medicine, Skill.Religion, Skill.Perception, Skill.Persuasion, Skill.History };
                     proficiencyCount = 2;
                     break;
 
-                case "Fighter":
-                    proficiencies = NameLists.GetFighterProficiencies();
+                case Class.Fighter:
+                    proficiencies = new List<Skill> { Skill.Acrobatics, Skill.Atheletics, Skill.Insight, Skill.Survival, Skill.Perception, Skill.History };
                     proficiencyCount = 2;
                     break;
 
-                case "Wizard":
-                    proficiencies = NameLists.GetWizardProficiencies();
+                case Class.Wizard:
+                    proficiencies = new List<Skill> { Skill.Insight, Skill.Arcana, Skill.Medicine, Skill.Insight, Skill.Investigation, Skill.History };
                     proficiencyCount = 2;
                     break;
 
-                case "Rogue":
-                    proficiencies = NameLists.GetRogueProficiencies();
+                case Class.Rogue:
+                    proficiencies = new List<Skill> { Skill.Stealth, Skill.SleightOfHand, Skill.Acrobatics, Skill.Perception, Skill.Persuasion, Skill.Deception };
                     proficiencyCount = 3;
                     break;
 
@@ -82,21 +82,9 @@ namespace AI_GM
                     int selectedProficiencyIndex;
                     if (int.TryParse(Console.ReadLine(), out selectedProficiencyIndex) && selectedProficiencyIndex >= 1 && selectedProficiencyIndex <= proficiencies.Count)
                     {
-                        switch (proficiencyCount)
-                        {
-                            case 1:
-                                character.Class.SkillProficiency1 = proficiencies[selectedProficiencyIndex - 1];
-                                Console.WriteLine("Proficiency selected: " + character.Class.SkillProficiency1);
-                                break;
-                            case 2:
-                                character.Class.SkillProficiency2 = proficiencies[selectedProficiencyIndex - 1];
-                                Console.WriteLine("Proficiency selected: " + character.Class.SkillProficiency2);
-                                break;
-                            case 3:
-                                character.Class.SkillProficiency3 = proficiencies[selectedProficiencyIndex - 1];
-                                Console.WriteLine("Proficiency selected: " + character.Class.SkillProficiency3);
-                                break;
-                        }
+                        character.SkillsProficiencies.Add(proficiencies[selectedProficiencyIndex - 1]);
+                        Console.WriteLine("Proficiency selected: " + proficiencies[selectedProficiencyIndex - 1]);
+
                         selectProficiency = false;
                     }
                     else
@@ -111,20 +99,20 @@ namespace AI_GM
 
         public static Character SelectCharacterSpecies(Character character)
         {
-            List<string> speciesNames = NameLists.GetSpeciesNames();
+            string[] speciesNames = Enum.GetNames(typeof(Specie));
             Species species = new Species();
             Console.WriteLine("Select a species");
             Console.WriteLine("enter the number that corresponds to the class you would like to choose");
             while (true)
             {
-                for (int i = 0; i < speciesNames.Count; i++)
+                for (int i = 0; i < speciesNames.Length; i++)
                 {
                     Console.WriteLine((i + 1) + ": " + speciesNames[i]);
                 }
                 int selectedSpeciesIndex;
-                if (int.TryParse(Console.ReadLine(), out selectedSpeciesIndex) && selectedSpeciesIndex >= 1 && selectedSpeciesIndex <= speciesNames.Count)
+                if (int.TryParse(Console.ReadLine(), out selectedSpeciesIndex) && selectedSpeciesIndex >= 1 && selectedSpeciesIndex <= speciesNames.Length)
                 {
-                    species.Name = speciesNames[selectedSpeciesIndex - 1];
+                    species.Name = (Specie)Enum.Parse(typeof(Class), speciesNames[selectedSpeciesIndex - 1]);
                     character.Species = species;
                     Console.WriteLine("Species selected: " + species.Name);
                     return character;
@@ -138,31 +126,31 @@ namespace AI_GM
 
         public static Character SelectSpeciesFeatures(Character character)
         {
-            List<string> languages = new();
-            List<string> proficiencies = new List<string>();
+            List<Language> languages = new();
+            List<Skill> proficiencies = new();
             int languageCount;
             int proficiencyCount;
             switch (character.Species.Name)
             {
-                case "Human":
-                    languages = NameLists.GetOptionalHumanLanguages();
+                case Specie.Human:
+                    languages = new List<Language> { Language.Giant, Language.Dwarvish, Language.Elvish, Language.Celestial };
                     languageCount = 2;
                     proficiencyCount = 2;
-                    proficiencies = NameLists.HumanProficiencies();
+                    proficiencies = new List<Skill> { Skill.Atheletics, Skill.Perception, Skill.Religion, Skill.Survival };
                     break;
 
-                case "Elf":
-                    languages = NameLists.GetOptionalElvenLanguages();
+                case Specie.Elf:
+                    languages = new List<Language> { Language.Dwarvish, Language.Celestial };
                     languageCount = 1;
                     proficiencyCount = 1;
-                    proficiencies = NameLists.ElfProficiencies();
+                    proficiencies = new List<Skill> { Skill.Acrobatics, Skill.Perception, Skill.Medicine, Skill.Nature };
                     break;
 
-                case "Dwarf":
-                    languages = NameLists.GetOptionalDwarvenLanguages();
+                case Specie.Dwarf:
+                    languages = new List<Language> { Language.Elvish, Language.Giant };
                     languageCount = 1;
                     proficiencyCount = 1;
-                    proficiencies = NameLists.DwarfProficiencies();
+                    proficiencies = new List<Skill> { Skill.Atheletics, Skill.Intimidation, Skill.History, Skill.Survival };
                     break;
 
                 default:
@@ -181,7 +169,8 @@ namespace AI_GM
                 int selectedLanguageIndex;
                 if (int.TryParse(Console.ReadLine(), out selectedLanguageIndex) && selectedLanguageIndex >= 1 && selectedLanguageIndex <= languages.Count)
                 {
-                    character.Species.Languages.Add(languages[selectedLanguageIndex - 1]);
+                    Language selectedLanguage = languages[selectedLanguageIndex - 1];
+                    character.Species.Languages.Add(selectedLanguage);
                 }
                 else
                 {
@@ -205,21 +194,9 @@ namespace AI_GM
                     int selectedProficiencyIndex;
                     if (int.TryParse(Console.ReadLine(), out selectedProficiencyIndex) && selectedProficiencyIndex >= 1 && selectedProficiencyIndex <= proficiencies.Count)
                     {
-                        switch (proficiencyCount)
-                        {
-                            case 1:
-                                character.Class.SkillProficiency1 = proficiencies[selectedProficiencyIndex - 1];
-                                Console.WriteLine("Proficiency selected: " + character.Class.SkillProficiency1);
-                                break;
-                            case 2:
-                                character.Class.SkillProficiency2 = proficiencies[selectedProficiencyIndex - 1];
-                                Console.WriteLine("Proficiency selected: " + character.Class.SkillProficiency2);
-                                break;
-                            case 3:
-                                character.Class.SkillProficiency3 = proficiencies[selectedProficiencyIndex - 1];
-                                Console.WriteLine("Proficiency selected: " + character.Class.SkillProficiency3);
-                                break;
-                        }
+                        character.SkillsProficiencies.Add(proficiencies[selectedProficiencyIndex - 1]);
+                        Console.WriteLine("Proficiency selected: " + proficiencies[selectedProficiencyIndex - 1]);
+
                         selectProficiency = false;
                     }
                     else

@@ -91,11 +91,18 @@
             set { _speed = value; }
         }
 
-        private List<string> _proficiencies;
-        public List<string> Proficiencies
+        private List<Enum> _proficiencies;
+        public List<Enum> Proficiencies
         {
             get { return _proficiencies; }
             set { _proficiencies = value; }
+        }
+
+        private List<Skill> _skillsProficiencies;
+        public List<Skill> SkillsProficiencies
+        {
+            get { return _skillsProficiencies; }
+            set { _skillsProficiencies = value; }
         }
 
     }
