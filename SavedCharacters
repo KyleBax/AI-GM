@@ -1,29 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Character xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Name>k</Name>
-  <Strength>10</Strength>
-  <Dexterity>35</Dexterity>
+  <Name>kyle</Name>
+  <Strength>35</Strength>
+  <Dexterity>10</Dexterity>
   <Constitution>10</Constitution>
   <Intelligence>10</Intelligence>
   <Wisdom>10</Wisdom>
   <Charisma>10</Charisma>
   <Class>
-    <Name>Rogue</Name>
+    <Name>Fighter</Name>
     <SpellSlots>0</SpellSlots>
-    <SkillProficiency1>Acrobatics</SkillProficiency1>
-    <SkillProficiency2>Sleight of Hand</SkillProficiency2>
-    <SkillProficiency3>Stealth</SkillProficiency3>
-    <HitDice>0</HitDice>
-    <Level>0</Level>
+    <Abilities>
+      <string>Ability 1</string>
+      <string>Ability 2</string>
+    </Abilities>
+    <ProficiencyWeapons>
+      <string>Simple Weapons</string>
+      <string>Martial Weapons</string>
+    </ProficiencyWeapons>
+    <ProficiencyArmour>
+      <string>Heavy Armour</string>
+      <string>Light Armour</string>
+      <string>Medium Armour</string>
+    </ProficiencyArmour>
+    <HitDice>10</HitDice>
+    <HitDiceCount>1</HitDiceCount>
+    <Level>1</Level>
   </Class>
   <Species>
-    <Name>Dwarf</Name>
-    <Size>0</Size>
+    <Name>Human</Name>
+    <Size>3</Size>
+    <Languages>
+      <Language>Common</Language>
+    </Languages>
+    <Description>insert description here</Description>
     <DarkvisionRange>0</DarkvisionRange>
-    <Cauterize>false</Cauterize>
-    <StrongMind>false</StrongMind>
+    <Cauterize>true</Cauterize>
+    <StrongMind>true</StrongMind>
   </Species>
   <ProficeincyModifier>0</ProficeincyModifier>
   <Level>0</Level>
   <Speed>0</Speed>
+  <SkillsProficiencies>
+    <Skill>Acrobatics</Skill>
+    <Skill>Atheletics</Skill>
+  </SkillsProficiencies>
 </Character>

@@ -112,7 +112,7 @@ namespace AI_GM
                 int selectedSpeciesIndex;
                 if (int.TryParse(Console.ReadLine(), out selectedSpeciesIndex) && selectedSpeciesIndex >= 1 && selectedSpeciesIndex <= speciesNames.Length)
                 {
-                    species.Name = (Specie)Enum.Parse(typeof(Class), speciesNames[selectedSpeciesIndex - 1]);
+                    species.Name = (Specie)Enum.Parse(typeof(Specie), speciesNames[selectedSpeciesIndex - 1]);
                     character.Species = species;
                     Console.WriteLine("Species selected: " + species.Name);
                     return character;

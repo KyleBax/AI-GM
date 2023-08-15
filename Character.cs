@@ -104,6 +104,10 @@
             get { return _skillsProficiencies; }
             set { _skillsProficiencies = value; }
         }
+        public Character()
+        {
+            SkillsProficiencies = new List<Skill>();
+        }
 
     }
 }
