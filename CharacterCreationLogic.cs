@@ -14,50 +14,50 @@
                 case Class.Cleric:
                     character.Class.HitDice = 8;
                     character.Class.SpellSlots = 3;
-                    character.Class.ProficiencyWeapons.Add("Simple Weapons");
-                    character.Class.ProficiencyArmour.Add("Light Armour");
-                    character.Class.ProficiencyArmour.Add("Medium Armour");
+                    character.Class.ProficiencyWeapons.Add(WeaponType.SimpleWeapons);
+                    character.Class.ProficiencyArmour.Add(ArmourType.LightArmour);
+                    character.Class.ProficiencyArmour.Add(ArmourType.MediumArmour);
                     //this is a place holder until I work out exactly what they should be
-                    character.Class.Abilities.Add("Ability 1");
-                    character.Class.Abilities.Add("Ability 2");
+                    character.Class.Abilities.Add(Ability.Ability1);
+                    character.Class.Abilities.Add(Ability.Ability2);
                     break;
 
                 case  Class.Fighter:
                     character.Class.HitDice = 10;
                     character.Class.SpellSlots = 0;
-                    character.Class.ProficiencyWeapons.Add("Simple Weapons");
-                    character.Class.ProficiencyWeapons.Add("Martial Weapons");
-                    character.Class.ProficiencyArmour.Add("Heavy Armour");
-                    character.Class.ProficiencyArmour.Add("Light Armour");
-                    character.Class.ProficiencyArmour.Add("Medium Armour");
+                    character.Class.ProficiencyWeapons.Add(WeaponType.SimpleWeapons);
+                    character.Class.ProficiencyWeapons.Add(WeaponType.MartialWeapons);
+                    character.Class.ProficiencyArmour.Add(ArmourType.LightArmour);
+                    character.Class.ProficiencyArmour.Add(ArmourType.MediumArmour);
+                    character.Class.ProficiencyArmour.Add(ArmourType.HeavyArmour);
                     //this is a place holder until I work out exactly what they should be
-                    character.Class.Abilities.Add("Ability 1");
-                    character.Class.Abilities.Add("Ability 2");
+                    character.Class.Abilities.Add(Ability.Ability3);
+                    character.Class.Abilities.Add(Ability.Ability4);
                     break;
 
                 case Class.Wizard:
                     character.Class.HitDice = 6;
                     character.Class.SpellSlots = 3;
-                    character.Class.ProficiencyWeapons.Add("Daggers");
-                    character.Class.ProficiencyWeapons.Add("Darts");
-                    character.Class.ProficiencyWeapons.Add("Quarterstaffs");
-                    character.Class.ProficiencyArmour.Add("Light Armour");
+                    character.Class.ProficiencyWeapons.Add(WeaponType.Daggers);
+                    character.Class.ProficiencyWeapons.Add(WeaponType.Darts);
+                    character.Class.ProficiencyWeapons.Add(WeaponType.QuarterStaffs);
+                    character.Class.ProficiencyArmour.Add(ArmourType.LightArmour);
                     //this is a place holder until I work out exactly what they should be
-                    character.Class.Abilities.Add("Ability 1");
-                    character.Class.Abilities.Add("Ability 2");
+                    character.Class.Abilities.Add(Ability.Ability5);
+                    character.Class.Abilities.Add(Ability.Ability6);
                     break;
 
                 case Class.Rogue:
                     character.Class.HitDice = 8;
                     character.Class.SpellSlots = 0;
-                    character.Class.ProficiencyWeapons.Add("Simple Weapons");
-                    character.Class.ProficiencyWeapons.Add("Longswords");
-                    character.Class.ProficiencyWeapons.Add("Rapiers");
-                    character.Class.ProficiencyWeapons.Add("Shortswords");
-                    character.Class.ProficiencyArmour.Add("Light Armour");
+                    character.Class.ProficiencyWeapons.Add(WeaponType.SimpleWeapons);
+                    character.Class.ProficiencyWeapons.Add(WeaponType.LongSwords);
+                    character.Class.ProficiencyWeapons.Add(WeaponType.Rapiers);
+                    character.Class.ProficiencyWeapons.Add(WeaponType.ShortSwords);
+                    character.Class.ProficiencyArmour.Add(ArmourType.LightArmour);
                     //this is a place holder until I work out exactly what they should be
-                    character.Class.Abilities.Add("Ability 1");
-                    character.Class.Abilities.Add("Ability 2");
+                    character.Class.Abilities.Add(Ability.Ability7);
+                    character.Class.Abilities.Add(Ability.Ability8);
                     break;
 
                 default:

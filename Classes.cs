@@ -18,22 +18,22 @@ namespace AI_GM
             set { _spellSlots = value; }
         }
 
-        private List<string> _abilities;
-        public List<string> Abilities
+        private List<Ability> _abilities;
+        public List<Ability> Abilities
         {
             get { return _abilities; }
             set { _abilities = value; }
         }
 
-        private List<string> _proficiencyWeapons;
-        public List<string> ProficiencyWeapons //TODO: enum
+        private List<WeaponType> _proficiencyWeapons;
+        public List<WeaponType> ProficiencyWeapons
         {
             get { return _proficiencyWeapons; }
             set { _proficiencyWeapons = value; }
         }
 
-        private List<string> _proficiencyArmour;
-        public List<string> ProficiencyArmour
+        private List<ArmourType> _proficiencyArmour;
+        public List<ArmourType> ProficiencyArmour
         {
             get { return _proficiencyArmour; }
             set { _proficiencyArmour = value; }

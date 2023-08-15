@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AI_GM
+﻿namespace AI_GM
 {
     public enum Skill
     {
@@ -58,5 +52,40 @@ namespace AI_GM
         FireBall,
         FireBolt,
         Bless
+    }
+
+    public enum WeaponType
+    {
+        SimpleWeapons,
+        MartialWeapons,
+        Daggers,
+        QuarterStaffs,
+        Ranged,
+        CrossBows,
+        Firearms,
+        Darts,
+        LongSwords,
+        ShortSwords,
+        Rapiers
+    }
+
+    public enum ArmourType
+    {
+        LightArmour,
+        MediumArmour,
+        HeavyArmour
+    }
+
+    public enum Ability
+    {
+        //placeholders
+        Ability1,
+        Ability2,
+        Ability3,
+        Ability4,
+        Ability5,
+        Ability6,
+        Ability7,
+        Ability8
     }
 }
