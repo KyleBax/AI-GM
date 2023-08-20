@@ -56,8 +56,8 @@
 
     public enum WeaponType
     {
-        SimpleWeapons,
-        MartialWeapons,
+        Simple,
+        Martial,
         Daggers,
         QuarterStaffs,
         Ranged,
@@ -69,11 +69,11 @@
         Rapiers
     }
 
-    public enum ArmourType
+    public enum Armour
     {
-        LightArmour,
-        MediumArmour,
-        HeavyArmour
+        Light,
+        Medium,
+        Heavy
     }
 
     public enum Ability

@@ -56,14 +56,14 @@
             set { _charisma = value; }
         }
 
-        private Classes _class;
+        private Classes _class = new Classes();
         public Classes Class
         {
             get { return _class; }
             set { _class = value; }
         }
 
-        private Species _species;
+        private Species _species = new Species();
         public Species Species
         {
             get { return _species; }
@@ -91,23 +91,13 @@
             set { _speed = value; }
         }
 
-        private List<Enum> _proficiencies;
-        public List<Enum> Proficiencies
-        {
-            get { return _proficiencies; }
-            set { _proficiencies = value; }
-        }
-
-        private List<Skill> _skillsProficiencies;
+        private List<Skill> _skillsProficiencies = new List<Skill>();
         public List<Skill> SkillsProficiencies
         {
             get { return _skillsProficiencies; }
             set { _skillsProficiencies = value; }
         }
-        public Character()
-        {
-            SkillsProficiencies = new List<Skill>();
-        }
+
 
     }
 }

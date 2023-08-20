@@ -2,7 +2,7 @@
 
 namespace AI_GM
 {
-    internal class CharacterCreationUI
+    internal static class CharacterCreationUI
     {
         public static string GetCharacterName()
         {
@@ -10,6 +10,31 @@ namespace AI_GM
             string name = Console.ReadLine();
 
             return name;
+        }
+
+        public static Character MultichoiceSelections<T>(Character character, List<T> options, List<T> targetList)
+        {
+            bool makeSelection = true;
+            while (makeSelection)
+            {
+                for (int i = 0; i < options.Count; i++)
+                {
+                    Console.WriteLine((i + 1) + ": " + options[i]);
+                }
+                int selectedProficiencyIndex;
+                if (int.TryParse(Console.ReadLine(), out selectedProficiencyIndex) && selectedProficiencyIndex >= 1 && selectedProficiencyIndex <= options.Count)
+                {
+                    targetList.Add(options[selectedProficiencyIndex - 1]);
+                    Console.WriteLine("Proficiency selected: " + options[selectedProficiencyIndex - 1]);
+
+                    makeSelection = false;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid selection. Please try again.");
+                }
+            }
+            return character;
         }
 
         public static Character SelectCharacterClass(Character character)
@@ -72,26 +97,7 @@ namespace AI_GM
             {
                 Console.WriteLine("Select your proficiencies");
                 Console.WriteLine("enter the number that corresponds to the proficiencies you would like to choose");
-                bool selectProficiency = true;
-                while (selectProficiency)
-                {
-                    for (int i = 0; i < proficiencies.Count; i++)
-                    {
-                        Console.WriteLine((i + 1) + ": " + proficiencies[i]);
-                    }
-                    int selectedProficiencyIndex;
-                    if (int.TryParse(Console.ReadLine(), out selectedProficiencyIndex) && selectedProficiencyIndex >= 1 && selectedProficiencyIndex <= proficiencies.Count)
-                    {
-                        character.SkillsProficiencies.Add(proficiencies[selectedProficiencyIndex - 1]);
-                        Console.WriteLine("Proficiency selected: " + proficiencies[selectedProficiencyIndex - 1]);
-
-                        selectProficiency = false;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid selection. Please try again.");
-                    }
-                }
+                character = MultichoiceSelections(character, proficiencies, character.SkillsProficiencies);
                 proficiencyCount -= 1;
             }
             return character;
@@ -100,7 +106,6 @@ namespace AI_GM
         public static Character SelectCharacterSpecies(Character character)
         {
             string[] speciesNames = Enum.GetNames(typeof(Specie));
-            Species species = new Species();
             Console.WriteLine("Select a species");
             Console.WriteLine("enter the number that corresponds to the class you would like to choose");
             while (true)
@@ -112,9 +117,8 @@ namespace AI_GM
                 int selectedSpeciesIndex;
                 if (int.TryParse(Console.ReadLine(), out selectedSpeciesIndex) && selectedSpeciesIndex >= 1 && selectedSpeciesIndex <= speciesNames.Length)
                 {
-                    species.Name = (Specie)Enum.Parse(typeof(Specie), speciesNames[selectedSpeciesIndex - 1]);
-                    character.Species = species;
-                    Console.WriteLine("Species selected: " + species.Name);
+                    character.Species.Name = (Specie)Enum.Parse(typeof(Specie), speciesNames[selectedSpeciesIndex - 1]);
+                    Console.WriteLine("Species selected: " + character.Species.Name);
                     return character;
                 }
                 else
@@ -162,7 +166,7 @@ namespace AI_GM
                 Console.WriteLine("Select your languages");
                 Console.WriteLine("enter the number that corresponds to the languages you would like to choose");
 
-                for (int i = 0; i < languages.Count; i++)
+/*                for (int i = 0; i < languages.Count; i++)
                 {
                     Console.WriteLine((i + 1) + ": " + languages[i]);
                 }
@@ -175,7 +179,9 @@ namespace AI_GM
                 else
                 {
                     Console.WriteLine("Invalid selection. Please try again.");
-                }
+                }*/
+
+                character = MultichoiceSelections(character, languages, character.Species.Languages);
 
                 languageCount -= 1;
             }
@@ -184,26 +190,7 @@ namespace AI_GM
             {
                 Console.WriteLine("Select your proficiencies");
                 Console.WriteLine("enter the number that corresponds to the proficiencies you would like to choose");
-                bool selectProficiency = true;
-                while (selectProficiency)
-                {
-                    for (int i = 0; i < proficiencies.Count; i++)
-                    {
-                        Console.WriteLine((i + 1) + ": " + proficiencies[i]);
-                    }
-                    int selectedProficiencyIndex;
-                    if (int.TryParse(Console.ReadLine(), out selectedProficiencyIndex) && selectedProficiencyIndex >= 1 && selectedProficiencyIndex <= proficiencies.Count)
-                    {
-                        character.SkillsProficiencies.Add(proficiencies[selectedProficiencyIndex - 1]);
-                        Console.WriteLine("Proficiency selected: " + proficiencies[selectedProficiencyIndex - 1]);
-
-                        selectProficiency = false;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid selection. Please try again.");
-                    }
-                }
+                character = MultichoiceSelections(character, proficiencies, character.SkillsProficiencies);
                 proficiencyCount -= 1;
             }
 

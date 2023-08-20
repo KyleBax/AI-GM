@@ -84,7 +84,7 @@ namespace AI_GM
         }
 
         private List<string> _attacks;
-        public List<string> Attacks //TODO: attack class?
+        public List<string> Attacks //TODO: attack class? (attack has some properties like damage value, range, name etc
         {
             get { return _attacks; }
             set { _attacks = value; }

@@ -16,7 +16,7 @@
             set { _size = value; }
         }
 
-        private List<Language> _languages;
+        private List<Language> _languages = new List<Language>();
         public List<Language> Languages
         {
             get { return _languages; }

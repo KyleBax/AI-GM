@@ -4,19 +4,15 @@
     {
         public static Character AddClassFeatures(Character character)
         {
-            character.Class.ProficiencyWeapons = new();
-            character.Class.ProficiencyArmour = new();
-            character.Class.Abilities = new();
-            character.Class.Level = 1;
 
             switch (character.Class.Name)
             {
                 case Class.Cleric:
                     character.Class.HitDice = 8;
                     character.Class.SpellSlots = 3;
-                    character.Class.ProficiencyWeapons.Add(WeaponType.SimpleWeapons);
-                    character.Class.ProficiencyArmour.Add(ArmourType.LightArmour);
-                    character.Class.ProficiencyArmour.Add(ArmourType.MediumArmour);
+                    character.Class.ProficiencyWeapons.Add(WeaponType.Simple);
+                    character.Class.ProficiencyArmour.Add(Armour.Light);
+                    character.Class.ProficiencyArmour.Add(Armour.Medium);
                     //this is a place holder until I work out exactly what they should be
                     character.Class.Abilities.Add(Ability.Ability1);
                     character.Class.Abilities.Add(Ability.Ability2);
@@ -25,11 +21,11 @@
                 case  Class.Fighter:
                     character.Class.HitDice = 10;
                     character.Class.SpellSlots = 0;
-                    character.Class.ProficiencyWeapons.Add(WeaponType.SimpleWeapons);
-                    character.Class.ProficiencyWeapons.Add(WeaponType.MartialWeapons);
-                    character.Class.ProficiencyArmour.Add(ArmourType.LightArmour);
-                    character.Class.ProficiencyArmour.Add(ArmourType.MediumArmour);
-                    character.Class.ProficiencyArmour.Add(ArmourType.HeavyArmour);
+                    character.Class.ProficiencyWeapons.Add(WeaponType.Simple);
+                    character.Class.ProficiencyWeapons.Add(WeaponType.Martial);
+                    character.Class.ProficiencyArmour.Add(Armour.Light);
+                    character.Class.ProficiencyArmour.Add(Armour.Medium);
+                    character.Class.ProficiencyArmour.Add(Armour.Heavy);
                     //this is a place holder until I work out exactly what they should be
                     character.Class.Abilities.Add(Ability.Ability3);
                     character.Class.Abilities.Add(Ability.Ability4);
@@ -41,7 +37,7 @@
                     character.Class.ProficiencyWeapons.Add(WeaponType.Daggers);
                     character.Class.ProficiencyWeapons.Add(WeaponType.Darts);
                     character.Class.ProficiencyWeapons.Add(WeaponType.QuarterStaffs);
-                    character.Class.ProficiencyArmour.Add(ArmourType.LightArmour);
+                    character.Class.ProficiencyArmour.Add(Armour.Light);
                     //this is a place holder until I work out exactly what they should be
                     character.Class.Abilities.Add(Ability.Ability5);
                     character.Class.Abilities.Add(Ability.Ability6);
@@ -50,11 +46,11 @@
                 case Class.Rogue:
                     character.Class.HitDice = 8;
                     character.Class.SpellSlots = 0;
-                    character.Class.ProficiencyWeapons.Add(WeaponType.SimpleWeapons);
+                    character.Class.ProficiencyWeapons.Add(WeaponType.Simple);
                     character.Class.ProficiencyWeapons.Add(WeaponType.LongSwords);
                     character.Class.ProficiencyWeapons.Add(WeaponType.Rapiers);
                     character.Class.ProficiencyWeapons.Add(WeaponType.ShortSwords);
-                    character.Class.ProficiencyArmour.Add(ArmourType.LightArmour);
+                    character.Class.ProficiencyArmour.Add(Armour.Light);
                     //this is a place holder until I work out exactly what they should be
                     character.Class.Abilities.Add(Ability.Ability7);
                     character.Class.Abilities.Add(Ability.Ability8);
@@ -71,9 +67,6 @@
 
         public static Character AddSpeciesFeatures(Character character)
         {
-            character.Species.Languages = new List<Language>();
-
-
             switch (character.Species.Name)
             {
                 case Specie.Human:

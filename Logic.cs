@@ -7,7 +7,7 @@
             System.Xml.Serialization.XmlSerializer xmlSerializer = new System.Xml.Serialization.XmlSerializer(typeof(Character));
             try
             {
-                using (FileStream file = File.Create(Readonly.SAVEDCHARACTERS))
+                using (FileStream file = File.Create(SavePath.SAVEDCHARACTERS))
                 {
                     xmlSerializer.Serialize(file, character);
                 }
@@ -24,7 +24,7 @@
             System.Xml.Serialization.XmlSerializer xmlSerializer = new System.Xml.Serialization.XmlSerializer(typeof(Character));
             try
             {
-                using (FileStream file = File.OpenRead(Readonly.SAVEDCHARACTERS))
+                using (FileStream file = File.OpenRead(SavePath.SAVEDCHARACTERS))
                 {
                     character = xmlSerializer.Deserialize(file) as Character;
                 }

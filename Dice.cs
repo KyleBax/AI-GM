@@ -1,10 +1,11 @@
 ﻿namespace AI_GM
 {
-    internal class Dice
+    internal static class Dice
     {
-        public static int DiceRoll(int diceType, Random random)
+        private static Random rng = new Random();   
+        public static int DiceRoll(int diceType)
         {
-            int diceRoll = random.Next(1, diceType + 1);
+            int diceRoll = rng.Next(1, diceType + 1);
             return diceRoll;
         }
     }

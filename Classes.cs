@@ -18,22 +18,22 @@ namespace AI_GM
             set { _spellSlots = value; }
         }
 
-        private List<Ability> _abilities;
+        private List<Ability> _abilities = new List<Ability>();
         public List<Ability> Abilities
         {
             get { return _abilities; }
             set { _abilities = value; }
         }
 
-        private List<WeaponType> _proficiencyWeapons;
+        private List<WeaponType> _proficiencyWeapons = new List<WeaponType>();
         public List<WeaponType> ProficiencyWeapons
         {
             get { return _proficiencyWeapons; }
             set { _proficiencyWeapons = value; }
         }
 
-        private List<ArmourType> _proficiencyArmour;
-        public List<ArmourType> ProficiencyArmour
+        private List<Armour> _proficiencyArmour = new List<Armour>();
+        public List<Armour> ProficiencyArmour
         {
             get { return _proficiencyArmour; }
             set { _proficiencyArmour = value; }
@@ -46,14 +46,14 @@ namespace AI_GM
             set { _hitDice = value; }
         }
 
-        private int _hitDiceCount;
+        private int _hitDiceCount = 1;
         public int HitDiceCount
         {
             get { return _hitDiceCount; }
             set { _hitDiceCount = value; }
         }
 
-        private int _level;
+        private int _level = 1;
         public int Level
         {
             get { return _level; }

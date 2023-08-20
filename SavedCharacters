@@ -1,48 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Character xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>kyle</Name>
-  <Strength>35</Strength>
-  <Dexterity>10</Dexterity>
+  <Strength>10</Strength>
+  <Dexterity>35</Dexterity>
   <Constitution>10</Constitution>
   <Intelligence>10</Intelligence>
   <Wisdom>10</Wisdom>
   <Charisma>10</Charisma>
   <Class>
-    <Name>Fighter</Name>
+    <Name>Rogue</Name>
     <SpellSlots>0</SpellSlots>
     <Abilities>
-      <string>Ability 1</string>
-      <string>Ability 2</string>
+      <Ability>Ability7</Ability>
+      <Ability>Ability8</Ability>
     </Abilities>
     <ProficiencyWeapons>
-      <string>Simple Weapons</string>
-      <string>Martial Weapons</string>
+      <WeaponType>Simple</WeaponType>
+      <WeaponType>LongSwords</WeaponType>
+      <WeaponType>Rapiers</WeaponType>
+      <WeaponType>ShortSwords</WeaponType>
     </ProficiencyWeapons>
     <ProficiencyArmour>
-      <string>Heavy Armour</string>
-      <string>Light Armour</string>
-      <string>Medium Armour</string>
+      <Armour>Light</Armour>
     </ProficiencyArmour>
-    <HitDice>10</HitDice>
+    <HitDice>8</HitDice>
     <HitDiceCount>1</HitDiceCount>
     <Level>1</Level>
   </Class>
   <Species>
-    <Name>Human</Name>
+    <Name>Elf</Name>
     <Size>3</Size>
     <Languages>
       <Language>Common</Language>
+      <Language>Elvish</Language>
+      <Language>Celestial</Language>
     </Languages>
     <Description>insert description here</Description>
-    <DarkvisionRange>0</DarkvisionRange>
-    <Cauterize>true</Cauterize>
+    <DarkvisionRange>60</DarkvisionRange>
+    <Cauterize>false</Cauterize>
     <StrongMind>true</StrongMind>
   </Species>
   <ProficeincyModifier>0</ProficeincyModifier>
   <Level>0</Level>
   <Speed>0</Speed>
   <SkillsProficiencies>
+    <Skill>Stealth</Skill>
+    <Skill>SleightOfHand</Skill>
     <Skill>Acrobatics</Skill>
-    <Skill>Atheletics</Skill>
+    <Skill>Perception</Skill>
   </SkillsProficiencies>
 </Character>
