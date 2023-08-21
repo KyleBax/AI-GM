@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Character xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Name>kyle</Name>
-  <Strength>10</Strength>
-  <Dexterity>35</Dexterity>
-  <Constitution>10</Constitution>
-  <Intelligence>10</Intelligence>
-  <Wisdom>10</Wisdom>
+  <Name>k</Name>
+  <Strength>15</Strength>
+  <Dexterity>15</Dexterity>
+  <Constitution>15</Constitution>
+  <Intelligence>15</Intelligence>
+  <Wisdom>15</Wisdom>
   <Charisma>10</Charisma>
   <Class>
-    <Name>Rogue</Name>
+    <Name>Fighter</Name>
     <SpellSlots>0</SpellSlots>
     <Abilities>
-      <Ability>Ability7</Ability>
-      <Ability>Ability8</Ability>
+      <Ability>Ability3</Ability>
+      <Ability>Ability4</Ability>
     </Abilities>
     <ProficiencyWeapons>
       <WeaponType>Simple</WeaponType>
-      <WeaponType>LongSwords</WeaponType>
-      <WeaponType>Rapiers</WeaponType>
-      <WeaponType>ShortSwords</WeaponType>
+      <WeaponType>Martial</WeaponType>
     </ProficiencyWeapons>
     <ProficiencyArmour>
       <Armour>Light</Armour>
+      <Armour>Medium</Armour>
+      <Armour>Heavy</Armour>
     </ProficiencyArmour>
-    <HitDice>8</HitDice>
+    <HitDice>10</HitDice>
     <HitDiceCount>1</HitDiceCount>
     <Level>1</Level>
   </Class>
@@ -33,7 +33,7 @@
     <Languages>
       <Language>Common</Language>
       <Language>Elvish</Language>
-      <Language>Celestial</Language>
+      <Language>Dwarvish</Language>
     </Languages>
     <Description>insert description here</Description>
     <DarkvisionRange>60</DarkvisionRange>
@@ -44,9 +44,8 @@
   <Level>0</Level>
   <Speed>0</Speed>
   <SkillsProficiencies>
-    <Skill>Stealth</Skill>
-    <Skill>SleightOfHand</Skill>
-    <Skill>Acrobatics</Skill>
+    <Skill>Atheletics</Skill>
+    <Skill>Insight</Skill>
     <Skill>Perception</Skill>
   </SkillsProficiencies>
 </Character>

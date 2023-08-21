@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.Design;
+using System.Reflection;
 
 namespace AI_GM
 {
@@ -12,7 +14,7 @@ namespace AI_GM
             return name;
         }
 
-        public static Character MultichoiceSelections<T>(Character character, List<T> options, List<T> targetList)
+        public static Character MultichoiceListSelections<T>(Character character, List<T> options, List<T> targetList)
         {
             bool makeSelection = true;
             while (makeSelection)
@@ -37,24 +39,28 @@ namespace AI_GM
             return character;
         }
 
-        public static Character SelectCharacterClass(Character character)
+        public static Character Selection<TEnum>(Character character, string[] options, string propertyName)
+            where TEnum : Enum
         {
-            string[] classNames = Enum.GetNames(typeof(Class));
-            Classes classes = new Classes();
-            Console.WriteLine("select a class");
-            Console.WriteLine("enter the number that corresponds to the class you would like to choose");
             while (true)
             {
-                for (int i = 0; i < classNames.Length; i++)
+                for (int i = 0; i < options.Length; i++)
                 {
-                    Console.WriteLine((i + 1) + ": " + classNames[i]);
+                    Console.WriteLine((i + 1) + ": " + options[i]);
                 }
-                int selectedClassIndex;
-                if (int.TryParse(Console.ReadLine(), out selectedClassIndex) && selectedClassIndex >= 1 && selectedClassIndex <= classNames.Length)
+                int selectedIndex;
+                if (int.TryParse(Console.ReadLine(), out selectedIndex) && selectedIndex >= 1 && selectedIndex <= options.Length)
                 {
-                    classes.Name = (Class)Enum.Parse(typeof(Class), classNames[selectedClassIndex - 1]);
-                    character.Class = classes;
-                    Console.WriteLine("Class selected: " + classes.Name);
+                    PropertyInfo propertyInfo = typeof(Character).GetProperty(propertyName);
+                    if (propertyInfo != null)
+                    {
+                        propertyInfo.SetValue(character, Enum.Parse(typeof(TEnum), options[selectedIndex - 1]));
+                        Console.WriteLine("Selection Made: " + propertyInfo.GetValue(character));
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid property name.");
+                    }
                     return character;
                 }
                 else
@@ -62,6 +68,16 @@ namespace AI_GM
                     Console.WriteLine("Invalid selection. Please try again.");
                 }
             }
+        }
+
+        public static Character SelectCharacterClass(Character character)
+        {
+            string[] classNames = Enum.GetNames(typeof(Class));
+            Console.WriteLine("select a class");
+            Console.WriteLine("enter the number that corresponds to the class you would like to choose");
+
+            character = Selection<Class>(character, classNames, "Class.Name");
+            return character;
         }
 
         public static Character SelectClassProficiencies(Character character)
@@ -97,7 +113,7 @@ namespace AI_GM
             {
                 Console.WriteLine("Select your proficiencies");
                 Console.WriteLine("enter the number that corresponds to the proficiencies you would like to choose");
-                character = MultichoiceSelections(character, proficiencies, character.SkillsProficiencies);
+                character = MultichoiceListSelections(character, proficiencies, character.SkillsProficiencies);
                 proficiencyCount -= 1;
             }
             return character;
@@ -108,30 +124,15 @@ namespace AI_GM
             string[] speciesNames = Enum.GetNames(typeof(Specie));
             Console.WriteLine("Select a species");
             Console.WriteLine("enter the number that corresponds to the class you would like to choose");
-            while (true)
-            {
-                for (int i = 0; i < speciesNames.Length; i++)
-                {
-                    Console.WriteLine((i + 1) + ": " + speciesNames[i]);
-                }
-                int selectedSpeciesIndex;
-                if (int.TryParse(Console.ReadLine(), out selectedSpeciesIndex) && selectedSpeciesIndex >= 1 && selectedSpeciesIndex <= speciesNames.Length)
-                {
-                    character.Species.Name = (Specie)Enum.Parse(typeof(Specie), speciesNames[selectedSpeciesIndex - 1]);
-                    Console.WriteLine("Species selected: " + character.Species.Name);
-                    return character;
-                }
-                else
-                {
-                    Console.WriteLine("Invalid selection. Please try again.");
-                }
-            }
+
+            character = Selection<Specie>(character, speciesNames, "Species.Name");
+            return character;
         }
 
         public static Character SelectSpeciesFeatures(Character character)
         {
-            List<Language> languages = new();
-            List<Skill> proficiencies = new();
+            List<Language> languages;
+            List<Skill> proficiencies;
             int languageCount;
             int proficiencyCount;
             switch (character.Species.Name)
@@ -165,24 +166,7 @@ namespace AI_GM
             {
                 Console.WriteLine("Select your languages");
                 Console.WriteLine("enter the number that corresponds to the languages you would like to choose");
-
-/*                for (int i = 0; i < languages.Count; i++)
-                {
-                    Console.WriteLine((i + 1) + ": " + languages[i]);
-                }
-                int selectedLanguageIndex;
-                if (int.TryParse(Console.ReadLine(), out selectedLanguageIndex) && selectedLanguageIndex >= 1 && selectedLanguageIndex <= languages.Count)
-                {
-                    Language selectedLanguage = languages[selectedLanguageIndex - 1];
-                    character.Species.Languages.Add(selectedLanguage);
-                }
-                else
-                {
-                    Console.WriteLine("Invalid selection. Please try again.");
-                }*/
-
-                character = MultichoiceSelections(character, languages, character.Species.Languages);
-
+                character = MultichoiceListSelections(character, languages, character.Species.Languages);
                 languageCount -= 1;
             }
 
@@ -190,7 +174,7 @@ namespace AI_GM
             {
                 Console.WriteLine("Select your proficiencies");
                 Console.WriteLine("enter the number that corresponds to the proficiencies you would like to choose");
-                character = MultichoiceSelections(character, proficiencies, character.SkillsProficiencies);
+                character = MultichoiceListSelections(character, proficiencies, character.SkillsProficiencies);
                 proficiencyCount -= 1;
             }
 
