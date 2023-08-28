@@ -39,44 +39,36 @@ namespace AI_GM
             return character;
         }
 
-        public static Character Selection<TEnum>(Character character, string[] options, string propertyName)
-            where TEnum : Enum
+        public static T Select<T>()
         {
-            while (true)
+            string[] enumNames = Enum.GetNames(typeof(T));
+
+            Console.WriteLine("Available options:");
+            for (int i = 0; i < enumNames.Length; i++)
             {
-                for (int i = 0; i < options.Length; i++)
-                {
-                    Console.WriteLine((i + 1) + ": " + options[i]);
-                }
-                int selectedIndex;
-                if (int.TryParse(Console.ReadLine(), out selectedIndex) && selectedIndex >= 1 && selectedIndex <= options.Length)
-                {
-                    PropertyInfo propertyInfo = typeof(Character).GetProperty(propertyName);
-                    if (propertyInfo != null)
-                    {
-                        propertyInfo.SetValue(character, Enum.Parse(typeof(TEnum), options[selectedIndex - 1]));
-                        Console.WriteLine("Selection Made: " + propertyInfo.GetValue(character));
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid property name.");
-                    }
-                    return character;
-                }
-                else
-                {
-                    Console.WriteLine("Invalid selection. Please try again.");
-                }
+                Console.WriteLine($"{i + 1}: {enumNames[i]}");
             }
+            Console.WriteLine("Enter the corresponding number of the desired option: ");
+            int selectedIndex;
+            while (!int.TryParse(Console.ReadLine(), out selectedIndex) || selectedIndex < 1 || selectedIndex > enumNames.Length)
+            {
+                Console.WriteLine("Enter the corresponding number of the desired option: ");
+            }
+
+            T selectedEnumValue = (T)Enum.Parse(typeof(T), enumNames[selectedIndex - 1]);
+
+            return selectedEnumValue;
         }
+
+
+
+        
 
         public static Character SelectCharacterClass(Character character)
         {
-            string[] classNames = Enum.GetNames(typeof(Class));
             Console.WriteLine("select a class");
-            Console.WriteLine("enter the number that corresponds to the class you would like to choose");
 
-            character = Selection<Class>(character, classNames, "Class.Name");
+            character.Class.Name = Select<Class>();
             return character;
         }
 
@@ -121,11 +113,9 @@ namespace AI_GM
 
         public static Character SelectCharacterSpecies(Character character)
         {
-            string[] speciesNames = Enum.GetNames(typeof(Specie));
             Console.WriteLine("Select a species");
-            Console.WriteLine("enter the number that corresponds to the class you would like to choose");
 
-            character = Selection<Specie>(character, speciesNames, "Species.Name");
+            character.Species.Name = Select<Specie>();
             return character;
         }
 

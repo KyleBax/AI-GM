@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Character xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>k</Name>
-  <Strength>15</Strength>
-  <Dexterity>15</Dexterity>
+  <Strength>22</Strength>
+  <Dexterity>18</Dexterity>
   <Constitution>15</Constitution>
-  <Intelligence>15</Intelligence>
-  <Wisdom>15</Wisdom>
+  <Intelligence>10</Intelligence>
+  <Wisdom>10</Wisdom>
   <Charisma>10</Charisma>
   <Class>
     <Name>Fighter</Name>
@@ -44,8 +44,9 @@
   <Level>0</Level>
   <Speed>0</Speed>
   <SkillsProficiencies>
-    <Skill>Atheletics</Skill>
-    <Skill>Insight</Skill>
+    <Skill>Acrobatics</Skill>
+    <Skill>Acrobatics</Skill>
     <Skill>Perception</Skill>
   </SkillsProficiencies>
+  <Inventory />
 </Character>

@@ -98,6 +98,13 @@
             set { _skillsProficiencies = value; }
         }
 
+        private List<Item> _inventory = new List<Item> ();
+        public List<Item> Inventory
+        {
+            get { return _inventory; }
+            set { _inventory = value; }
+        }
+
 
     }
 }

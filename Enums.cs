@@ -61,7 +61,6 @@
         Daggers,
         QuarterStaffs,
         Ranged,
-        CrossBows,
         Firearms,
         Darts,
         LongSwords,
@@ -87,5 +86,36 @@
         Ability6,
         Ability7,
         Ability8
+    }
+
+    public enum DamageType
+    {
+        bludgeoning,
+        piercing,
+        slashing,
+        fire,
+        cold
+    }
+
+    public enum ItemType
+    {
+        Weapon,
+        Armour,
+        Potion
+    }
+
+    public enum Rarity
+    {
+        Common,
+        Uncommon,
+        Rare,
+        VeryRare
+    }
+
+    public enum Property
+    {
+        Magic,
+        Ammunition,
+        Loading
     }
 }
