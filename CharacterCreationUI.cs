@@ -52,7 +52,7 @@ namespace AI_GM
             int selectedIndex;
             while (!int.TryParse(Console.ReadLine(), out selectedIndex) || selectedIndex < 1 || selectedIndex > enumNames.Length)
             {
-                Console.WriteLine("Enter the corresponding number of the desired option: ");
+                Console.WriteLine("Invalid option");
             }
 
             T selectedEnumValue = (T)Enum.Parse(typeof(T), enumNames[selectedIndex - 1]);
