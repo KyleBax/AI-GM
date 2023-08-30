@@ -59,5 +59,6 @@ namespace AI_GM
             get { return _level; }
             set { _level = value; }
         }
+
     }
 }

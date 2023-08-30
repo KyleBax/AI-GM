@@ -118,4 +118,9 @@
         Ammunition,
         Loading
     }
+
+    public enum MonsterName
+    {
+        Goblin
+    }
 }

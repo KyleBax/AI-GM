@@ -2,10 +2,10 @@
 {
     internal class SpecieDescriptions
     {
-        public static string GetDescription(Character character)
+        public static string GetDescription(Specie specieName)
         {
             string description = null;
-            switch (character.Species.Name)
+            switch (specieName)
             {
                 case Specie.Human:
                     description = "generic human description here";
@@ -18,20 +18,6 @@
                     break;
             }
             return description;
-        }
-        public static string HumanDescription()
-        {
-            return "insert description here";
-        }
-
-        public static string ElfDescription()
-        {
-            return "insert description here";
-        }
-
-        public static string DwarfDescription()
-        {
-            return "insert description here";
         }
     }
 }

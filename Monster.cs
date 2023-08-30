@@ -8,9 +8,9 @@ namespace AI_GM
 {
     internal class Monster
     {
-        private string _name;
+        private MonsterName _name;
 
-        public string Name
+        public MonsterName Name
         {
             get { return _name; }
             set { _name = value; }
@@ -26,6 +26,13 @@ namespace AI_GM
             set { _strength = value; }
         }
 
+        private int _strengthModifier;
+        public int StrengthModifier
+        {
+            get { return _strengthModifier; }
+            set { _strengthModifier = value; }
+        }
+
         private int _dexterity;
         public int Dexterity
         {
@@ -33,11 +40,25 @@ namespace AI_GM
             set { _dexterity = value; }
         }
 
+        private int _dexterityModifier;
+        public int DexterityModifier
+        {
+            get { return _dexterityModifier; }
+            set { _dexterityModifier = value; }
+        }
+
         private int _constitution;
         public int Constitution
         {
             get { return _constitution; }
             set { _constitution = value; }
+        }
+
+        private int _constitutionModifier;
+        public int ConstitutionModifier
+        {
+            get { return _constitutionModifier; }
+            set { _constitutionModifier = value; }
         }
 
         private int _intelligence;
@@ -48,6 +69,13 @@ namespace AI_GM
             set { _intelligence = value; }
         }
 
+        private int _intelligenceModifier;
+        public int IntelligenceModifier
+        {
+            get { return _intelligenceModifier; }
+            set { _intelligenceModifier = value; }
+        }
+
         private int _wisdom;
         public int Wisdom
         {
@@ -55,11 +83,25 @@ namespace AI_GM
             set { _wisdom = value; }
         }
 
+        private int _wisdomModifier;
+        public int WisdomModifier
+        {
+            get { return _wisdomModifier; }
+            set { _wisdomModifier = value; }
+        }
+
         private int _charisma;
         public int Charisma
         {
             get { return _charisma; }
             set { _charisma = value; }
+        }
+
+        private int _charismaModifier;
+        public int CharismaModifier
+        {
+            get { return _charismaModifier; }
+            set { _charismaModifier = value; }
         }
 
         private int _cR;
@@ -83,11 +125,25 @@ namespace AI_GM
             set { _speed = value; }
         }
 
-        private List<string> _attacks;
-        public List<string> Attacks //TODO: attack class? (attack has some properties like damage value, range, name etc
+        private List<Attack> _attacks;
+        public List<Attack> Attacks //TODO: attack class? (attack has some properties like damage value, range, name etc
         {
             get { return _attacks; }
             set { _attacks = value; }
+        }
+
+        private int _hitPoints;
+        public int HitPoints
+        {
+            get { return _hitPoints; }
+            set { _hitPoints = value; }
+        }
+
+        private int _initiative;
+        public int Initiative
+        {
+            get { return _initiative; }
+            set { _initiative = value; }
         }
     }
 }

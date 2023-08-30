@@ -1,29 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Character xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Name>k</Name>
-  <Strength>22</Strength>
-  <Dexterity>18</Dexterity>
-  <Constitution>15</Constitution>
+  <Name>john smith</Name>
+  <Strength>10</Strength>
+  <StrengthModifier>0</StrengthModifier>
+  <Dexterity>20</Dexterity>
+  <DexterityModifier>5</DexterityModifier>
+  <Constitution>18</Constitution>
+  <ConstitutionModifier>4</ConstitutionModifier>
   <Intelligence>10</Intelligence>
-  <Wisdom>10</Wisdom>
-  <Charisma>10</Charisma>
+  <IntelligenceModifier>0</IntelligenceModifier>
+  <Wisdom>15</Wisdom>
+  <WisdomModifier>2</WisdomModifier>
+  <Charisma>12</Charisma>
+  <CharismaModifier>1</CharismaModifier>
   <Class>
-    <Name>Fighter</Name>
+    <Name>Rogue</Name>
     <SpellSlots>0</SpellSlots>
     <Abilities>
-      <Ability>Ability3</Ability>
-      <Ability>Ability4</Ability>
+      <Ability>Ability7</Ability>
+      <Ability>Ability8</Ability>
     </Abilities>
     <ProficiencyWeapons>
       <WeaponType>Simple</WeaponType>
-      <WeaponType>Martial</WeaponType>
+      <WeaponType>LongSwords</WeaponType>
+      <WeaponType>Rapiers</WeaponType>
+      <WeaponType>ShortSwords</WeaponType>
     </ProficiencyWeapons>
     <ProficiencyArmour>
       <Armour>Light</Armour>
-      <Armour>Medium</Armour>
-      <Armour>Heavy</Armour>
     </ProficiencyArmour>
-    <HitDice>10</HitDice>
+    <HitDice>8</HitDice>
     <HitDiceCount>1</HitDiceCount>
     <Level>1</Level>
   </Class>
@@ -33,7 +39,7 @@
     <Languages>
       <Language>Common</Language>
       <Language>Elvish</Language>
-      <Language>Dwarvish</Language>
+      <Language>Celestial</Language>
     </Languages>
     <Description>insert description here</Description>
     <DarkvisionRange>60</DarkvisionRange>
@@ -44,8 +50,9 @@
   <Level>0</Level>
   <Speed>0</Speed>
   <SkillsProficiencies>
+    <Skill>Stealth</Skill>
     <Skill>Acrobatics</Skill>
-    <Skill>Acrobatics</Skill>
+    <Skill>Deception</Skill>
     <Skill>Perception</Skill>
   </SkillsProficiencies>
   <Inventory />

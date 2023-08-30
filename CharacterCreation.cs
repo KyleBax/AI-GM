@@ -18,6 +18,7 @@
                 character = CharacterCreationLogic.AddSpeciesFeatures(character);
                 character = CharacterCreationUI.SelectSpeciesFeatures(character);
                 character = CharacterCreationUI.StatPointDistribution(character);
+                character = CharacterCreationLogic.statModifiers(character);
                 bool characterComplete = CharacterCreationUI.CharacterComplete(character, true);
                 if (characterComplete)
                 {

@@ -75,7 +75,7 @@
                     character.Species.DarkvisionRange = 0;
                     character.Species.Cauterize = true;
                     character.Species.StrongMind = true;
-                    character.Species.Description = SpecieDescriptions.HumanDescription();
+                    character.Species.Description = SpecieDescriptions.GetDescription(Specie.Human);
                     break;
 
                 case Specie.Elf:
@@ -85,7 +85,7 @@
                     character.Species.DarkvisionRange = 60;
                     character.Species.Cauterize = false;
                     character.Species.StrongMind = true; 
-                    character.Species.Description = SpecieDescriptions.ElfDescription();
+                    character.Species.Description = SpecieDescriptions.GetDescription(Specie.Elf);
                     break;
 
                 case Specie.Dwarf:
@@ -95,7 +95,7 @@
                     character.Species.DarkvisionRange = 60;
                     character.Species.Cauterize = true;
                     character.Species.StrongMind = false;
-                    character.Species.Description = SpecieDescriptions.DwarfDescription();
+                    character.Species.Description = SpecieDescriptions.GetDescription(Specie.Dwarf);
                     break;
 
                 default:
@@ -103,5 +103,22 @@
             }
             return character;
         }
+
+        public static Character statModifiers(Character character)
+        {
+            character.StrengthModifier = CalculateModifier(character.Strength);
+            character.DexterityModifier = CalculateModifier(character.Dexterity);
+            character.ConstitutionModifier = CalculateModifier(character.Constitution);
+            character.IntelligenceModifier = CalculateModifier(character.Intelligence);
+            character.WisdomModifier = CalculateModifier(character.Wisdom);
+            character.CharismaModifier = CalculateModifier(character.Charisma);
+            return character;
+        }
+
+        public static int CalculateModifier(int statValue)
+        {
+            return (statValue - 10) / 2;
+        }
+
     }
 }
