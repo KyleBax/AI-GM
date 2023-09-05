@@ -14,20 +14,52 @@ namespace AI_GM
             List<Monster> monsters = new List<Monster>();
             monster = GetMonster(); //TODO create a method that randomises how many monsters and what type of monster they are
             monsters.Add(monster);  //Make it so that it automates their initiative at creation also
+
             monster = GetMonster();
             monsters.Add(monster);
+
             Console.WriteLine("you are entering combat, roll initiative");
-            int initiative = character.DexterityModifier + Dice.DiceRoll(20);
-            Console.WriteLine($"You rolled {initiative}");
+            character.Initiative = character.DexterityModifier + Dice.DiceRoll(20);
+            Console.WriteLine($"You rolled {character.Initiative}");
             Console.WriteLine($"You are face to face with a {monster.Name}");
             // TODO add a method that determines the order of combat based on the higher initiative roll
             List<object> combatParticipants = new List<object>();
-            combatParticipants.Add(character);
-            foreach(Monster m in monsters)
+
+            monsters.Sort((monster1, monster2) => monster2.Initiative.CompareTo(monster1.Initiative));
+
+
+            foreach (Monster m in monsters)
             {
-                combatParticipants.Add((Monster)m);
+                if (combatParticipants.Contains(character))
+                {
+                    combatParticipants.Add(m);
+                }
+                else
+                {
+                    if (m.Initiative >= character.Initiative)
+                    {
+                        combatParticipants.Add(m);
+                    }
+                    else
+                    {
+                        combatParticipants.Add(character);
+                        combatParticipants.Add(m);
+                    }
+                }
+
             }
-            Console.WriteLine(combatParticipants.Count);
+
+            for (int i = 0; i < combatParticipants.Count; i++)
+            {
+                if (combatParticipants[i] is Character character1)
+                {
+                    Console.WriteLine($"{character1.Name}, {character1.Initiative}");
+                }
+                if (combatParticipants[i] is Monster monster1)
+                {
+                    Console.WriteLine($"{monster1.Name}, {monster1.Initiative}");
+                }
+            }
         }
 
 
@@ -56,7 +88,7 @@ namespace AI_GM
             monster.CharismaModifier = -1;
             monster.Speed = 30;
             monster.HitPoints = Dice.DiceRoll(6) + Dice.DiceRoll(6);  //TODO change DiceRoll method to take diceCount also
-            monster.Initiative = Dice.DiceRoll(20) + 2;
+            monster.Initiative = Dice.DiceRoll(20);
             return monster;
         }
     }
