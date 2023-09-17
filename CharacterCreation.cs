@@ -19,6 +19,7 @@
                 character = CharacterCreationUI.SelectSpeciesFeatures(character);
                 character = CharacterCreationUI.StatPointDistribution(character);
                 character = CharacterCreationLogic.statModifiers(character);
+                character.MaxHitPoints = CharacterCreationLogic.CalulateStartingHitPoints(character);
                 bool characterComplete = CharacterCreationUI.CharacterComplete(character, true);
                 if (characterComplete)
                 {

@@ -132,11 +132,18 @@ namespace AI_GM
             set { _attacks = value; }
         }
 
-        private int _hitPoints;
-        public int HitPoints
+        private int _maxHitPoints;
+        public int MaxHitPoints
         {
-            get { return _hitPoints; }
-            set { _hitPoints = value; }
+            get { return _maxHitPoints; }
+            set { _maxHitPoints = value; }
+        }
+
+        private int _damageTaken;
+        public int DamageTaken
+        {
+            get { return _damageTaken; }
+            set { _damageTaken = value; }
         }
 
         private int _initiative;
@@ -145,5 +152,7 @@ namespace AI_GM
             get { return _initiative; }
             set { _initiative = value; }
         }
+
+
     }
 }

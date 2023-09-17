@@ -154,5 +154,19 @@
             set { _initiative = value; }
         }
 
+        private int _maxHitPoints;
+        public int MaxHitPoints
+        {
+            get { return _maxHitPoints; }
+            set { _maxHitPoints = value; }
+        }
+
+        private int _damageTaken;
+        public int DamageTaken
+        {
+            get { return _damageTaken; }
+            set { _damageTaken = value; }
+        }
+
     }
 }

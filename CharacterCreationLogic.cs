@@ -120,5 +120,11 @@
             return (statValue - 10) / 2;
         }
 
+        public static int CalulateStartingHitPoints(Character character)
+        {
+            int hitPoints = character.Class.HitDice + character.ConstitutionModifier;
+            return hitPoints;
+        }
+
     }
 }

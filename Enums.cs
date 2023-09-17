@@ -121,6 +121,8 @@
 
     public enum MonsterName
     {
-        Goblin
+        Goblin,
+        Rat,
+        PoisonousSnake
     }
 }

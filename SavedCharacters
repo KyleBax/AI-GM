@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Character xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Name>john smith</Name>
+  <Name>you</Name>
   <Strength>10</Strength>
   <StrengthModifier>0</StrengthModifier>
   <Dexterity>20</Dexterity>
   <DexterityModifier>5</DexterityModifier>
-  <Constitution>18</Constitution>
-  <ConstitutionModifier>4</ConstitutionModifier>
-  <Intelligence>10</Intelligence>
-  <IntelligenceModifier>0</IntelligenceModifier>
-  <Wisdom>15</Wisdom>
-  <WisdomModifier>2</WisdomModifier>
-  <Charisma>12</Charisma>
-  <CharismaModifier>1</CharismaModifier>
+  <Constitution>15</Constitution>
+  <ConstitutionModifier>2</ConstitutionModifier>
+  <Intelligence>18</Intelligence>
+  <IntelligenceModifier>4</IntelligenceModifier>
+  <Wisdom>12</Wisdom>
+  <WisdomModifier>1</WisdomModifier>
+  <Charisma>10</Charisma>
+  <CharismaModifier>0</CharismaModifier>
   <Class>
     <Name>Rogue</Name>
     <SpellSlots>0</SpellSlots>
@@ -34,16 +34,16 @@
     <Level>1</Level>
   </Class>
   <Species>
-    <Name>Elf</Name>
+    <Name>Human</Name>
     <Size>3</Size>
     <Languages>
       <Language>Common</Language>
       <Language>Elvish</Language>
-      <Language>Celestial</Language>
+      <Language>Dwarvish</Language>
     </Languages>
-    <Description>insert description here</Description>
-    <DarkvisionRange>60</DarkvisionRange>
-    <Cauterize>false</Cauterize>
+    <Description>generic human description here</Description>
+    <DarkvisionRange>0</DarkvisionRange>
+    <Cauterize>true</Cauterize>
     <StrongMind>true</StrongMind>
   </Species>
   <ProficeincyModifier>0</ProficeincyModifier>
@@ -51,9 +51,13 @@
   <Speed>0</Speed>
   <SkillsProficiencies>
     <Skill>Stealth</Skill>
-    <Skill>Acrobatics</Skill>
+    <Skill>Persuasion</Skill>
     <Skill>Deception</Skill>
     <Skill>Perception</Skill>
+    <Skill>Atheletics</Skill>
   </SkillsProficiencies>
   <Inventory />
+  <Initiative>0</Initiative>
+  <MaxHitPoints>10</MaxHitPoints>
+  <DamageTaken>0</DamageTaken>
 </Character>

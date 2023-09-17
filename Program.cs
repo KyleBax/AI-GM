@@ -5,8 +5,8 @@
         static void Main(string[] args)
         {
             Character character = new Character();
-            string newCharacter = UI.LoadCampaign();
-            if (newCharacter == "y")
+            bool newCharacter = UI.GetConfirmation("press Y to start a new campaign");
+            if (newCharacter)
             {
                 character = CharacterCreation.NewCharacter(character);
                 Logic.SerializeCharacter(character);
