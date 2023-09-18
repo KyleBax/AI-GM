@@ -41,15 +41,41 @@
 
             }
 
-            for (int i = 0; i < combatParticipants.Count; i++)
+            //add a player count for future
+            while (combatParticipants.Count > 1)
             {
-                if (combatParticipants[i] is Character character1)
+                for (int i = 0; i < combatParticipants.Count; i++)
                 {
-                    Console.WriteLine($"{character1.Name}, {character1.Initiative}");
-                }
-                if (combatParticipants[i] is Monster monster1)
-                {
-                    Console.WriteLine($"{monster1.Name}, {monster1.Initiative}");
+                    if (combatParticipants[i] is Character character1)
+                    {
+                        if(character1.DamageTaken == character1.MaxHitPoints)
+                        {
+                            Console.WriteLine($"{character1.Name}, {character1.Initiative}, you are dying. Make a death saving throw");
+
+                        }
+                        else
+                        {
+                            Console.WriteLine($"{character1.Name}, {character1.Initiative}, your turn");
+                        }
+                        
+
+                    }
+                    if (combatParticipants[i] is Monster monster1)
+                    {
+                        if (monster1.DamageTaken == monster1.MaxHitPoints)
+                        {
+                            Console.WriteLine($"{monster1.Name}, {monster1.Initiative}, has died");
+                            combatParticipants.Remove(i);
+                        }
+                        else
+                        {
+                            //after making a map for the system, target closest oponnent
+                            int target;
+
+                            Console.WriteLine($"{monster1.Name}, {monster1.Initiative}");
+                        }
+                        
+                    }
                 }
             }
         }
