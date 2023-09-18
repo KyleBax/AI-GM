@@ -119,7 +119,7 @@
                     monster.Charisma = 8;
                     monster.CharismaModifier = -1;
                     monster.Speed = 30;
-                    monster.MaxHitPoints = Dice.DiceRoll(6) + Dice.DiceRoll(6);  //TODO change DiceRoll method to take diceCount also
+                    monster.MaxHitPoints = Dice.DiceCount("2d6");  //TODO change DiceRoll method to take diceCount also
                     monster.Initiative = Dice.DiceRoll(20) + monster.DexterityModifier;
                     break;
 
