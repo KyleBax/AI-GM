@@ -3,7 +3,7 @@
     /// <summary>
     /// Holds the information of the characters
     /// </summary>
-    public class Character
+    public class Character : IFightable
     {
         private string _name;
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AI_GM
 {
-    internal class Monster
+    internal class Monster : IFightable
     {
         private MonsterName _name;
 
