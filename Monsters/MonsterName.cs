@@ -8,11 +8,6 @@
         PoisonousSnake
     }
 
-    public enum AttackType
-    {
-        PoisonousSnakeBite,
-        RatBite,
-        Scimitar
-    }
+
 
 }

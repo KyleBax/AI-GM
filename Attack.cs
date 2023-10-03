@@ -4,8 +4,8 @@ namespace AI_GM
 {
     internal class Attack
     {
-        private AttackType _name;
-        public AttackType Name
+        private MonsterAttackType _name;
+        public MonsterAttackType Name
         {
             get { return _name; }
             set { _name = value; }

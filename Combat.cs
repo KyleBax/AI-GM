@@ -245,7 +245,7 @@ namespace AI_GM
                     monster.Speed = 30;
                     monster.MaxHitPoints = Dice.DiceCount("2d6");
                     monster.Initiative = Dice.DiceRoll(20) + monster.DexterityModifier;
-                    monster.Attacks.Add(GetMonsterAttack(AttackType.Scimitar));
+                    monster.Attacks.Add(GetMonsterAttack(MonsterAttackType.Scimitar));
                     break;
 
                 case MonsterName.PoisonousSnake:
@@ -265,7 +265,7 @@ namespace AI_GM
                     monster.Speed = 30;
                     monster.MaxHitPoints = Dice.DiceRoll(4);
                     monster.Initiative = Dice.DiceRoll(20) + monster.DexterityModifier;
-                    monster.Attacks.Add(GetMonsterAttack(AttackType.PoisonousSnakeBite));
+                    monster.Attacks.Add(GetMonsterAttack(MonsterAttackType.PoisonousSnakeBite));
                     break;
 
                 case MonsterName.Rat:
@@ -285,7 +285,7 @@ namespace AI_GM
                     monster.Speed = 20;
                     monster.MaxHitPoints = Math.Max(Dice.DiceRoll(4) - 1, 1);
                     monster.Initiative = Dice.DiceRoll(20) + monster.DexterityModifier;
-                    monster.Attacks.Add(GetMonsterAttack(AttackType.RatBite));
+                    monster.Attacks.Add(GetMonsterAttack(MonsterAttackType.RatBite));
                     break;
                 default:
                     break;
@@ -293,25 +293,25 @@ namespace AI_GM
             return monster;
         }
 
-        public static Attack GetMonsterAttack(AttackType attackType)
+        public static Attack GetMonsterAttack(MonsterAttackType attackType)
         {
             Attack attack = new Attack();
             attack.Name = attackType;
             switch (attackType)
             {
-                case AttackType.RatBite:
+                case MonsterAttackType.RatBite:
                     attack.HitModifier = 0;
                     attack.DamageModifier = 0;
                     attack.DamageDice = "1d4";
                     attack.DamageType = DamageType.piercing;
                     break;
-                case AttackType.PoisonousSnakeBite:
+                case MonsterAttackType.PoisonousSnakeBite:
                     attack.HitModifier = 5;
                     attack.DamageModifier = 0;
                     attack.DamageDice = "2d4";
                     attack.DamageType = DamageType.poison;
                     break;
-                case AttackType.Scimitar:
+                case MonsterAttackType.Scimitar:
                     attack.HitModifier = 4;
                     attack.DamageModifier = 2;
                     attack.DamageDice = "1d6";
