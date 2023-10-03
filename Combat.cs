@@ -2,6 +2,36 @@
 {
     internal class Combat
     {
+        /// <summary>
+        /// The main method for the combat process
+        /// </summary>
+        /// <param name="character"></param>
+        public static void CombatMain(Character character)
+        {
+            character.Initiative = GetPlayerInitiative(character);
+            List<IFightable> combatParticipants = GetCombatParticipantsList(character);
+
+            while (combatParticipants.Count >= 1)
+            {
+                for (int i = 0; i < combatParticipants.Count; i++)
+                {
+
+                    if (combatParticipants[i] is Character character1)
+                    {
+                        PlayerTurn(combatParticipants, character1);
+                    }
+                    if (combatParticipants[i] is Monster monster1)
+                    {
+                        MonsterTurn(combatParticipants, monster1);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets a random selection of monsters, and adds them to a list
+        /// </summary>
+        /// <returns></returns>
         public static List<Monster> GetMonsters()
         {
             Random random = new Random();
@@ -61,19 +91,24 @@
             }
             else
             {
-                //after making a map for the system, target closest oponnent
-                int target = 1;
-                if (combatParticipants[target] is Monster)
-                {
-                    //change target until it is a player
-                }
-
-                if (combatParticipants[target] is Character)
-                {
-                    //attack
-                }
-
                 Console.WriteLine($"{monster.Name}, {monster.Initiative}");
+                //after making a map for the system, target closest oponnent
+                int target = 0;
+                while (true)
+                {
+                    if (combatParticipants[target].Identifier == Identifier.Monster)
+                    {
+                        target++;
+                    }
+
+                    if (combatParticipants[target].Identifier == Identifier.Player)
+                    {
+                        Console.WriteLine("target aqcuired");
+                        // Deal Damage here
+                        break;
+                    }
+                }
+
             }
         }
 
@@ -83,21 +118,62 @@
             {
                 Console.WriteLine($"{character.Name}, {character.Initiative}, you are dying. Make a death saving throw");
 
-                //add death save method here
+                int result = Dice.DiceRoll(20);
+                // change to switch statement
+                if (result > 1 && result <= 10)
+                {
+                    Console.WriteLine("You have failed a death save");
+                    character.DeathSaveFailure += 1;
+                }
+                if (result == 1)
+                {
+                    Console.WriteLine("You have suffered a critical death save");
+                    character.DeathSaveFailure += 2;
+                }
+                if (result == 20)
+                {
+                    Console.WriteLine("You have made a successful death save");
+                    character.DeathSaveSuccess += 2;
+                }
+                if (result > 10 && result <= 19)
+                {
+                    Console.WriteLine("You have made a successful death save");
+                    character.DeathSaveSuccess += 1;
+                }
+
+                if (character.DeathSaveFailure >= 3)
+                {
+                    Console.WriteLine("You have died, please start a new campaign");
+                    // add player death effects here
+                }
+
+                if (character.DeathSaveSuccess >= 3)
+                {
+                    Console.WriteLine("You have succeeded in avoiding death");
+                }
+
 
             }
             else
             {
                 Console.WriteLine($"{character.Name}, {character.Initiative}, your turn");
                 Console.WriteLine("choose a target");
-                // make it so that the user can pick a target
-                // int target;
+
 
                 for (int j = 0; j < combatParticipants.Count; j++)
                 {
-                    Console.WriteLine(j + 1 + " " + combatParticipants[j].Speed);
+                    if (combatParticipants[j].Identifier == Identifier.Monster)
+                    {
+                        Console.WriteLine(j + 1 + " " + combatParticipants[j].Identifier);
+                    }
+
                 }
                 int selection = Int32.Parse(Console.ReadLine());
+
+
+
+
+
 
                 // select an attack to make
                 // spells, weapons etc
@@ -111,32 +187,10 @@
 
         }
 
-        //TODO seperate the code into logic and UI
-        public static void CombatMain(Character character)
+        public static void MonsterAttack()
         {
-            character.Initiative = GetPlayerInitiative(character);
-            List<IFightable> combatParticipants = GetCombatParticipantsList(character);
 
-            while (combatParticipants.Count >= 1)
-            {
-                for (int i = 0; i < combatParticipants.Count; i++)
-                {
-
-                    if (combatParticipants[i] is Character character1)
-                    {                     
-                        PlayerTurn(combatParticipants, character1);
-                    }
-                    if (combatParticipants[i] is Monster monster1)
-                    {
-                        MonsterTurn(combatParticipants, monster1);
-                    }
-                }
-            }
         }
-
-
-
-
 
         public static Monster GetMonsterStats(MonsterName monsterName)
         {
@@ -177,7 +231,7 @@
                     monster.Charisma = 3;
                     monster.CharismaModifier = -4;
                     monster.Speed = 30;
-                    monster.MaxHitPoints = Dice.DiceRoll(4);  
+                    monster.MaxHitPoints = Dice.DiceRoll(4);
                     monster.Initiative = Dice.DiceRoll(20) + monster.DexterityModifier;
                     break;
 
@@ -196,7 +250,7 @@
                     monster.Charisma = 4;
                     monster.CharismaModifier = -3;
                     monster.Speed = 20;
-                    monster.MaxHitPoints = Dice.DiceRoll(4)-1;
+                    monster.MaxHitPoints = Math.Max(Dice.DiceRoll(4) - 1, 1);
                     monster.Initiative = Dice.DiceRoll(20) + monster.DexterityModifier;
                     break;
                 default:

@@ -175,5 +175,20 @@
             set { _identifier = value; }
         }
 
+        private int _deathSaveSuccess = 0;
+        public int DeathSaveSuccess
+        {
+            get { return _deathSaveSuccess; }
+            set { _deathSaveSuccess = value; }
+        }
+
+        private int _deathSaveFailure = 0;
+        public int DeathSaveFailure
+        {
+            get { return _deathSaveFailure; }
+            set { _deathSaveFailure = value; }
+        }
+
+
     }
 }

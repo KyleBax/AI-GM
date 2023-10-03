@@ -1,6 +1,4 @@
-﻿using static AI_GM.SpecieDescriptions;
-
-namespace AI_GM
+﻿namespace AI_GM
 {
     public class Classes
     {
