@@ -1,4 +1,7 @@
-﻿namespace AI_GM
+﻿using AI_GM.Characters;
+using AI_GM.Monsters;
+
+namespace AI_GM
 {
     internal class Combat
     {
@@ -79,7 +82,7 @@
         {
             Console.WriteLine("you are entering combat, roll initiative");
             int initiative = character.DexterityModifier + Dice.DiceRoll(20);
-            Console.WriteLine($"You rolled {character.Initiative}");
+            Console.WriteLine($"You rolled {initiative}");
             return initiative;
         }
 
@@ -104,12 +107,40 @@
                     if (combatParticipants[target].Identifier == Identifier.Player)
                     {
                         Console.WriteLine("target aqcuired");
-                        // Deal Damage here
+                        // if target is within range of an attack, perform attack else move speed toward target
+                        // if target is within range of  an attack, attack, else move speed toward target then end turn
+
+                        // change so that it is DiceRoll + attack.HitModifier
+                        int attackRoll = Dice.DiceRoll(20) + 5;
+
+                        bool hit = CheckIfHit(combatParticipants[target].ArmourClass, attackRoll);
+                        if (hit)
+                        {
+                            int damage = MonsterDealDamage(monster);
+                            combatParticipants[target].DamageTaken += damage;
+                        }
                         break;
                     }
                 }
 
             }
+        }
+
+        public static bool CheckIfHit(int targetAC, int attackRoll)
+        {
+            bool hit = false;
+            if (attackRoll >= targetAC)
+            {
+                hit = true;
+            }
+            return hit;
+        }
+
+        public static int MonsterDealDamage(Monster monster)
+        {
+            int damage = 1;
+
+            return damage;
         }
 
         public static void PlayerTurn(List<IFightable> combatParticipants, Character character)
@@ -119,26 +150,24 @@
                 Console.WriteLine($"{character.Name}, {character.Initiative}, you are dying. Make a death saving throw");
 
                 int result = Dice.DiceRoll(20);
-                // change to switch statement
-                if (result > 1 && result <= 10)
+                switch (result)
                 {
-                    Console.WriteLine("You have failed a death save");
-                    character.DeathSaveFailure += 1;
-                }
-                if (result == 1)
-                {
-                    Console.WriteLine("You have suffered a critical death save");
-                    character.DeathSaveFailure += 2;
-                }
-                if (result == 20)
-                {
-                    Console.WriteLine("You have made a successful death save");
-                    character.DeathSaveSuccess += 2;
-                }
-                if (result > 10 && result <= 19)
-                {
-                    Console.WriteLine("You have made a successful death save");
-                    character.DeathSaveSuccess += 1;
+                    case 1:
+                        Console.WriteLine("You have suffered a critical death save");
+                        character.DeathSaveFailure += 2;
+                        break;
+                    case int n when n > 1 && n <= 10:
+                        Console.WriteLine("You have failed a death save");
+                        character.DeathSaveFailure += 1;
+                        break;
+                    case int n when n > 10 && n <= 19:
+                        Console.WriteLine("You have made a successful death save");
+                        character.DeathSaveSuccess += 1;
+                        break;
+                    case 20:
+                        Console.WriteLine("You have made a successful death save");
+                        character.DeathSaveSuccess += 2;
+                        break;
                 }
 
                 if (character.DeathSaveFailure >= 3)
@@ -150,6 +179,10 @@
                 if (character.DeathSaveSuccess >= 3)
                 {
                     Console.WriteLine("You have succeeded in avoiding death");
+                    while (character.DamageTaken >= character.MaxHitPoints)
+                    {
+                        character.DamageTaken--;
+                    }
                 }
 
 
@@ -170,6 +203,7 @@
                 }
                 int selection = Int32.Parse(Console.ReadLine());
 
+                Console.WriteLine("Select an attack");
 
 
 
@@ -187,10 +221,7 @@
 
         }
 
-        public static void MonsterAttack()
-        {
 
-        }
 
         public static Monster GetMonsterStats(MonsterName monsterName)
         {
@@ -214,6 +245,7 @@
                     monster.Speed = 30;
                     monster.MaxHitPoints = Dice.DiceCount("2d6");
                     monster.Initiative = Dice.DiceRoll(20) + monster.DexterityModifier;
+                    monster.Attacks.Add(GetMonsterAttack(AttackType.Scimitar));
                     break;
 
                 case MonsterName.PoisonousSnake:
@@ -233,6 +265,7 @@
                     monster.Speed = 30;
                     monster.MaxHitPoints = Dice.DiceRoll(4);
                     monster.Initiative = Dice.DiceRoll(20) + monster.DexterityModifier;
+                    monster.Attacks.Add(GetMonsterAttack(AttackType.PoisonousSnakeBite));
                     break;
 
                 case MonsterName.Rat:
@@ -252,11 +285,41 @@
                     monster.Speed = 20;
                     monster.MaxHitPoints = Math.Max(Dice.DiceRoll(4) - 1, 1);
                     monster.Initiative = Dice.DiceRoll(20) + monster.DexterityModifier;
+                    monster.Attacks.Add(GetMonsterAttack(AttackType.RatBite));
                     break;
                 default:
                     break;
             }
             return monster;
+        }
+
+        public static Attack GetMonsterAttack(AttackType attackType)
+        {
+            Attack attack = new Attack();
+            attack.Name = attackType;
+            switch (attackType)
+            {
+                case AttackType.RatBite:
+                    attack.HitModifier = 0;
+                    attack.DamageModifier = 0;
+                    attack.DamageDice = "1d4";
+                    attack.DamageType = DamageType.piercing;
+                    break;
+                case AttackType.PoisonousSnakeBite:
+                    attack.HitModifier = 5;
+                    attack.DamageModifier = 0;
+                    attack.DamageDice = "2d4";
+                    attack.DamageType = DamageType.poison;
+                    break;
+                case AttackType.Scimitar:
+                    attack.HitModifier = 4;
+                    attack.DamageModifier = 2;
+                    attack.DamageDice = "1d6";
+                    attack.DamageType = DamageType.slashing;
+                    break;
+            }
+
+            return attack;
         }
     }
 }

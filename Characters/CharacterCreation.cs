@@ -1,4 +1,4 @@
-﻿namespace AI_GM
+﻿namespace AI_GM.Characters
 {
     internal class CharacterCreation
     {
@@ -18,7 +18,7 @@
                 character = CharacterCreationLogic.AddSpeciesFeatures(character);
                 character = CharacterCreationUI.SelectSpeciesFeatures(character);
                 character = CharacterCreationUI.StatPointDistribution(character);
-                character = CharacterCreationLogic.statModifiers(character);
+                character = CharacterCreationLogic.StatModifiers(character);
                 character.MaxHitPoints = CharacterCreationLogic.CalulateStartingHitPoints(character);
                 bool characterComplete = CharacterCreationUI.CharacterComplete(character, true);
                 if (characterComplete)

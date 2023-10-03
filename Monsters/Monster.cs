@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AI_GM
+namespace AI_GM.Monsters
 {
     internal class Monster : IFightable
     {
@@ -125,7 +125,7 @@ namespace AI_GM
             set { _speed = value; }
         }
 
-        private List<Attack> _attacks;
+        private List<Attack> _attacks = new List<Attack>();
         public List<Attack> Attacks //TODO: attack class? (attack has some properties like damage value, range, name etc
         {
             get { return _attacks; }
@@ -158,6 +158,13 @@ namespace AI_GM
         {
             get { return _identifier; }
             set { _identifier = value; }
+        }
+
+        private int _armourClass;
+        public int ArmourClass
+        {
+            get { return _armourClass; }
+            set { _armourClass = value; }
         }
 
 

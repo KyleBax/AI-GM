@@ -6,7 +6,8 @@
         piercing,
         slashing,
         fire,
-        cold
+        cold,
+        poison
     }
 
     public enum Identifier

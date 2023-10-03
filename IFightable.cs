@@ -23,5 +23,7 @@
         public int Initiative { get; set; }
 
         public Identifier Identifier { get; set; }
+
+        public int ArmourClass { get; set; }
     }
 }

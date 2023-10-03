@@ -1,4 +1,4 @@
-﻿namespace AI_GM
+﻿namespace AI_GM.Characters
 {
     public enum Skill
     {
@@ -66,4 +66,6 @@
         Ability7,
         Ability8
     }
+
+
 }

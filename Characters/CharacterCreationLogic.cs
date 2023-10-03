@@ -1,4 +1,4 @@
-﻿namespace AI_GM
+﻿namespace AI_GM.Characters
 {
     internal class CharacterCreationLogic
     {
@@ -18,7 +18,7 @@
                     character.Class.Abilities.Add(Ability.Ability2);
                     break;
 
-                case  Class.Fighter:
+                case Class.Fighter:
                     character.Class.HitDice = 10;
                     character.Class.SpellSlots = 0;
                     character.Class.ProficiencyWeapons.Add(WeaponType.Simple);
@@ -84,7 +84,7 @@
                     character.Species.Languages.Add(Language.Elvish);
                     character.Species.DarkvisionRange = 60;
                     character.Species.Cauterize = false;
-                    character.Species.StrongMind = true; 
+                    character.Species.StrongMind = true;
                     character.Species.Description = SpecieDescriptions.GetDescription(Specie.Elf);
                     break;
 
@@ -104,7 +104,7 @@
             return character;
         }
 
-        public static Character statModifiers(Character character)
+        public static Character StatModifiers(Character character)
         {
             character.StrengthModifier = CalculateModifier(character.Strength);
             character.DexterityModifier = CalculateModifier(character.Dexterity);

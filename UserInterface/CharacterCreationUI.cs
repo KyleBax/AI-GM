@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Reflection;
+using AI_GM.Characters;
 
-namespace AI_GM
+namespace AI_GM.UI
 {
     internal static class CharacterCreationUI
     {
@@ -21,7 +22,7 @@ namespace AI_GM
             {
                 for (int i = 0; i < options.Count; i++)
                 {
-                    Console.WriteLine((i + 1) + ": " + options[i]);
+                    Console.WriteLine(i + 1 + ": " + options[i]);
                 }
                 int selectedProficiencyIndex;
                 if (int.TryParse(Console.ReadLine(), out selectedProficiencyIndex) && selectedProficiencyIndex >= 1 && selectedProficiencyIndex <= options.Count)
@@ -62,7 +63,7 @@ namespace AI_GM
 
 
 
-        
+
 
         public static Character SelectCharacterClass(Character character)
         {

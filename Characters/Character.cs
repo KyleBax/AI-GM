@@ -1,4 +1,4 @@
-﻿namespace AI_GM
+﻿namespace AI_GM.Characters
 {
     /// <summary>
     /// Holds the information of the characters
@@ -67,7 +67,7 @@
         public int IntelligenceModifier
         {
             get { return _intelligenceModifier; }
-            set { _intelligenceModifier = value;}
+            set { _intelligenceModifier = value; }
         }
 
         private int _wisdom;
@@ -81,7 +81,7 @@
         public int WisdomModifier
         {
             get { return _wisdomModifier; }
-            set { _wisdomModifier = value;}
+            set { _wisdomModifier = value; }
         }
 
         private int _charisma;
@@ -95,7 +95,7 @@
         public int CharismaModifier
         {
             get { return _charismaModifier; }
-            set { _charismaModifier = value;}
+            set { _charismaModifier = value; }
         }
 
         private Classes _class = new Classes();
@@ -116,7 +116,7 @@
         public int ProficeincyModifier
         {
             get { return _proficeincyModifier; }
-            set { _proficeincyModifier = value;}
+            set { _proficeincyModifier = value; }
         }
 
         private int _level;
@@ -140,7 +140,7 @@
             set { _skillsProficiencies = value; }
         }
 
-        private List<Item> _inventory = new List<Item> ();
+        private List<Item> _inventory = new List<Item>();
         public List<Item> Inventory
         {
             get { return _inventory; }
@@ -187,6 +187,13 @@
         {
             get { return _deathSaveFailure; }
             set { _deathSaveFailure = value; }
+        }
+
+        private int _armourClass;
+        public int ArmourClass
+        {
+            get { return _armourClass; }
+            set { _armourClass = value; }
         }
 
 

@@ -1,4 +1,6 @@
-﻿namespace AI_GM
+﻿using AI_GM.Characters;
+
+namespace AI_GM
 {
     public class Species
     {
