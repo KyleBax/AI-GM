@@ -19,7 +19,7 @@
             string input = UI.GetInput();
             if (input == "combat")
             {
-                Combat.StartOfCombat(character);
+                Combat.CombatMain(character);
             }
             else
             {

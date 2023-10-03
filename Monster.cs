@@ -153,6 +153,13 @@ namespace AI_GM
             set { _initiative = value; }
         }
 
+        private Identifier _identifier = Identifier.Monster;
+        public Identifier Identifier
+        {
+            get { return _identifier; }
+            set { _identifier = value; }
+        }
+
 
     }
 }

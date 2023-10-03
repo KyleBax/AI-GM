@@ -125,4 +125,10 @@
         Rat,
         PoisonousSnake
     }
+
+    public enum Identifier
+    {
+        Monster,
+        Player
+    }
 }

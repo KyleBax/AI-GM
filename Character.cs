@@ -168,5 +168,12 @@
             set { _damageTaken = value; }
         }
 
+        private Identifier _identifier = Identifier.Player;
+        public Identifier Identifier
+        {
+            get { return _identifier; }
+            set { _identifier = value; }
+        }
+
     }
 }

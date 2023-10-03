@@ -21,5 +21,7 @@
         public int DamageTaken { get; set; }
 
         public int Initiative { get; set; }
+
+        public Identifier Identifier { get; set; }
     }
 }

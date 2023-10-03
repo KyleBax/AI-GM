@@ -2,121 +2,6 @@
 {
     internal class Combat
     {
-
-        //TODO seperate the code into logic and UI
-        public static void StartOfCombat(Character character)
-        {
-            Monster monster = new Monster();
-            List<Monster> monsters = new List<Monster>();
-            monsters = GetMonsters();
-
-            Console.WriteLine("you are entering combat, roll initiative");
-            character.Initiative = character.DexterityModifier + Dice.DiceRoll(20);
-            Console.WriteLine($"You rolled {character.Initiative}");
-
-            List<IFightable> combatParticipants = new List<IFightable>();
-
-            monsters.Sort((monster1, monster2) => monster2.Initiative.CompareTo(monster1.Initiative));
-
-
-            foreach (Monster m in monsters)                              //add all participants / then sort by initiatve
-            {                                                            //add all participants / then sort by initiatve
-                if (combatParticipants.Contains(character))              //add all participants / then sort by initiatve
-                {                                                        //add all participants / then sort by initiatve
-                    combatParticipants.Add(m);                           //add all participants / then sort by initiatve
-                }                                                        //add all participants / then sort by initiatve
-                else                                                     //add all participants / then sort by initiatve
-                {                                                        //add all participants / then sort by initiatve
-                    if (m.Initiative >= character.Initiative)            //add all participants / then sort by initiatve
-                    {                                                    //add all participants / then sort by initiatve
-                        combatParticipants.Add(m);                       //add all participants / then sort by initiatve
-                    }                                                    //add all participants / then sort by initiatve
-                    else                                                 //add all participants / then sort by initiatve
-                    {                                                    //add all participants / then sort by initiatve
-                        combatParticipants.Add(character);               //add all participants / then sort by initiatve
-                        combatParticipants.Add(m);                       //add all participants / then sort by initiatve
-                    }                                                    //add all participants / then sort by initiatve
-                }                                                        //add all participants / then sort by initiatve
-                                                                         //add all participants / then sort by initiatve
-            }                                                            //add all participants / then sort by initiatve
-
-            //add a player count for future
-            while (combatParticipants.Count > 1)
-            {
-                for (int i = 0; i < combatParticipants.Count; i++)
-                {
-                    if (combatParticipants[i] is Character character1)
-                    {                     
-
-                        if(character1.DamageTaken >= character1.MaxHitPoints)
-                        {
-                            Console.WriteLine($"{character1.Name}, {character1.Initiative}, you are dying. Make a death saving throw");
-
-                        }
-                        else
-                        {
-                            Console.WriteLine($"{character1.Name}, {character1.Initiative}, your turn");
-                            Console.WriteLine("choose a target");
-                            // make it so that the user can pick a target
-                           // int target;
-
-                            for(int j = 0; j < combatParticipants.Count; j++)
-                            {
-                                Console.WriteLine(i + " " + combatParticipants[j].MaxHitPoints);
-                            }
-                            int selection = Int32.Parse(Console.ReadLine());
-
-                            var target = combatParticipants[selection];
-
-
-
-                            foreach (Monster m in combatParticipants)
-                            {
-                                Console.WriteLine(m.Name);
-                            }
-                            // select an attack to make
-                            // spells, weapons etc
-                            // roll a d20 to hit
-                            // determine if hit (d20+toHitModifier >= monster.AC)
-                            // on a hit deal damage, on a miss do nothing
-
-                            
-                            Console.ReadLine();
-                        }
-                        
-
-                    }
-                    if (combatParticipants[i] is Monster monster1)
-                    {
-                        if (monster1.DamageTaken == monster1.MaxHitPoints)
-                        {
-                            Console.WriteLine($"{monster1.Name}, {monster1.Initiative}, has died");
-                            combatParticipants.Remove(i);
-                        }
-                        else
-                        {
-                            //after making a map for the system, target closest oponnent
-                            int target = 1;
-                            if (combatParticipants[target] is Monster)
-                            {
-                                //change target until it is a player
-                            }
-
-                            if (combatParticipants[target] is Character)
-                            {
-                                //attack
-                            }
-
-                            Console.WriteLine($"{monster1.Name}, {monster1.Initiative}");
-                        }
-                        
-                    }
-                }
-            }
-        }
-
-
-
         public static List<Monster> GetMonsters()
         {
             Random random = new Random();
@@ -133,6 +18,125 @@
 
             return monsters;
         }
+
+        /// <summary>
+        /// Adds all combat participants and then sorts them by initiative highest to lowest
+        /// </summary>
+        /// <param name="character"></param>
+        /// <returns></returns>
+        public static List<IFightable> GetCombatParticipantsList(Character character)
+        {
+            Monster monster = new Monster();
+            List<Monster> monsters = new List<Monster>();
+            monsters = GetMonsters();
+            List<IFightable> combatParticipants = new List<IFightable>();
+            foreach (Monster m in monsters)
+            {
+                combatParticipants.Add(m);
+            }
+            combatParticipants.Add(character);
+            combatParticipants.Sort((x, y) => y.Initiative.CompareTo(x.Initiative));
+
+            return combatParticipants;
+        }
+
+        /// <summary>
+        /// gets player initiative, and tells the player what their initiative is
+        /// </summary>
+        /// <param name="character"></param>
+        /// <returns></returns>
+        public static int GetPlayerInitiative(Character character)
+        {
+            Console.WriteLine("you are entering combat, roll initiative");
+            int initiative = character.DexterityModifier + Dice.DiceRoll(20);
+            Console.WriteLine($"You rolled {character.Initiative}");
+            return initiative;
+        }
+
+        public static void MonsterTurn(List<IFightable> combatParticipants, Monster monster)
+        {
+            if (monster.DamageTaken == monster.MaxHitPoints)
+            {
+                Console.WriteLine($"{monster.Name}, {monster.Initiative}, has died");
+            }
+            else
+            {
+                //after making a map for the system, target closest oponnent
+                int target = 1;
+                if (combatParticipants[target] is Monster)
+                {
+                    //change target until it is a player
+                }
+
+                if (combatParticipants[target] is Character)
+                {
+                    //attack
+                }
+
+                Console.WriteLine($"{monster.Name}, {monster.Initiative}");
+            }
+        }
+
+        public static void PlayerTurn(List<IFightable> combatParticipants, Character character)
+        {
+            if (character.DamageTaken >= character.MaxHitPoints)
+            {
+                Console.WriteLine($"{character.Name}, {character.Initiative}, you are dying. Make a death saving throw");
+
+                //add death save method here
+
+            }
+            else
+            {
+                Console.WriteLine($"{character.Name}, {character.Initiative}, your turn");
+                Console.WriteLine("choose a target");
+                // make it so that the user can pick a target
+                // int target;
+
+                for (int j = 0; j < combatParticipants.Count; j++)
+                {
+                    Console.WriteLine(j + 1 + " " + combatParticipants[j].Speed);
+                }
+                int selection = Int32.Parse(Console.ReadLine());
+
+                // select an attack to make
+                // spells, weapons etc
+                // roll a d20 to hit
+                // determine if hit (d20+toHitModifier >= monster.AC)
+                // on a hit deal damage, on a miss do nothing
+
+
+                Console.ReadLine();
+            }
+
+        }
+
+        //TODO seperate the code into logic and UI
+        public static void CombatMain(Character character)
+        {
+            character.Initiative = GetPlayerInitiative(character);
+            List<IFightable> combatParticipants = GetCombatParticipantsList(character);
+
+            while (combatParticipants.Count >= 1)
+            {
+                for (int i = 0; i < combatParticipants.Count; i++)
+                {
+
+                    if (combatParticipants[i] is Character character1)
+                    {                     
+                        PlayerTurn(combatParticipants, character1);
+                    }
+                    if (combatParticipants[i] is Monster monster1)
+                    {
+                        MonsterTurn(combatParticipants, monster1);
+                    }
+                }
+            }
+        }
+
+
+
+
 
         public static Monster GetMonsterStats(MonsterName monsterName)
         {
