@@ -2,12 +2,19 @@
 {
     public enum DamageType
     {
-        bludgeoning,
-        piercing,
-        slashing,
-        fire,
-        cold,
-        poison
+        Bludgeoning,
+        Piercing,
+        Slashing,
+        Fire,
+        Cold,
+        Poison,
+        Acid,
+        Force,
+        Lightning,
+        Necrotic,
+        Psychic,
+        Radiant,
+        Thunder
     }
 
     public enum Identifier

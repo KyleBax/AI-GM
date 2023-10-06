@@ -189,8 +189,14 @@ namespace AI_GM
             }
             else
             {
+                IFightable slectedMonster = SelectMonsterFromParticipants(combatParticipants);
+
                 Console.WriteLine($"{character.Name}, {character.Initiative}, your turn");
                 Console.WriteLine("choose a target");
+
+
+                var selections = combatParticipants.Where(p => p.Identifier == Identifier.Monster).ToList();
+
 
 
                 for (int j = 0; j < combatParticipants.Count; j++)
@@ -210,6 +216,7 @@ namespace AI_GM
 
 
                 // select an attack to make
+               //possibly: Attack selectedAttack = SelectAttack(character);
                 // spells, weapons etc
                 // roll a d20 to hit
                 // determine if hit (d20+toHitModifier >= monster.AC)
@@ -221,7 +228,10 @@ namespace AI_GM
 
         }
 
-
+        private static IFightable SelectMonsterFromParticipants(List<IFightable> fightables)
+        {
+            throw new NotImplementedException();
+        }
 
         public static Monster GetMonsterStats(MonsterName monsterName)
         {
@@ -303,19 +313,19 @@ namespace AI_GM
                     attack.HitModifier = 0;
                     attack.DamageModifier = 0;
                     attack.DamageDice = "1d4";
-                    attack.DamageType = DamageType.piercing;
+                    attack.DamageType = DamageType.Piercing;
                     break;
                 case MonsterAttackType.PoisonousSnakeBite:
                     attack.HitModifier = 5;
                     attack.DamageModifier = 0;
                     attack.DamageDice = "2d4";
-                    attack.DamageType = DamageType.poison;
+                    attack.DamageType = DamageType.Poison;
                     break;
                 case MonsterAttackType.Scimitar:
                     attack.HitModifier = 4;
                     attack.DamageModifier = 2;
                     attack.DamageDice = "1d6";
-                    attack.DamageType = DamageType.slashing;
+                    attack.DamageType = DamageType.Slashing;
                     break;
             }
 
