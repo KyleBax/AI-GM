@@ -209,14 +209,8 @@ namespace AI_GM
                 }
                 int selection = Int32.Parse(Console.ReadLine());
 
-                Console.WriteLine("Select an attack");
+                Attack attack = SelectAttack(character);
 
-
-
-
-
-                // select an attack to make
-               //possibly: Attack selectedAttack = SelectAttack(character);
                 // spells, weapons etc
                 // roll a d20 to hit
                 // determine if hit (d20+toHitModifier >= monster.AC)
@@ -226,6 +220,11 @@ namespace AI_GM
                 Console.ReadLine();
             }
 
+        }
+
+        private static Attack SelectAttack(Character character)
+        {
+            throw new NotImplementedException();
         }
 
         private static IFightable SelectMonsterFromParticipants(List<IFightable> fightables)
@@ -303,9 +302,9 @@ namespace AI_GM
             return monster;
         }
 
-        public static Attack GetMonsterAttack(MonsterAttackType attackType)
+        public static MonsterAttack GetMonsterAttack(MonsterAttackType attackType)
         {
-            Attack attack = new Attack();
+            MonsterAttack attack = new MonsterAttack();
             attack.Name = attackType;
             switch (attackType)
             {

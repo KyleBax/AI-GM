@@ -2,7 +2,7 @@
 
 namespace AI_GM
 {
-    internal class Attack
+    internal class MonsterAttack
     {
         private MonsterAttackType _name;
         public MonsterAttackType Name

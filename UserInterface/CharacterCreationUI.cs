@@ -3,7 +3,7 @@ using System.ComponentModel.Design;
 using System.Reflection;
 using AI_GM.Characters;
 
-namespace AI_GM.UI
+namespace AI_GM.UserInterface
 {
     internal static class CharacterCreationUI
     {

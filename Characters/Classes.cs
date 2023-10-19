@@ -1,6 +1,4 @@
-﻿using AI_GM.Characters;
-
-namespace AI_GM
+﻿namespace AI_GM.Characters
 {
     public class Classes
     {

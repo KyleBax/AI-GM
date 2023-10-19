@@ -1,4 +1,6 @@
-﻿namespace AI_GM.Characters
+﻿using AI_GM.Combat;
+
+namespace AI_GM.Characters
 {
     /// <summary>
     /// Holds the information of the characters

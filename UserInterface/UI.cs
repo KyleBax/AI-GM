@@ -1,4 +1,4 @@
-﻿namespace AI_GM
+﻿namespace AI_GM.UserInterface
 {
     internal class UI
     {

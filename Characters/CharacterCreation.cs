@@ -1,4 +1,6 @@
-﻿namespace AI_GM.Characters
+﻿using AI_GM.UserInterface;
+
+namespace AI_GM.Characters
 {
     internal class CharacterCreation
     {

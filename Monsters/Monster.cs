@@ -125,8 +125,8 @@ namespace AI_GM.Monsters
             set { _speed = value; }
         }
 
-        private List<Attack> _attacks = new List<Attack>();
-        public List<Attack> Attacks //TODO: attack class? (attack has some properties like damage value, range, name etc
+        private List<MonsterAttack> _attacks = new List<MonsterAttack>();
+        public List<MonsterAttack> Attacks //TODO: attack class? (attack has some properties like damage value, range, name etc
         {
             get { return _attacks; }
             set { _attacks = value; }
