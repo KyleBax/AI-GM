@@ -1,62 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Character xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Name>kyle</Name>
-  <MaxHitPoints>8</MaxHitPoints>
-  <DamageTaken>0</DamageTaken>
-  <Identifier>Player</Identifier>
-  <AttackDice>2</AttackDice>
-  <DefendDice>3</DefendDice>
-  <Strength>0</Strength>
-  <StrengthModifier>0</StrengthModifier>
-  <Dexterity>0</Dexterity>
-  <DexterityModifier>0</DexterityModifier>
-  <Constitution>0</Constitution>
-  <ConstitutionModifier>0</ConstitutionModifier>
-  <Intelligence>0</Intelligence>
-  <IntelligenceModifier>0</IntelligenceModifier>
-  <Wisdom>0</Wisdom>
-  <WisdomModifier>0</WisdomModifier>
-  <Charisma>0</Charisma>
-  <CharismaModifier>0</CharismaModifier>
-  <Class>
-    <Name>Fighter</Name>
-    <SpellSlots>0</SpellSlots>
-    <Abilities>
-      <Ability>Ability3</Ability>
-      <Ability>Ability4</Ability>
-    </Abilities>
-    <ProficiencyWeapons>
-      <WeaponType>Simple</WeaponType>
-      <WeaponType>Martial</WeaponType>
-    </ProficiencyWeapons>
-    <ProficiencyArmour>
-      <Armour>Light</Armour>
-      <Armour>Medium</Armour>
-      <Armour>Heavy</Armour>
-    </ProficiencyArmour>
-    <HitDice>10</HitDice>
-    <HitDiceCount>1</HitDiceCount>
-    <Level>1</Level>
-  </Class>
-  <Species>
-    <Name>Elf</Name>
-    <Size>3</Size>
-    <Languages>
-      <Language>Common</Language>
-      <Language>Elvish</Language>
-    </Languages>
-    <Description>generic elf description here</Description>
-    <DarkvisionRange>60</DarkvisionRange>
-    <Cauterize>false</Cauterize>
-    <StrongMind>true</StrongMind>
-  </Species>
-  <ProficeincyModifier>0</ProficeincyModifier>
-  <Level>0</Level>
-  <Speed>0</Speed>
-  <SkillsProficiencies />
-  <Inventory />
-  <Initiative>0</Initiative>
-  <DeathSaveSuccess>0</DeathSaveSuccess>
-  <DeathSaveFailure>0</DeathSaveFailure>
-  <ArmourClass>0</ArmourClass>
-</Character>
+<Campaign xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <PlayerCharacters>
+    <Character>
+      <Name>kyle</Name>
+      <MaxHitPoints>8</MaxHitPoints>
+      <DamageTaken>0</DamageTaken>
+      <Identifier>Player</Identifier>
+      <AttackDice>2</AttackDice>
+      <DefendDice>3</DefendDice>
+      <Strength>0</Strength>
+      <StrengthModifier>0</StrengthModifier>
+      <Dexterity>0</Dexterity>
+      <DexterityModifier>0</DexterityModifier>
+      <Constitution>0</Constitution>
+      <ConstitutionModifier>0</ConstitutionModifier>
+      <Intelligence>0</Intelligence>
+      <IntelligenceModifier>0</IntelligenceModifier>
+      <Wisdom>0</Wisdom>
+      <WisdomModifier>0</WisdomModifier>
+      <Charisma>0</Charisma>
+      <CharismaModifier>0</CharismaModifier>
+      <Class>
+        <Name>Fighter</Name>
+        <SpellSlots>0</SpellSlots>
+        <Abilities>
+          <Ability>Ability3</Ability>
+          <Ability>Ability4</Ability>
+        </Abilities>
+        <ProficiencyWeapons>
+          <WeaponType>Simple</WeaponType>
+          <WeaponType>Martial</WeaponType>
+        </ProficiencyWeapons>
+        <ProficiencyArmour>
+          <Armour>Light</Armour>
+          <Armour>Medium</Armour>
+          <Armour>Heavy</Armour>
+        </ProficiencyArmour>
+        <HitDice>10</HitDice>
+        <HitDiceCount>1</HitDiceCount>
+        <Level>1</Level>
+      </Class>
+      <Species>
+        <Name>Human</Name>
+        <Size>3</Size>
+        <Languages>
+          <Language>Common</Language>
+        </Languages>
+        <Description>generic human description here</Description>
+        <DarkvisionRange>0</DarkvisionRange>
+        <Cauterize>true</Cauterize>
+        <StrongMind>true</StrongMind>
+      </Species>
+      <ProficeincyModifier>0</ProficeincyModifier>
+      <Level>0</Level>
+      <Speed>0</Speed>
+      <SkillsProficiencies />
+      <Inventory />
+      <Initiative>0</Initiative>
+      <DeathSaveSuccess>0</DeathSaveSuccess>
+      <DeathSaveFailure>0</DeathSaveFailure>
+      <ArmourClass>0</ArmourClass>
+    </Character>
+  </PlayerCharacters>
+  <ActiveMonsters />
+</Campaign>

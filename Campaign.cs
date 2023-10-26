@@ -8,7 +8,7 @@ using AI_GM.Monsters;
 
 namespace AI_GM
 {
-    internal class Campaign
+    public class Campaign
     {
         private List<Character> _playerCharacters = new List<Character>();
         public List<Character> PlayerCharacters

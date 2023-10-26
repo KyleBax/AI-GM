@@ -1,5 +1,6 @@
 ﻿using AI_GM.Characters;
 using AI_GM.Monsters;
+using System.Collections.Generic;
 
 namespace AI_GM.Combat
 {
@@ -70,7 +71,7 @@ namespace AI_GM.Combat
             {
                 combatParticipants.Add(m);
             }
-           // combatParticipants.Sort((x, y) => y.Initiative.CompareTo(x.Initiative));
+            // combatParticipants.Sort((x, y) => y.Initiative.CompareTo(x.Initiative));
 
             return combatParticipants;
         }
@@ -88,11 +89,13 @@ namespace AI_GM.Combat
             return initiative;
         }
 
-        public static void MonsterTurn(List<IFightable> combatParticipants, Monster monster)
+        public static List<IFightable> MonsterTurn(List<IFightable> combatParticipants, Monster monster)
         {
-            if (monster.DamageTaken == monster.MaxHitPoints)
+            if (monster.DamageTaken >= monster.MaxHitPoints)
             {
                 Console.WriteLine($"{monster.Name}, {monster.Initiative}, has died");
+                combatParticipants.Remove(monster);
+                return combatParticipants;
             }
             else
             {
@@ -109,21 +112,26 @@ namespace AI_GM.Combat
                     if (combatParticipants[target].Identifier == Identifier.Player)
                     {
                         Console.WriteLine("target aqcuired");
-                        // if target is within range of an attack, perform attack else move speed toward target
-                        // if target is within range of  an attack, attack, else move speed toward target then end turn
-
-                        // change so that it is DiceRoll + attack.HitModifier
-                        int attackRoll = Dice.DiceRoll(20) + 5;
-
-                        bool hit = CheckIfHit(combatParticipants[target].ArmourClass, attackRoll);
-                        if (hit)
+                        int hits = GetHits(monster.AttackDice, "attack");
+                        Console.WriteLine($"The monster has {hits} hits");
+                        int defended = 0;
+                        if (hits > 0)
                         {
-                            int damage = MonsterDealDamage(monster);
-                            combatParticipants[target].DamageTaken += damage;
+                            defended = GetHits(combatParticipants[target].DefendDice, "monsterDefend");
+                            Console.WriteLine($"You have defended {defended} hits ");
                         }
+                        if (defended > hits)
+                        {
+                            defended = hits;
+                        }
+
+                        int damage = hits - defended;
+                        Console.WriteLine($"You have taken {damage} damage");
+                        combatParticipants[target].DamageTaken += damage;
                         break;
                     }
                 }
+                return combatParticipants;
 
             }
         }
@@ -157,45 +165,73 @@ namespace AI_GM.Combat
                 Console.WriteLine("Select an action");
                 Console.WriteLine("move, attack, search"); //to be fully implemented
 
+                PlayerAttackAction(combatParticipants, character);
 
-                IFightable slectedMonster = SelectMonsterFromParticipants(combatParticipants);
-
-                Console.WriteLine($"{character.Name}, {character.Initiative}, your turn");
-                Console.WriteLine("choose a target");
-
-
-                var selections = combatParticipants.Where(p => p.Identifier == Identifier.Monster).ToList();
-
-
-
-                for (int j = 0; j < combatParticipants.Count; j++)
-                {
-                    if (combatParticipants[j].Identifier == Identifier.Monster)
-                    {
-                        Console.WriteLine(j + 1 + " " + combatParticipants[j].Identifier);
-                    }
-
-                }
-                int selection = int.Parse(Console.ReadLine());
-
-                Attack attack = SelectAttack(character);
-
-                int attackRoll = Dice.DiceRoll(20);
-
-                bool hit = DetermineIfHit(attack, character, attackRoll);
-
-                if (hit)
-                {
-                    int damage = GetDamage(attack, character);
-                    // add damage to target monster
-
-                }
-
-
-
-                Console.ReadLine();
             }
 
+        }
+
+        private static List<IFightable> PlayerAttackAction(List<IFightable> combatParticipants, Character character)
+        {
+            IFightable selectedMonster = SelectMonsterFromParticipants(combatParticipants);
+            int hits = GetHits(character.AttackDice, "attack");
+
+            Console.WriteLine($"You have {hits} hits");
+            int defended = 0;
+            if ( hits > 0 )
+            {
+                defended = GetHits(selectedMonster.DefendDice, "playerDefend");
+                Console.WriteLine($"The Monster has defended {defended} hits ");
+            }
+            if(defended > hits)
+            {
+                defended = hits;
+            }
+
+            int damage = hits - defended;
+
+            Console.WriteLine($"You have dealt {damage} damage to the monster");
+
+            selectedMonster.DamageTaken += damage;
+            if (selectedMonster.DamageTaken >= selectedMonster.MaxHitPoints)
+            {
+                Console.WriteLine("you have killed this monster");
+                //removes the selectedMonster from combatParticipants
+                combatParticipants.Remove(selectedMonster);
+            }
+            return combatParticipants;
+        }
+
+        private static int GetHits(int diceCount, string roll)
+        {
+            int hits = 0;
+            for (int i = 0; i < diceCount; i++)
+            {
+                int result = Dice.DiceRoll(6);
+                switch (roll)
+                {
+                    case "attack":
+                        if (result <= 3)
+                        {
+                            hits++;
+                        }
+                        break;
+                    case "playerDefend":
+                        if(result >= 5)
+                        {
+                            hits++;
+                        }
+                        break;
+                    case "monsterDefend":
+                        if(result == 4)
+                        {
+                            hits++;
+                        }
+                        break;
+                }
+
+            }
+            return hits;
         }
 
         private static void DeathSaves(Character character)
@@ -239,24 +275,35 @@ namespace AI_GM.Combat
             }
         }
 
-        private static int GetDamage(Attack attack, Character character)
+        private static IFightable SelectMonsterFromParticipants(List<IFightable> combatParticipants)
         {
-            throw new NotImplementedException();
-        }
+            Console.WriteLine("choose a target");
 
-        private static bool DetermineIfHit(Attack attack, Character character, int attackRoll)
-        {
-            throw new NotImplementedException();
-        }
+            var selections = combatParticipants.Where(p => p.Identifier == Identifier.Monster).ToList();
+            while(true)
+            {
+                for (int i = 0; i < selections.Count; i++)
+                {
+                    if (selections[i].Identifier == Identifier.Monster)
+                    {
+                        Console.WriteLine(i + 1 + " " + selections[i].Identifier);
+                    }
 
-        private static Attack SelectAttack(Character character)
-        {
-            throw new NotImplementedException();
-        }
+                }
+                int selection = int.Parse(Console.ReadLine());
 
-        private static IFightable SelectMonsterFromParticipants(List<IFightable> fightables)
-        {
-            throw new NotImplementedException();
+                if (selection >= 1 && selection <= selections.Count)
+                {
+                    return selections[selection - 1];
+                }
+                else
+                {
+                    Console.WriteLine("Invalid Selection");
+                    Console.WriteLine("Select one of these options");
+                }
+            }
+
+
         }
 
         public static Monster GetMonsterStats(MonsterName monsterName)

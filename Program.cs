@@ -19,13 +19,17 @@ namespace AI_GM
             }
             else
             {
-                character = Logic.DeserializeCampaign();
-                CharacterCreationUI.CharacterComplete(character, false);
+                campaign = Logic.DeserializeCampaign();
+                foreach (Character character1 in campaign.PlayerCharacters)
+                {
+                    CharacterCreationUI.CharacterComplete(character1, false);
+                }
+
             }
             string input = UI.GetInput();
             if (input == "combat")
             {
-                AI_GM.Combat.Combat.CombatMain(character);
+                AI_GM.Combat.Combat.CombatMain(campaign);
             }
             else
             {

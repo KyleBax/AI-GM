@@ -7,7 +7,7 @@ using AI_GM.Combat;
 
 namespace AI_GM.Monsters
 {
-    internal class Monster : IFightable
+    public class Monster : IFightable
     {
         private MonsterName _name;
 
