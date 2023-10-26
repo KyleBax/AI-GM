@@ -9,6 +9,11 @@
             set { _name = value; }
         }
 
+
+
+
+
+
         private int _spellSlots;
         public int SpellSlots
         {

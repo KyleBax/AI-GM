@@ -175,7 +175,7 @@ namespace AI_GM.UserInterface
         public static bool CharacterComplete(Character character, bool newCharacter)
         {
             Console.WriteLine($"Name:{character.Name}, Class: {character.Class.Name}, Species: {character.Species.Name}");
-            Console.WriteLine($"STR:{character.Strength}, DEX: {character.Dexterity}, CON: {character.Constitution}, INT: {character.Intelligence}, WIS: {character.Wisdom}, CHA: {character.Charisma}");
+            // Console.WriteLine($"STR:{character.Strength}, DEX: {character.Dexterity}, CON: {character.Constitution}, INT: {character.Intelligence}, WIS: {character.Wisdom}, CHA: {character.Charisma}");
             if (newCharacter)
             {
                 Console.WriteLine("Are you happy with your character? Y/N?");

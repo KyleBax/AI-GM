@@ -2,6 +2,10 @@
 {
     public interface IFightable
     {
+        public int AttackDice { get; set; }
+
+        public int DefendDice { get; set; }
+
         public int MaxHitPoints { get; set; }
 
         public int StrengthModifier { get; set; }

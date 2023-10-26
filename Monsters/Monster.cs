@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AI_GM.Combat;
 
 namespace AI_GM.Monsters
 {
@@ -14,6 +15,27 @@ namespace AI_GM.Monsters
         {
             get { return _name; }
             set { _name = value; }
+        }
+
+        private Identifier _identifier = Identifier.Monster;
+        public Identifier Identifier
+        {
+            get { return _identifier; }
+            set { _identifier = value; }
+        }
+
+        private int _attackDice;
+        public int AttackDice
+        {
+            get { return _attackDice; }
+            set { _attackDice = value; }
+        }
+
+        private int _defendDice;
+        public int DefendDice
+        {
+            get { return _defendDice; }
+            set { _defendDice = value; }
         }
 
         /// <summary>
@@ -153,12 +175,7 @@ namespace AI_GM.Monsters
             set { _initiative = value; }
         }
 
-        private Identifier _identifier = Identifier.Monster;
-        public Identifier Identifier
-        {
-            get { return _identifier; }
-            set { _identifier = value; }
-        }
+
 
         private int _armourClass;
         public int ArmourClass

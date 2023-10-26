@@ -1,6 +1,6 @@
 ﻿using AI_GM.Monsters;
 
-namespace AI_GM
+namespace AI_GM.Combat
 {
     internal class MonsterAttack
     {

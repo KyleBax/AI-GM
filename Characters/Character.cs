@@ -15,6 +15,44 @@ namespace AI_GM.Characters
             set { _name = value; }
         }
 
+        private int _maxHitPoints;
+        public int MaxHitPoints
+        {
+            get { return _maxHitPoints; }
+            set { _maxHitPoints = value; }
+        }
+
+        private int _damageTaken;
+        public int DamageTaken
+        {
+            get { return _damageTaken; }
+            set { _damageTaken = value; }
+        }
+
+        private Identifier _identifier = Identifier.Player;
+        public Identifier Identifier
+        {
+            get { return _identifier; }
+            set { _identifier = value; }
+        }
+
+        private int _attackDice;
+        public int AttackDice
+        {
+            get { return _attackDice; }
+            set { _attackDice = value; }
+        }
+
+        private int _defendDice;
+        public int DefendDice
+        {
+            get { return _defendDice; }
+            set { _defendDice = value; }
+        }
+
+
+
+
         private int _strength;
         public int Strength
         {
@@ -156,26 +194,7 @@ namespace AI_GM.Characters
             set { _initiative = value; }
         }
 
-        private int _maxHitPoints;
-        public int MaxHitPoints
-        {
-            get { return _maxHitPoints; }
-            set { _maxHitPoints = value; }
-        }
 
-        private int _damageTaken;
-        public int DamageTaken
-        {
-            get { return _damageTaken; }
-            set { _damageTaken = value; }
-        }
-
-        private Identifier _identifier = Identifier.Player;
-        public Identifier Identifier
-        {
-            get { return _identifier; }
-            set { _identifier = value; }
-        }
 
         private int _deathSaveSuccess = 0;
         public int DeathSaveSuccess

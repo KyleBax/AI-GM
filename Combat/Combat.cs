@@ -1,31 +1,30 @@
 ﻿using AI_GM.Characters;
 using AI_GM.Monsters;
 
-namespace AI_GM
+namespace AI_GM.Combat
 {
     internal class Combat
     {
         /// <summary>
         /// The main method for the combat process
         /// </summary>
-        /// <param name="character"></param>
-        public static void CombatMain(Character character)
+        /// <param name="campaign"></param>
+        public static void CombatMain(Campaign campaign)
         {
-            character.Initiative = GetPlayerInitiative(character);
-            List<IFightable> combatParticipants = GetCombatParticipantsList(character);
+            List<IFightable> combatParticipants = GetCombatParticipantsList(campaign);
 
             while (combatParticipants.Count >= 1)
             {
                 for (int i = 0; i < combatParticipants.Count; i++)
                 {
 
-                    if (combatParticipants[i] is Character character1)
+                    if (combatParticipants[i] is Character character)
                     {
-                        PlayerTurn(combatParticipants, character1);
+                        PlayerTurn(combatParticipants, character);
                     }
-                    if (combatParticipants[i] is Monster monster1)
+                    if (combatParticipants[i] is Monster monster)
                     {
-                        MonsterTurn(combatParticipants, monster1);
+                        MonsterTurn(combatParticipants, monster);
                     }
                 }
             }
@@ -57,18 +56,21 @@ namespace AI_GM
         /// </summary>
         /// <param name="character"></param>
         /// <returns></returns>
-        public static List<IFightable> GetCombatParticipantsList(Character character)
+        public static List<IFightable> GetCombatParticipantsList(Campaign campaign)
         {
             Monster monster = new Monster();
             List<Monster> monsters = new List<Monster>();
             monsters = GetMonsters();
             List<IFightable> combatParticipants = new List<IFightable>();
+            foreach (Character character in campaign.PlayerCharacters)
+            {
+                combatParticipants.Add(character);
+            }
             foreach (Monster m in monsters)
             {
                 combatParticipants.Add(m);
             }
-            combatParticipants.Add(character);
-            combatParticipants.Sort((x, y) => y.Initiative.CompareTo(x.Initiative));
+           // combatParticipants.Sort((x, y) => y.Initiative.CompareTo(x.Initiative));
 
             return combatParticipants;
         }
@@ -145,50 +147,17 @@ namespace AI_GM
 
         public static void PlayerTurn(List<IFightable> combatParticipants, Character character)
         {
+            Console.WriteLine($"it is your turn {character.Name}");
             if (character.DamageTaken >= character.MaxHitPoints)
             {
-                Console.WriteLine($"{character.Name}, {character.Initiative}, you are dying. Make a death saving throw");
-
-                int result = Dice.DiceRoll(20);
-                switch (result)
-                {
-                    case 1:
-                        Console.WriteLine("You have suffered a critical death save");
-                        character.DeathSaveFailure += 2;
-                        break;
-                    case int n when n > 1 && n <= 10:
-                        Console.WriteLine("You have failed a death save");
-                        character.DeathSaveFailure += 1;
-                        break;
-                    case int n when n > 10 && n <= 19:
-                        Console.WriteLine("You have made a successful death save");
-                        character.DeathSaveSuccess += 1;
-                        break;
-                    case 20:
-                        Console.WriteLine("You have made a successful death save");
-                        character.DeathSaveSuccess += 2;
-                        break;
-                }
-
-                if (character.DeathSaveFailure >= 3)
-                {
-                    Console.WriteLine("You have died, please start a new campaign");
-                    // add player death effects here
-                }
-
-                if (character.DeathSaveSuccess >= 3)
-                {
-                    Console.WriteLine("You have succeeded in avoiding death");
-                    while (character.DamageTaken >= character.MaxHitPoints)
-                    {
-                        character.DamageTaken--;
-                    }
-                }
-
-
+                DeathSaves(character);
             }
             else
             {
+                Console.WriteLine("Select an action");
+                Console.WriteLine("move, attack, search"); //to be fully implemented
+
+
                 IFightable slectedMonster = SelectMonsterFromParticipants(combatParticipants);
 
                 Console.WriteLine($"{character.Name}, {character.Initiative}, your turn");
@@ -207,19 +176,77 @@ namespace AI_GM
                     }
 
                 }
-                int selection = Int32.Parse(Console.ReadLine());
+                int selection = int.Parse(Console.ReadLine());
 
                 Attack attack = SelectAttack(character);
 
-                // spells, weapons etc
-                // roll a d20 to hit
-                // determine if hit (d20+toHitModifier >= monster.AC)
-                // on a hit deal damage, on a miss do nothing
+                int attackRoll = Dice.DiceRoll(20);
+
+                bool hit = DetermineIfHit(attack, character, attackRoll);
+
+                if (hit)
+                {
+                    int damage = GetDamage(attack, character);
+                    // add damage to target monster
+
+                }
+
 
 
                 Console.ReadLine();
             }
 
+        }
+
+        private static void DeathSaves(Character character)
+        {
+            Console.WriteLine($"{character.Name}, {character.Initiative}, you are dying. Make a death saving throw");
+
+            int result = Dice.DiceRoll(20);
+            switch (result)
+            {
+                case 1:
+                    Console.WriteLine("You have suffered a critical death save");
+                    character.DeathSaveFailure += 2;
+                    break;
+                case int n when n > 1 && n <= 10:
+                    Console.WriteLine("You have failed a death save");
+                    character.DeathSaveFailure += 1;
+                    break;
+                case int n when n > 10 && n <= 19:
+                    Console.WriteLine("You have made a successful death save");
+                    character.DeathSaveSuccess += 1;
+                    break;
+                case 20:
+                    Console.WriteLine("You have made a successful death save");
+                    character.DeathSaveSuccess += 2;
+                    break;
+            }
+
+            if (character.DeathSaveFailure >= 3)
+            {
+                Console.WriteLine("You have died, please start a new campaign");
+                // add player death effects here
+            }
+
+            if (character.DeathSaveSuccess >= 3)
+            {
+                Console.WriteLine("You have succeeded in avoiding death");
+                while (character.DamageTaken >= character.MaxHitPoints)
+                {
+                    character.DamageTaken--;
+                }
+            }
+        }
+
+        private static int GetDamage(Attack attack, Character character)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static bool DetermineIfHit(Attack attack, Character character, int attackRoll)
+        {
+            throw new NotImplementedException();
         }
 
         private static Attack SelectAttack(Character character)
@@ -239,6 +266,8 @@ namespace AI_GM
             {
                 case MonsterName.Goblin:
                     monster.Name = MonsterName.Goblin;
+                    monster.AttackDice = 2;
+                    monster.DefendDice = 2;
                     monster.Strength = 8;
                     monster.StrengthModifier = -1;
                     monster.Dexterity = 14;
@@ -259,6 +288,8 @@ namespace AI_GM
 
                 case MonsterName.PoisonousSnake:
                     monster.Name = MonsterName.PoisonousSnake;
+                    monster.AttackDice = 2;
+                    monster.DefendDice = 1;
                     monster.Strength = 2;
                     monster.StrengthModifier = -4;
                     monster.Dexterity = 16;
@@ -279,6 +310,8 @@ namespace AI_GM
 
                 case MonsterName.Rat:
                     monster.Name = MonsterName.Rat;
+                    monster.AttackDice = 1;
+                    monster.DefendDice = 1;
                     monster.Strength = 2;
                     monster.StrengthModifier = -4;
                     monster.Dexterity = 11;

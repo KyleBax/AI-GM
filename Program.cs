@@ -1,5 +1,6 @@
 ﻿using AI_GM.Characters;
 using AI_GM.UserInterface;
+using AI_GM.Combat;
 
 namespace AI_GM
 {
@@ -7,22 +8,24 @@ namespace AI_GM
     {
         static void Main(string[] args)
         {
+            Campaign campaign = new Campaign();
             Character character = new Character();
             bool newCharacter = UI.GetConfirmation("press Y to start a new campaign");
             if (newCharacter)
             {
                 character = CharacterCreation.NewCharacter(character);
-                Logic.SerializeCharacter(character);
+                campaign.PlayerCharacters.Add(character);
+                Logic.SerializeCampaign(campaign);
             }
             else
             {
-                character = Logic.DeserializeCharacter();
+                character = Logic.DeserializeCampaign();
                 CharacterCreationUI.CharacterComplete(character, false);
             }
             string input = UI.GetInput();
             if (input == "combat")
             {
-                Combat.CombatMain(character);
+                AI_GM.Combat.Combat.CombatMain(character);
             }
             else
             {

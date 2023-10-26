@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace AI_GM
 {
-    internal class EnumLanguage
+    public enum Language
     {
+        Common,
+        Elvish,
+        Dwarvish,
+        Celestial,
+        Giant
     }
 }

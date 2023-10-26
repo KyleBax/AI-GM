@@ -8,6 +8,10 @@
             switch (character.Class.Name)
             {
                 case Class.Cleric:
+                    character.AttackDice = 2;
+                    character.DefendDice = 2;
+                    character.MaxHitPoints = 4;
+
                     character.Class.HitDice = 8;
                     character.Class.SpellSlots = 3;
                     character.Class.ProficiencyWeapons.Add(WeaponType.Simple);
@@ -19,6 +23,10 @@
                     break;
 
                 case Class.Fighter:
+                    character.AttackDice = 2;
+                    character.DefendDice = 3;
+                    character.MaxHitPoints = 8;
+
                     character.Class.HitDice = 10;
                     character.Class.SpellSlots = 0;
                     character.Class.ProficiencyWeapons.Add(WeaponType.Simple);
@@ -32,6 +40,10 @@
                     break;
 
                 case Class.Wizard:
+                    character.AttackDice = 1;
+                    character.DefendDice = 1;
+                    character.MaxHitPoints = 4;
+
                     character.Class.HitDice = 6;
                     character.Class.SpellSlots = 3;
                     character.Class.ProficiencyWeapons.Add(WeaponType.Daggers);
@@ -44,6 +56,10 @@
                     break;
 
                 case Class.Rogue:
+                    character.AttackDice = 1;
+                    character.DefendDice = 2;
+                    character.MaxHitPoints = 6;
+
                     character.Class.HitDice = 8;
                     character.Class.SpellSlots = 0;
                     character.Class.ProficiencyWeapons.Add(WeaponType.Simple);
