@@ -25,7 +25,7 @@ namespace AI_GM.Combat
                     }
                     if (combatParticipants[i] is Monster monster)
                     {
-                        MonsterTurn(combatParticipants, monster);
+                        MonsterTurn(ref combatParticipants, monster);
                     }
                 }
             }
@@ -71,31 +71,17 @@ namespace AI_GM.Combat
             {
                 combatParticipants.Add(m);
             }
-            // combatParticipants.Sort((x, y) => y.Initiative.CompareTo(x.Initiative));
 
             return combatParticipants;
         }
 
-        /// <summary>
-        /// gets player initiative, and tells the player what their initiative is
-        /// </summary>
-        /// <param name="character"></param>
-        /// <returns></returns>
-        public static int GetPlayerInitiative(Character character)
-        {
-            Console.WriteLine("you are entering combat, roll initiative");
-            int initiative = character.DexterityModifier + Dice.DiceRoll(20);
-            Console.WriteLine($"You rolled {initiative}");
-            return initiative;
-        }
-
-        public static List<IFightable> MonsterTurn(List<IFightable> combatParticipants, Monster monster)
+        public static void MonsterTurn(ref List<IFightable> combatParticipants, Monster monster)
         {
             if (monster.DamageTaken >= monster.MaxHitPoints)
             {
                 Console.WriteLine($"{monster.Name}, {monster.Initiative}, has died");
                 combatParticipants.Remove(monster);
-                return combatParticipants;
+                return;
             }
             else
             {
@@ -131,26 +117,8 @@ namespace AI_GM.Combat
                         break;
                     }
                 }
-                return combatParticipants;
 
             }
-        }
-
-        public static bool CheckIfHit(int targetAC, int attackRoll)
-        {
-            bool hit = false;
-            if (attackRoll >= targetAC)
-            {
-                hit = true;
-            }
-            return hit;
-        }
-
-        public static int MonsterDealDamage(Monster monster)
-        {
-            int damage = 1;
-
-            return damage;
         }
 
         public static void PlayerTurn(List<IFightable> combatParticipants, Character character)
@@ -165,13 +133,13 @@ namespace AI_GM.Combat
                 Console.WriteLine("Select an action");
                 Console.WriteLine("move, attack, search"); //to be fully implemented
 
-                PlayerAttackAction(combatParticipants, character);
+                PlayerAttackAction(ref combatParticipants, character);
 
             }
 
         }
 
-        private static List<IFightable> PlayerAttackAction(List<IFightable> combatParticipants, Character character)
+        private static void PlayerAttackAction(ref List<IFightable> combatParticipants, Character character)
         {
             IFightable selectedMonster = SelectMonsterFromParticipants(combatParticipants);
             int hits = GetHits(character.AttackDice, "attack");
@@ -199,7 +167,7 @@ namespace AI_GM.Combat
                 //removes the selectedMonster from combatParticipants
                 combatParticipants.Remove(selectedMonster);
             }
-            return combatParticipants;
+           
         }
 
         private static int GetHits(int diceCount, string roll)

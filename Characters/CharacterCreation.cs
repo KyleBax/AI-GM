@@ -14,14 +14,9 @@ namespace AI_GM.Characters
             {
                 character.Name = CharacterCreationUI.GetCharacterName();
                 character = CharacterCreationUI.SelectCharacterClass(character);
-               // character = CharacterCreationUI.SelectClassProficiencies(character);
                 character = CharacterCreationLogic.AddClassFeatures(character);
                 character = CharacterCreationUI.SelectCharacterSpecies(character);
                 character = CharacterCreationLogic.AddSpeciesFeatures(character);
-               // character = CharacterCreationUI.SelectSpeciesFeatures(character);
-               // character = CharacterCreationUI.StatPointDistribution(character);
-               // character = CharacterCreationLogic.StatModifiers(character);
-               // character.MaxHitPoints = CharacterCreationLogic.CalulateStartingHitPoints(character);
                 bool characterComplete = CharacterCreationUI.CharacterComplete(character, true);
                 if (characterComplete)
                 {

@@ -73,44 +73,7 @@ namespace AI_GM.UserInterface
             return character;
         }
 
-        public static Character SelectClassProficiencies(Character character)
-        {
-            List<Skill> proficiencies = new();
-            int proficiencyCount;
-            switch (character.Class.Name)
-            {
-                case Class.Cleric:
-                    proficiencies = new List<Skill> { Skill.Survival, Skill.Medicine, Skill.Religion, Skill.Perception, Skill.Persuasion, Skill.History };
-                    proficiencyCount = 2;
-                    break;
-
-                case Class.Fighter:
-                    proficiencies = new List<Skill> { Skill.Acrobatics, Skill.Atheletics, Skill.Insight, Skill.Survival, Skill.Perception, Skill.History };
-                    proficiencyCount = 2;
-                    break;
-
-                case Class.Wizard:
-                    proficiencies = new List<Skill> { Skill.Insight, Skill.Arcana, Skill.Medicine, Skill.Insight, Skill.Investigation, Skill.History };
-                    proficiencyCount = 2;
-                    break;
-
-                case Class.Rogue:
-                    proficiencies = new List<Skill> { Skill.Stealth, Skill.SleightOfHand, Skill.Acrobatics, Skill.Perception, Skill.Persuasion, Skill.Deception };
-                    proficiencyCount = 3;
-                    break;
-
-                default:
-                    return character;
-            }
-            while (proficiencyCount >= 1)
-            {
-                Console.WriteLine("Select your proficiencies");
-                Console.WriteLine("enter the number that corresponds to the proficiencies you would like to choose");
-                character = MultichoiceListSelections(character, proficiencies, character.SkillsProficiencies);
-                proficiencyCount -= 1;
-            }
-            return character;
-        }
+       
 
         public static Character SelectCharacterSpecies(Character character)
         {
@@ -120,57 +83,7 @@ namespace AI_GM.UserInterface
             return character;
         }
 
-        public static Character SelectSpeciesFeatures(Character character)
-        {
-            List<Language> languages;
-            List<Skill> proficiencies;
-            int languageCount;
-            int proficiencyCount;
-            switch (character.Species.Name)
-            {
-                case Specie.Human:
-                    languages = new List<Language> { Language.Giant, Language.Dwarvish, Language.Elvish, Language.Celestial };
-                    languageCount = 2;
-                    proficiencyCount = 2;
-                    proficiencies = new List<Skill> { Skill.Atheletics, Skill.Perception, Skill.Religion, Skill.Survival };
-                    break;
-
-                case Specie.Elf:
-                    languages = new List<Language> { Language.Dwarvish, Language.Celestial };
-                    languageCount = 1;
-                    proficiencyCount = 1;
-                    proficiencies = new List<Skill> { Skill.Acrobatics, Skill.Perception, Skill.Medicine, Skill.Nature };
-                    break;
-
-                case Specie.Dwarf:
-                    languages = new List<Language> { Language.Elvish, Language.Giant };
-                    languageCount = 1;
-                    proficiencyCount = 1;
-                    proficiencies = new List<Skill> { Skill.Atheletics, Skill.Intimidation, Skill.History, Skill.Survival };
-                    break;
-
-                default:
-                    return character;
-            }
-
-            while (languageCount >= 1)
-            {
-                Console.WriteLine("Select your languages");
-                Console.WriteLine("enter the number that corresponds to the languages you would like to choose");
-                character = MultichoiceListSelections(character, languages, character.Species.Languages);
-                languageCount -= 1;
-            }
-
-            while (proficiencyCount >= 1)
-            {
-                Console.WriteLine("Select your proficiencies");
-                Console.WriteLine("enter the number that corresponds to the proficiencies you would like to choose");
-                character = MultichoiceListSelections(character, proficiencies, character.SkillsProficiencies);
-                proficiencyCount -= 1;
-            }
-
-            return character;
-        }
+       
 
         public static bool CharacterComplete(Character character, bool newCharacter)
         {
