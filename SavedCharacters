@@ -8,35 +8,14 @@
       <Identifier>Player</Identifier>
       <AttackDice>2</AttackDice>
       <DefendDice>3</DefendDice>
-      <Strength>0</Strength>
-      <StrengthModifier>0</StrengthModifier>
-      <Dexterity>0</Dexterity>
-      <DexterityModifier>0</DexterityModifier>
-      <Constitution>0</Constitution>
-      <ConstitutionModifier>0</ConstitutionModifier>
-      <Intelligence>0</Intelligence>
-      <IntelligenceModifier>0</IntelligenceModifier>
-      <Wisdom>0</Wisdom>
-      <WisdomModifier>0</WisdomModifier>
-      <Charisma>0</Charisma>
-      <CharismaModifier>0</CharismaModifier>
+      <PlayerNumber>0</PlayerNumber>
       <Class>
         <Name>Fighter</Name>
         <SpellSlots>0</SpellSlots>
-        <Abilities>
-          <Ability>Ability3</Ability>
-          <Ability>Ability4</Ability>
-        </Abilities>
-        <ProficiencyWeapons>
-          <WeaponType>Simple</WeaponType>
-          <WeaponType>Martial</WeaponType>
-        </ProficiencyWeapons>
-        <ProficiencyArmour>
-          <Armour>Light</Armour>
-          <Armour>Medium</Armour>
-          <Armour>Heavy</Armour>
-        </ProficiencyArmour>
-        <HitDice>10</HitDice>
+        <Abilities />
+        <ProficiencyWeapons />
+        <ProficiencyArmour />
+        <HitDice>0</HitDice>
         <HitDiceCount>1</HitDiceCount>
         <Level>1</Level>
       </Class>

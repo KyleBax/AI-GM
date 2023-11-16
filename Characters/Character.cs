@@ -50,93 +50,16 @@ namespace AI_GM.Characters
             set { _defendDice = value; }
         }
 
-
-
-
-        private int _strength;
-        public int Strength
+        private int _playerNumber;
+        public int PlayerNumber
         {
-            get { return _strength; }
-            set { _strength = value; }
+            get { return _playerNumber; }
+            set { _playerNumber = value; }
         }
 
-        private int _strengthModifier;
-        public int StrengthModifier
-        {
-            get { return _strengthModifier; }
-            set { _strengthModifier = value; }
-        }
 
-        private int _dexterity;
-        public int Dexterity
-        {
-            get { return _dexterity; }
-            set { _dexterity = value; }
-        }
 
-        private int _dexterityModifier;
-        public int DexterityModifier
-        {
-            get { return _dexterityModifier; }
-            set { _dexterityModifier = value; }
-        }
 
-        private int _constitution;
-        public int Constitution
-        {
-            get { return _constitution; }
-            set { _constitution = value; }
-        }
-
-        private int _constitutionModifier;
-        public int ConstitutionModifier
-        {
-            get { return _constitutionModifier; }
-            set { _constitutionModifier = value; }
-        }
-
-        private int _intelligence;
-
-        public int Intelligence
-        {
-            get { return _intelligence; }
-            set { _intelligence = value; }
-        }
-
-        private int _intelligenceModifier;
-        public int IntelligenceModifier
-        {
-            get { return _intelligenceModifier; }
-            set { _intelligenceModifier = value; }
-        }
-
-        private int _wisdom;
-        public int Wisdom
-        {
-            get { return _wisdom; }
-            set { _wisdom = value; }
-        }
-
-        private int _wisdomModifier;
-        public int WisdomModifier
-        {
-            get { return _wisdomModifier; }
-            set { _wisdomModifier = value; }
-        }
-
-        private int _charisma;
-        public int Charisma
-        {
-            get { return _charisma; }
-            set { _charisma = value; }
-        }
-
-        private int _charismaModifier;
-        public int CharismaModifier
-        {
-            get { return _charismaModifier; }
-            set { _charismaModifier = value; }
-        }
 
         private Classes _class = new Classes();
         public Classes Class

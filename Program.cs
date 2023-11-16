@@ -1,6 +1,7 @@
 ﻿using AI_GM.Characters;
 using AI_GM.UserInterface;
 using AI_GM.Combat;
+using AI_GM.Map;
 
 namespace AI_GM
 {
@@ -26,7 +27,13 @@ namespace AI_GM
                 }
 
             }
+            MapGenerator.MapGeneratorMain();
+
             string input = UI.GetInput();
+            if(input == "start")
+            {
+
+            }
             if (input == "combat")
             {
                 AI_GM.Combat.Combat.CombatMain(campaign);
