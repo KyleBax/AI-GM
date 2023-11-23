@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace AI_GM.Map
 {
@@ -14,9 +9,21 @@ namespace AI_GM.Map
             List<Room> rooms = GetRoomsFromTextFile(@"C:\Repos\Rakete mentoring work\AI-GM\Map\Maps.txt");
             List<Room> startingRooms = GetRoomsFromTextFile(@"C:\Repos\Rakete mentoring work\AI-GM\Map\FirstRoomMaps.txt");
             Room room = GetRandomRoom(startingRooms);
+            PlayerSpawn.SpawnPlayer(room, 2, 3);
+
             PrintRoomLayout(room);
         }
 
+        public void HandlePlayerMovement()
+        {
+
+        }
+
+        /// <summary>
+        /// Gets a random number and uses that to select the room that appears
+        /// </summary>
+        /// <param name="rooms"></param>
+        /// <returns></returns>
         private static Room GetRandomRoom(List<Room> rooms)
         {
             int randomRoomNumber = Dice.DiceRoll(rooms.Count) - 1;
@@ -24,6 +31,11 @@ namespace AI_GM.Map
             return room;
         }
 
+        /// <summary>
+        /// seperates the rooms in the text files, using "ROOM" as the divider, then adds them to a list
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns name="rooms"></returns>
         public static List<Room> GetRoomsFromTextFile(string filePath)
         {
             List<Room> rooms = new List<Room>();
@@ -46,7 +58,11 @@ namespace AI_GM.Map
 
             return rooms;
         }
-
+        /// <summary>
+        /// takes from the l
+        /// </summary>
+        /// <param name="currentRoom"></param>
+        /// <returns></returns>
         private static Room CreateRoom(List<string> currentRoom)
         {
             Room newRoom = new Room();
@@ -73,7 +89,7 @@ namespace AI_GM.Map
                     }
                 }
 
-                newRoom.layout = layout;
+                newRoom.Layout = layout;
             }
             else
             {
@@ -82,18 +98,20 @@ namespace AI_GM.Map
             return newRoom;
         }
 
+
         public static void PrintRoomLayout(Room room)
         {
-            for (int i = 0; i < room.layout.GetLength(0); i++)
+            for (int i = 0; i < room.Layout.GetLength(0); i++)
             {
-                for (int j = 0; j < room.layout.GetLength(1); j++)
+                for (int j = 0; j < room.Layout.GetLength(1); j++)
                 {
-                    Console.Write(room.layout[i, j]);
+                    Console.Write(room.Layout[i, j]);
                 }
                 Console.WriteLine();
             }
+            //Point positon
         }
 
-
+        
     }
 }
