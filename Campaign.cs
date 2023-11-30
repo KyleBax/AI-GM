@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AI_GM.Characters;
+using AI_GM.Map;
 using AI_GM.Monsters;
 
 namespace AI_GM
@@ -23,5 +24,10 @@ namespace AI_GM
             get { return _activeMonsters; }
             set { _activeMonsters = value; }
         }
+
+        
+
+
+
     }
 }

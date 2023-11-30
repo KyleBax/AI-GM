@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AI_GM.Map
 {
-    internal class Room
+    public class Room
     {
         // Key for rooms
         // # == Wall
@@ -21,20 +21,6 @@ namespace AI_GM.Map
         {
             get { return _layout; }
             set { _layout = value; }
-        }
-
-        private int _playerX;
-        public int PlayerX
-        {
-            get { return _playerX; }
-            set { _playerX = value; }
-        }
-
-        private int _playerY;
-        public int PlayerY
-        {
-            get { return _playerY; }
-            set { _playerY = value; }
         }
 
     }

@@ -1,6 +1,5 @@
 ﻿using AI_GM.Characters;
 using AI_GM.Monsters;
-using System.Collections.Generic;
 
 namespace AI_GM.Combat
 {
@@ -146,12 +145,12 @@ namespace AI_GM.Combat
 
             Console.WriteLine($"You have {hits} hits");
             int defended = 0;
-            if ( hits > 0 )
+            if (hits > 0)
             {
                 defended = GetHits(selectedMonster.DefendDice, "playerDefend");
                 Console.WriteLine($"The Monster has defended {defended} hits ");
             }
-            if(defended > hits)
+            if (defended > hits)
             {
                 defended = hits;
             }
@@ -167,7 +166,7 @@ namespace AI_GM.Combat
                 //removes the selectedMonster from combatParticipants
                 combatParticipants.Remove(selectedMonster);
             }
-           
+
         }
 
         private static int GetHits(int diceCount, string roll)
@@ -185,13 +184,13 @@ namespace AI_GM.Combat
                         }
                         break;
                     case "playerDefend":
-                        if(result >= 5)
+                        if (result >= 5)
                         {
                             hits++;
                         }
                         break;
                     case "monsterDefend":
-                        if(result == 4)
+                        if (result == 4)
                         {
                             hits++;
                         }
@@ -202,14 +201,14 @@ namespace AI_GM.Combat
             return hits;
         }
 
-        
+
 
         private static IFightable SelectMonsterFromParticipants(List<IFightable> combatParticipants)
         {
             Console.WriteLine("choose a target");
 
             var selections = combatParticipants.Where(p => p.Identifier == Identifier.Monster).ToList();
-            while(true)
+            while (true)
             {
                 for (int i = 0; i < selections.Count; i++)
                 {

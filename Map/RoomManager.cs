@@ -1,15 +1,17 @@
 ﻿using AI_GM.Characters;
 using System.Drawing;
+using System.Numerics;
 
 namespace AI_GM.Map
 {
     internal class MapGenerator
     {
+        public static Room room = new Room();
         public static void MapGeneratorMain(Campaign campaign)
         {
-            List<Room> rooms = GetRoomsFromTextFile(@"C:\Repos\Rakete mentoring work\AI-GM\Map\Maps.txt");
+            
             List<Room> startingRooms = GetRoomsFromTextFile(@"C:\Repos\Rakete mentoring work\AI-GM\Map\FirstRoomMaps.txt");
-            Room room = GetRandomRoom(startingRooms);
+            room = GetRandomRoom(startingRooms);
             Character character = campaign.PlayerCharacters.FirstOrDefault();
 
             if (character != null)
@@ -20,8 +22,8 @@ namespace AI_GM.Map
 
                 while ((keyInfo = Console.ReadKey()).Key != ConsoleKey.Escape)
                 {
-                    HandlePlayerMovement(keyInfo, character);
-                    PrintRoomLayout(room, character);     
+                    HandlePlayerMovement(keyInfo, campaign, character);
+                    PrintRoomLayout(room, character);
                 }
             }
             else
@@ -35,36 +37,35 @@ namespace AI_GM.Map
         /// <summary>
         /// Handles player movement and actions
         /// w = move up, a = move left, s = move down, d = move right
-        /// t = search for traps, f = search for treasure
+        /// t = search for traps, f = search for treasure v = attack
         /// </summary>
         /// <param name="keyInfo"></param>
-        public static void HandlePlayerMovement(ConsoleKeyInfo keyInfo, Character character)
+        public static void HandlePlayerMovement(ConsoleKeyInfo keyInfo, Campaign campaign, Character character)
         {
+            int currentX = character.X;
+            int currentY = character.Y;
+
             Console.WriteLine();
             switch (keyInfo.Key)
             {
                 case ConsoleKey.W:
                     // Move up logic                  
-                    Console.WriteLine("Player moves up.");
-                    character.Y--;
+                    TryMovePlayer(campaign, character, currentX, currentY - 1);
                     break;
 
                 case ConsoleKey.A:
                     // Move left logic
-                    Console.WriteLine("Player moves left.");
-                    character.X--;
+                    TryMovePlayer(campaign, character, currentX - 1, currentY);
                     break;
 
                 case ConsoleKey.S:
                     // Move down logic
-                    Console.WriteLine("Player moves down.");
-                    character.Y++;
+                    TryMovePlayer(campaign, character, currentX, currentY + 1);
                     break;
 
                 case ConsoleKey.D:
                     // Move right logic
-                    Console.WriteLine("Player moves right.");
-                    character.X++;
+                    TryMovePlayer(campaign, character, currentX + 1, currentY);
                     break;
 
                 case ConsoleKey.T:
@@ -78,6 +79,7 @@ namespace AI_GM.Map
                     break;
 
                 case ConsoleKey.V:
+                    // combat logic
                     Console.WriteLine("Player attacks");
                     break;
 
@@ -88,6 +90,61 @@ namespace AI_GM.Map
                     Console.WriteLine($"Unknown key: {keyInfo.Key}");
                     break;
             }
+        }
+        private static void TryMovePlayer(Campaign campaign, Character character, int targetX, int targetY)
+        {
+            if (IsMoveValid(room, campaign, targetX, targetY))
+            {
+                if (room.Layout[targetY, targetX] == 'D')
+                {
+                    LoadNewRoom();
+                }
+                else
+                {
+                    UpdateRoomLayout(character, targetX, targetY);
+                }
+            }
+            else
+            {
+                Console.WriteLine("The path is blocked");
+            }
+        }
+
+        private static void UpdateRoomLayout(Character character, int targetX, int targetY)
+        {
+            room.Layout[character.Y, character.X] = ' ';
+            room.Layout[targetY, targetX] = 'X';
+            character.X = targetX;
+            character.Y = targetY;
+        }
+
+        private static void LoadNewRoom()
+        {
+            List<Room> rooms = GetRoomsFromTextFile(@"C:\Repos\Rakete mentoring work\AI-GM\Map\Maps.txt");
+            room = GetRandomRoom(rooms);
+
+        }
+
+        /// <summary>
+        /// checks to make sure the move is valid by checking it is inside the room and not in the space of an object
+        /// that can not be 
+        /// </summary>
+        /// <param name="room"></param>
+        /// <param name="campaign"></param>
+        /// <param name="targetX"></param>
+        /// <param name="targetY"></param>
+        /// <returns></returns>
+        private static bool IsMoveValid(Room room, Campaign campaign, int targetX, int targetY)
+        {
+            // Check if the target position is within the bounds of the room
+            if (targetX >= 0 && targetX < room.Layout.GetLength(1) &&
+                targetY >= 0 && targetY < room.Layout.GetLength(0))
+            {
+                // Check if the target position is not a wall ('#')
+                return room.Layout[targetY, targetX] != '#';
+            }
+
+            return false;
         }
 
 
@@ -177,7 +234,7 @@ namespace AI_GM.Map
             {
                 for (int j = 0; j < room.Layout.GetLength(1); j++)
                 {
-                    if (i== character.Y && j== character.X)
+                    if (i == character.Y && j == character.X)
                     {
                         Console.Write("X");
                     }
@@ -185,12 +242,12 @@ namespace AI_GM.Map
                     {
                         Console.Write(room.Layout[i, j]);
                     }
-                    
+
                 }
                 Console.WriteLine();
             }
         }
 
-        
+
     }
 }

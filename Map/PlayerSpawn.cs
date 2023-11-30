@@ -9,6 +9,11 @@ namespace AI_GM.Map
 {
     internal class PlayerSpawn
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="room"></param>
+        /// <param name="campaign"></param>
         public static void SpawnPlayer(Room room, Campaign campaign)
         {
             int desiredPlayerCount = campaign.PlayerCharacters.Count;
@@ -26,14 +31,12 @@ namespace AI_GM.Map
                         character.X = j;
                         character.Y = i;
 
-                        // Update the room layout with 'X' at the player's position
                         room.Layout[i, j] = ' ';
 
                         Console.WriteLine($"{character.X}, {character.Y}");
 
                         playerCount++;
 
-                        // Exit the loop once all players are spawned
                         if (playerCount >= desiredPlayerCount)
                         {
                             // Replace all remaining 'S' occurrences with spaces

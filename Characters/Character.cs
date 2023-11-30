@@ -51,10 +51,6 @@ namespace AI_GM.Characters
             set { _playerNumber = value; }
         }
 
-
-
-
-
         private Classes _class = new Classes();
         public Classes Class
         {
@@ -69,32 +65,11 @@ namespace AI_GM.Characters
             set { _species = value; }
         }
 
-        private int _proficeincyModifier;
-        public int ProficeincyModifier
-        {
-            get { return _proficeincyModifier; }
-            set { _proficeincyModifier = value; }
-        }
-
-        private int _level;
-        public int Level
-        {
-            get { return _level; }
-            set { _level = value; }
-        }
-
         private int _speed;
         public int Speed
         {
             get { return _speed; }
             set { _speed = value; }
-        }
-
-        private List<Skill> _skillsProficiencies = new List<Skill>();
-        public List<Skill> SkillsProficiencies
-        {
-            get { return _skillsProficiencies; }
-            set { _skillsProficiencies = value; }
         }
 
         private List<Item> _inventory = new List<Item>();
