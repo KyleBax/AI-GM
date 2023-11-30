@@ -23,11 +23,19 @@ namespace AI_GM.Map
             set { _layout = value; }
         }
 
-        private int _remainingMoves;
-        public int RemainingMoves
+        private int _playerX;
+        public int PlayerX
         {
-            get { return _remainingMoves; }
-            set { _remainingMoves = value; }
+            get { return _playerX; }
+            set { _playerX = value; }
         }
+
+        private int _playerY;
+        public int PlayerY
+        {
+            get { return _playerY; }
+            set { _playerY = value; }
+        }
+
     }
 }

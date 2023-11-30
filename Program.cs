@@ -7,7 +7,7 @@ namespace AI_GM
 {
     internal class Program
     {
-        static void Main(string[] args)
+        public static void Main()
         {
             Campaign campaign = new Campaign();
             Character character = new Character();
@@ -27,7 +27,7 @@ namespace AI_GM
                 }
 
             }
-            MapGenerator.MapGeneratorMain();
+            MapGenerator.MapGeneratorMain(campaign);
 
             string input = UI.GetInput();
             if(input == "start")

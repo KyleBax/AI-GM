@@ -1,23 +1,95 @@
-﻿using System.Drawing;
+﻿using AI_GM.Characters;
+using System.Drawing;
 
 namespace AI_GM.Map
 {
     internal class MapGenerator
     {
-        public static void MapGeneratorMain()
+        public static void MapGeneratorMain(Campaign campaign)
         {
             List<Room> rooms = GetRoomsFromTextFile(@"C:\Repos\Rakete mentoring work\AI-GM\Map\Maps.txt");
             List<Room> startingRooms = GetRoomsFromTextFile(@"C:\Repos\Rakete mentoring work\AI-GM\Map\FirstRoomMaps.txt");
             Room room = GetRandomRoom(startingRooms);
-            PlayerSpawn.SpawnPlayer(room, 2, 3);
+            Character character = campaign.PlayerCharacters.FirstOrDefault();
 
-            PrintRoomLayout(room);
+            if (character != null)
+            {
+                PlayerSpawn.SpawnPlayer(room, campaign);
+                PrintRoomLayout(room, character);
+                ConsoleKeyInfo keyInfo;
+
+                while ((keyInfo = Console.ReadKey()).Key != ConsoleKey.Escape)
+                {
+                    HandlePlayerMovement(keyInfo, character);
+                    PrintRoomLayout(room, character);     
+                }
+            }
+            else
+            {
+                Console.WriteLine("No character has been found, starting a new campaign");
+                Program.Main();
+            }
+
+
         }
-
-        public void HandlePlayerMovement()
+        /// <summary>
+        /// Handles player movement and actions
+        /// w = move up, a = move left, s = move down, d = move right
+        /// t = search for traps, f = search for treasure
+        /// </summary>
+        /// <param name="keyInfo"></param>
+        public static void HandlePlayerMovement(ConsoleKeyInfo keyInfo, Character character)
         {
+            Console.WriteLine();
+            switch (keyInfo.Key)
+            {
+                case ConsoleKey.W:
+                    // Move up logic                  
+                    Console.WriteLine("Player moves up.");
+                    character.Y--;
+                    break;
 
+                case ConsoleKey.A:
+                    // Move left logic
+                    Console.WriteLine("Player moves left.");
+                    character.X--;
+                    break;
+
+                case ConsoleKey.S:
+                    // Move down logic
+                    Console.WriteLine("Player moves down.");
+                    character.Y++;
+                    break;
+
+                case ConsoleKey.D:
+                    // Move right logic
+                    Console.WriteLine("Player moves right.");
+                    character.X++;
+                    break;
+
+                case ConsoleKey.T:
+                    // Search for traps logic
+                    Console.WriteLine("Player searches for traps.");
+                    break;
+
+                case ConsoleKey.F:
+                    // Search for treasure logic
+                    Console.WriteLine("Player searches for treasure.");
+                    break;
+
+                case ConsoleKey.V:
+                    Console.WriteLine("Player attacks");
+                    break;
+
+                // Add more cases for other keys as needed
+
+                default:
+                    // Handle other keys or provide a message for unknown keys
+                    Console.WriteLine($"Unknown key: {keyInfo.Key}");
+                    break;
+            }
         }
+
 
         /// <summary>
         /// Gets a random number and uses that to select the room that appears
@@ -99,17 +171,24 @@ namespace AI_GM.Map
         }
 
 
-        public static void PrintRoomLayout(Room room)
+        public static void PrintRoomLayout(Room room, Character character)
         {
             for (int i = 0; i < room.Layout.GetLength(0); i++)
             {
                 for (int j = 0; j < room.Layout.GetLength(1); j++)
                 {
-                    Console.Write(room.Layout[i, j]);
+                    if (i== character.Y && j== character.X)
+                    {
+                        Console.Write("X");
+                    }
+                    else
+                    {
+                        Console.Write(room.Layout[i, j]);
+                    }
+                    
                 }
                 Console.WriteLine();
             }
-            //Point positon
         }
 
         

@@ -4,18 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AI_GM.Combat;
+using AI_GM.Map;
 
 namespace AI_GM.Monsters
 {
-    public class Monster : IFightable
+    public class Monster : GameObject, IFightable
     {
-        private MonsterName _name;
-
-        public MonsterName Name
-        {
-            get { return _name; }
-            set { _name = value; }
-        }
+        
 
         private Identifier _identifier = Identifier.Monster;
         public Identifier Identifier
@@ -36,101 +31,6 @@ namespace AI_GM.Monsters
         {
             get { return _defendDice; }
             set { _defendDice = value; }
-        }
-
-        /// <summary>
-        /// Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma each have a range of 0-50
-        /// </summary>
-        private int _strength;
-        public int Strength
-        {
-            get { return _strength; }
-            set { _strength = value; }
-        }
-
-        private int _strengthModifier;
-        public int StrengthModifier
-        {
-            get { return _strengthModifier; }
-            set { _strengthModifier = value; }
-        }
-
-        private int _dexterity;
-        public int Dexterity
-        {
-            get { return _dexterity; }
-            set { _dexterity = value; }
-        }
-
-        private int _dexterityModifier;
-        public int DexterityModifier
-        {
-            get { return _dexterityModifier; }
-            set { _dexterityModifier = value; }
-        }
-
-        private int _constitution;
-        public int Constitution
-        {
-            get { return _constitution; }
-            set { _constitution = value; }
-        }
-
-        private int _constitutionModifier;
-        public int ConstitutionModifier
-        {
-            get { return _constitutionModifier; }
-            set { _constitutionModifier = value; }
-        }
-
-        private int _intelligence;
-
-        public int Intelligence
-        {
-            get { return _intelligence; }
-            set { _intelligence = value; }
-        }
-
-        private int _intelligenceModifier;
-        public int IntelligenceModifier
-        {
-            get { return _intelligenceModifier; }
-            set { _intelligenceModifier = value; }
-        }
-
-        private int _wisdom;
-        public int Wisdom
-        {
-            get { return _wisdom; }
-            set { _wisdom = value; }
-        }
-
-        private int _wisdomModifier;
-        public int WisdomModifier
-        {
-            get { return _wisdomModifier; }
-            set { _wisdomModifier = value; }
-        }
-
-        private int _charisma;
-        public int Charisma
-        {
-            get { return _charisma; }
-            set { _charisma = value; }
-        }
-
-        private int _charismaModifier;
-        public int CharismaModifier
-        {
-            get { return _charismaModifier; }
-            set { _charismaModifier = value; }
-        }
-
-        private int _cR;
-        public int CR
-        {
-            get { return _cR; }
-            set { _cR = value; }
         }
 
         private string _description;
@@ -167,23 +67,5 @@ namespace AI_GM.Monsters
             get { return _damageTaken; }
             set { _damageTaken = value; }
         }
-
-        private int _initiative;
-        public int Initiative
-        {
-            get { return _initiative; }
-            set { _initiative = value; }
-        }
-
-
-
-        private int _armourClass;
-        public int ArmourClass
-        {
-            get { return _armourClass; }
-            set { _armourClass = value; }
-        }
-
-
     }
 }

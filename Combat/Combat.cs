@@ -79,13 +79,13 @@ namespace AI_GM.Combat
         {
             if (monster.DamageTaken >= monster.MaxHitPoints)
             {
-                Console.WriteLine($"{monster.Name}, {monster.Initiative}, has died");
+                Console.WriteLine($"{monster.Name}, has died");
                 combatParticipants.Remove(monster);
                 return;
             }
             else
             {
-                Console.WriteLine($"{monster.Name}, {monster.Initiative}");
+                Console.WriteLine($"{monster.Name}");
                 //after making a map for the system, target closest oponnent
                 int target = 0;
                 while (true)
@@ -126,7 +126,7 @@ namespace AI_GM.Combat
             Console.WriteLine($"it is your turn {character.Name}");
             if (character.DamageTaken >= character.MaxHitPoints)
             {
-                DeathSaves(character);
+                Console.WriteLine("you have died");
             }
             else
             {
@@ -202,46 +202,7 @@ namespace AI_GM.Combat
             return hits;
         }
 
-        private static void DeathSaves(Character character)
-        {
-            Console.WriteLine($"{character.Name}, {character.Initiative}, you are dying. Make a death saving throw");
-
-            int result = Dice.DiceRoll(20);
-            switch (result)
-            {
-                case 1:
-                    Console.WriteLine("You have suffered a critical death save");
-                    character.DeathSaveFailure += 2;
-                    break;
-                case int n when n > 1 && n <= 10:
-                    Console.WriteLine("You have failed a death save");
-                    character.DeathSaveFailure += 1;
-                    break;
-                case int n when n > 10 && n <= 19:
-                    Console.WriteLine("You have made a successful death save");
-                    character.DeathSaveSuccess += 1;
-                    break;
-                case 20:
-                    Console.WriteLine("You have made a successful death save");
-                    character.DeathSaveSuccess += 2;
-                    break;
-            }
-
-            if (character.DeathSaveFailure >= 3)
-            {
-                Console.WriteLine("You have died, please start a new campaign");
-                // add player death effects here
-            }
-
-            if (character.DeathSaveSuccess >= 3)
-            {
-                Console.WriteLine("You have succeeded in avoiding death");
-                while (character.DamageTaken >= character.MaxHitPoints)
-                {
-                    character.DamageTaken--;
-                }
-            }
-        }
+        
 
         private static IFightable SelectMonsterFromParticipants(List<IFightable> combatParticipants)
         {
@@ -280,68 +241,29 @@ namespace AI_GM.Combat
             switch (monsterName)
             {
                 case MonsterName.Goblin:
-                    monster.Name = MonsterName.Goblin;
+                    monster.Name = MonsterName.Goblin.ToString();
                     monster.AttackDice = 2;
                     monster.DefendDice = 2;
-                    monster.Strength = 8;
-                    monster.StrengthModifier = -1;
-                    monster.Dexterity = 14;
-                    monster.DexterityModifier = 2;
-                    monster.Constitution = 10;
-                    monster.ConstitutionModifier = 0;
-                    monster.Intelligence = 10;
-                    monster.IntelligenceModifier = 0;
-                    monster.Wisdom = 8;
-                    monster.WisdomModifier = -1;
-                    monster.Charisma = 8;
-                    monster.CharismaModifier = -1;
-                    monster.Speed = 30;
-                    monster.MaxHitPoints = Dice.DiceCount("2d6");
-                    monster.Initiative = Dice.DiceRoll(20) + monster.DexterityModifier;
+                    monster.Speed = 10;
+                    monster.MaxHitPoints = 1;
                     monster.Attacks.Add(GetMonsterAttack(MonsterAttackType.Scimitar));
                     break;
 
                 case MonsterName.PoisonousSnake:
-                    monster.Name = MonsterName.PoisonousSnake;
+                    monster.Name = MonsterName.PoisonousSnake.ToString();
                     monster.AttackDice = 2;
                     monster.DefendDice = 1;
-                    monster.Strength = 2;
-                    monster.StrengthModifier = -4;
-                    monster.Dexterity = 16;
-                    monster.DexterityModifier = 3;
-                    monster.Constitution = 11;
-                    monster.ConstitutionModifier = 0;
-                    monster.Intelligence = 1;
-                    monster.IntelligenceModifier = -5;
-                    monster.Wisdom = 10;
-                    monster.WisdomModifier = 0;
-                    monster.Charisma = 3;
-                    monster.CharismaModifier = -4;
-                    monster.Speed = 30;
-                    monster.MaxHitPoints = Dice.DiceRoll(4);
-                    monster.Initiative = Dice.DiceRoll(20) + monster.DexterityModifier;
+                    monster.Speed = 5;
+                    monster.MaxHitPoints = 1;
                     monster.Attacks.Add(GetMonsterAttack(MonsterAttackType.PoisonousSnakeBite));
                     break;
 
                 case MonsterName.Rat:
-                    monster.Name = MonsterName.Rat;
+                    monster.Name = MonsterName.Rat.ToString();
                     monster.AttackDice = 1;
                     monster.DefendDice = 1;
-                    monster.Strength = 2;
-                    monster.StrengthModifier = -4;
-                    monster.Dexterity = 11;
-                    monster.DexterityModifier = 0;
-                    monster.Constitution = 9;
-                    monster.ConstitutionModifier = -1;
-                    monster.Intelligence = 2;
-                    monster.IntelligenceModifier = -4;
-                    monster.Wisdom = 10;
-                    monster.WisdomModifier = 0;
-                    monster.Charisma = 4;
-                    monster.CharismaModifier = -3;
-                    monster.Speed = 20;
-                    monster.MaxHitPoints = Math.Max(Dice.DiceRoll(4) - 1, 1);
-                    monster.Initiative = Dice.DiceRoll(20) + monster.DexterityModifier;
+                    monster.Speed = 12;
+                    monster.MaxHitPoints = 1;
                     monster.Attacks.Add(GetMonsterAttack(MonsterAttackType.RatBite));
                     break;
                 default:

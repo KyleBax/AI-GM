@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AI_GM.Characters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,29 +9,53 @@ namespace AI_GM.Map
 {
     internal class PlayerSpawn
     {
-        public static void SpawnPlayer(Room room, int x, int y)
+        public static void SpawnPlayer(Room room, Campaign campaign)
         {
-            // Check if the provided coordinates are within the bounds of the room
-            if (x >= 0 && x < room.Layout.GetLength(0) && y >= 0 && y < room.Layout.GetLength(1))
-            {
-                room.Layout[x, y] = 'X';
+            int desiredPlayerCount = campaign.PlayerCharacters.Count;
+            int playerCount = 0;
 
-                // Replace any other 'S' with ' ' in the room
-                for (int i = 0; i < room.Layout.GetLength(0); i++)
+            // Iterate through the room layout
+            for (int i = 0; i < room.Layout.GetLength(0); i++)
+            {
+                for (int j = 0; j < room.Layout.GetLength(1); j++)
                 {
-                    for (int j = 0; j < room.Layout.GetLength(1); j++)
+                    if (room.Layout[i, j] == 'S')
                     {
-                        if (room.Layout[i, j] == 'S' && (i != x || j != y))
+                        // Update character's X and Y based on 'S' position
+                        Character character = campaign.PlayerCharacters[playerCount];
+                        character.X = j;
+                        character.Y = i;
+
+                        // Update the room layout with 'X' at the player's position
+                        room.Layout[i, j] = ' ';
+
+                        Console.WriteLine($"{character.X}, {character.Y}");
+
+                        playerCount++;
+
+                        // Exit the loop once all players are spawned
+                        if (playerCount >= desiredPlayerCount)
                         {
-                            room.Layout[i, j] = ' ';
+                            // Replace all remaining 'S' occurrences with spaces
+                            for (int m = i; m < room.Layout.GetLength(0); m++)
+                            {
+                                for (int n = 0; n < room.Layout.GetLength(1); n++)
+                                {
+                                    if (room.Layout[m, n] == 'S')
+                                    {
+                                        room.Layout[m, n] = ' ';
+                                    }
+                                }
+                            }
+
+                            return;
                         }
                     }
                 }
             }
-            else
-            {
-                Console.WriteLine("Invalid coordinates for spawning the player.");
-            }
+
+            Console.WriteLine($"Could not find enough 'S' in the room layout for all players. Found: {playerCount}");
         }
+
     }
 }

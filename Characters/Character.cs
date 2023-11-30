@@ -1,19 +1,13 @@
 ﻿using AI_GM.Combat;
+using AI_GM.Map;
 
 namespace AI_GM.Characters
 {
     /// <summary>
     /// Holds the information of the characters
     /// </summary>
-    public class Character : IFightable
+    public class Character : GameObject, IFightable
     {
-        private string _name;
-
-        public string Name
-        {
-            get { return _name; }
-            set { _name = value; }
-        }
 
         private int _maxHitPoints;
         public int MaxHitPoints
@@ -109,37 +103,6 @@ namespace AI_GM.Characters
             get { return _inventory; }
             set { _inventory = value; }
         }
-
-        private int _initiative;
-        public int Initiative
-        {
-            get { return _initiative; }
-            set { _initiative = value; }
-        }
-
-
-
-        private int _deathSaveSuccess = 0;
-        public int DeathSaveSuccess
-        {
-            get { return _deathSaveSuccess; }
-            set { _deathSaveSuccess = value; }
-        }
-
-        private int _deathSaveFailure = 0;
-        public int DeathSaveFailure
-        {
-            get { return _deathSaveFailure; }
-            set { _deathSaveFailure = value; }
-        }
-
-        private int _armourClass;
-        public int ArmourClass
-        {
-            get { return _armourClass; }
-            set { _armourClass = value; }
-        }
-
 
     }
 }
