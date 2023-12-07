@@ -31,7 +31,7 @@ namespace AI_GM
             string input = UI.GetInput();
             if (input == "start")
             {
-                MapGenerator.MapGeneratorMain(campaign);
+                RoomManager.MapGeneratorMain(campaign);
             }
             if (input == "combat")
             {

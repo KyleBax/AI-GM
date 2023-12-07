@@ -4,12 +4,13 @@ using System.Numerics;
 
 namespace AI_GM.Map
 {
-    internal class MapGenerator
+    internal class RoomManager
     {
         public static Room room = new Room();
+        public static bool newRoom = false;
         public static void MapGeneratorMain(Campaign campaign)
         {
-            
+
             List<Room> startingRooms = GetRoomsFromTextFile(@"C:\Repos\Rakete mentoring work\AI-GM\Map\FirstRoomMaps.txt");
             room = GetRandomRoom(startingRooms);
             Character character = campaign.PlayerCharacters.FirstOrDefault();
@@ -71,6 +72,8 @@ namespace AI_GM.Map
                 case ConsoleKey.T:
                     // Search for traps logic
                     Console.WriteLine("Player searches for traps.");
+
+
                     break;
 
                 case ConsoleKey.F:
@@ -93,15 +96,18 @@ namespace AI_GM.Map
         }
         private static void TryMovePlayer(Campaign campaign, Character character, int targetX, int targetY)
         {
-            if (IsMoveValid(room, campaign, targetX, targetY))
+            if (IsTargetInBounds(room, campaign, targetX, targetY))
             {
                 if (room.Layout[targetY, targetX] == 'D')
                 {
                     LoadNewRoom();
+                    newRoom = true;
                 }
                 else
                 {
-                    UpdateRoomLayout(character, targetX, targetY);
+                    //update player location 
+                    character.X = targetX;
+                    character.Y = targetY;
                 }
             }
             else
@@ -112,17 +118,15 @@ namespace AI_GM.Map
 
         private static void UpdateRoomLayout(Character character, int targetX, int targetY)
         {
-            room.Layout[character.Y, character.X] = ' ';
-            room.Layout[targetY, targetX] = 'X';
-            character.X = targetX;
-            character.Y = targetY;
+            //room.Layout[character.Y, character.X] = ' ';
+            //room.Layout[targetY, targetX] = 'X';
+
         }
 
         private static void LoadNewRoom()
         {
             List<Room> rooms = GetRoomsFromTextFile(@"C:\Repos\Rakete mentoring work\AI-GM\Map\Maps.txt");
             room = GetRandomRoom(rooms);
-
         }
 
         /// <summary>
@@ -134,7 +138,7 @@ namespace AI_GM.Map
         /// <param name="targetX"></param>
         /// <param name="targetY"></param>
         /// <returns></returns>
-        private static bool IsMoveValid(Room room, Campaign campaign, int targetX, int targetY)
+        private static bool IsTargetInBounds(Room room, Campaign campaign, int targetX, int targetY)
         {
             // Check if the target position is within the bounds of the room
             if (targetX >= 0 && targetX < room.Layout.GetLength(1) &&
@@ -234,17 +238,61 @@ namespace AI_GM.Map
             {
                 for (int j = 0; j < room.Layout.GetLength(1); j++)
                 {
-                    if (i == character.Y && j == character.X)
+                    if (newRoom == true)
                     {
-                        Console.Write("X");
+                        if (room.Layout[i, j] == 'D')
+                        {
+                            if (j + 1 < room.Layout.GetLength(1) && room.Layout[i, j + 1] != '#')
+                            {
+                                character.Y = i;
+                                character.X = j + 1;
+                            }
+                            else if (i + 1 < room.Layout.GetLength(1) && room.Layout[i + 1, j] != '#')
+                            {
+                                character.Y = i + 1;
+                                character.X = j;
+                            }
+                            newRoom = false;
+                        }
+                        if (i == character.Y && j == character.X)
+                        {
+                            Console.Write('X');
+                        }
+                        else
+                        {
+                            Print(i, j, character);
+                        }
                     }
                     else
                     {
-                        Console.Write(room.Layout[i, j]);
+                        Print(i, j, character);
                     }
+
+
 
                 }
                 Console.WriteLine();
+            }
+
+        }
+
+        public static void Print(int i, int j, Character character)
+        {
+            if (i == character.Y && j == character.X)
+            {
+                Console.Write('X');
+            }
+            else
+            {
+                if (room.Layout[i, j] == 'T')
+                {
+                    Console.Write(' ');
+                }
+                else
+                {
+                    Console.Write(room.Layout[i, j]);
+                }
+
             }
         }
 
