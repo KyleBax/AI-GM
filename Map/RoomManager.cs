@@ -19,19 +19,8 @@ namespace AI_GM.Map
             Character character = campaign.PlayerCharacters.FirstOrDefault();
 
             if (character != null)
-            {
-                
+            {                
                 return true;
-                PlayerSpawn.SpawnPlayer(room, campaign);
-                CheckRoomLayout(campaign);
-                ConsoleKeyInfo keyInfo;
-
-                while ((keyInfo = Console.ReadKey()).Key != ConsoleKey.Escape)
-                {
-                    HandlePlayerMovement(keyInfo, campaign);
-                    CheckRoomLayout(campaign);
-                    GetAvailablePlayerActions(character);
-                }
             }
             else
             {
@@ -77,7 +66,6 @@ namespace AI_GM.Map
                                     }
                                 }
                             }
-
                             return campaign;
                         }
                     }
