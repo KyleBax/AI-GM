@@ -25,6 +25,19 @@ namespace AI_GM
             set { _activeMonsters = value; }
         }
 
+        private int _playerCount = 1;
+        public int PlayerCount
+        {
+            get { return _playerCount; }
+            set { _playerCount = value; }
+        }
+
+        private int _activePlayer = 1;
+        public int ActivePlayer
+        {
+            get { return _activePlayer; }
+            set { _activePlayer = value; }
+        }
         
 
 

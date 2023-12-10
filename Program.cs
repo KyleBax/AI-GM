@@ -8,6 +8,7 @@ namespace AI_GM
     {
         public static void Main()
         {
+         
             Campaign campaign = new Campaign();
             Character character = new Character();
             bool newCharacter = UI.GetConfirmation("press Y to start a new campaign");
@@ -27,34 +28,27 @@ namespace AI_GM
 
             }
 
-
+            bool initSuccess = false;
             string input = UI.GetInput();
             if (input == "start")
             {
-                RoomManager.MapGeneratorMain(campaign);
+                initSuccess = RoomManager.InitialiseMaps(campaign);
             }
             if (input == "combat")
             {
                 AI_GM.Combat.Combat.CombatMain(campaign);
             }
-            else
+            if(initSuccess == true)
             {
-                while (true)
+                campaign = RoomManager.SpawnPlayer(campaign);
+                RoomManager.CheckRoomLayout(campaign);
+                ConsoleKeyInfo keyInfo;
+
+                while ((keyInfo = Console.ReadKey()).Key != ConsoleKey.Escape)
                 {
-                    Console.WriteLine("press d followed by the number you want to roll. example d8");
-                    input = UI.GetInput();
-                    int diceRoll;
-
-                    if (input.StartsWith("d") && input.Length > 1 && int.TryParse(input.Substring(1), out int diceType))
-                    {
-                        diceRoll = Dice.DiceRoll(diceType);
-                        Console.WriteLine(diceRoll);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid input.");
-                    }
-
+                    RoomManager.HandlePlayerMovement(keyInfo, campaign);
+                    RoomManager.CheckRoomLayout(campaign);
+                    RoomManager.GetAvailablePlayerActions(character);
                 }
             }
         }

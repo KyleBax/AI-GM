@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AI_GM.Map
+{
+    public class EnumDoorSide
+    {
+        public enum DoorSide
+        {
+            Right,
+            Left,
+            Top,
+            Bottom
+        }
+    }
+}

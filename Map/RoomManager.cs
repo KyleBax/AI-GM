@@ -1,72 +1,134 @@
 ﻿using AI_GM.Characters;
 using System.Drawing;
 using System.Numerics;
+using static AI_GM.Map.EnumDoorSide;
 
 namespace AI_GM.Map
 {
     internal class RoomManager
     {
+        public static List<Room>? mainRooms;
         public static Room room = new Room();
         public static bool newRoom = false;
-        public static void MapGeneratorMain(Campaign campaign)
+        public static bool playerLocationUpdated = true;
+        public static bool InitialiseMaps(Campaign campaign)
         {
-
+            mainRooms = GetRoomsFromTextFile(@"C:\Repos\Rakete mentoring work\AI-GM\Map\Maps.txt");
             List<Room> startingRooms = GetRoomsFromTextFile(@"C:\Repos\Rakete mentoring work\AI-GM\Map\FirstRoomMaps.txt");
-            room = GetRandomRoom(startingRooms);
+            GetRandomRoom(startingRooms);
             Character character = campaign.PlayerCharacters.FirstOrDefault();
 
             if (character != null)
             {
+                
+                return true;
                 PlayerSpawn.SpawnPlayer(room, campaign);
-                PrintRoomLayout(room, character);
+                CheckRoomLayout(campaign);
                 ConsoleKeyInfo keyInfo;
 
                 while ((keyInfo = Console.ReadKey()).Key != ConsoleKey.Escape)
                 {
-                    HandlePlayerMovement(keyInfo, campaign, character);
-                    PrintRoomLayout(room, character);
+                    HandlePlayerMovement(keyInfo, campaign);
+                    CheckRoomLayout(campaign);
+                    GetAvailablePlayerActions(character);
                 }
             }
             else
             {
                 Console.WriteLine("No character has been found, starting a new campaign");
-                Program.Main();
+                return false;
             }
 
 
         }
+        public static Campaign SpawnPlayer(Campaign campaign)
+        {
+            int desiredPlayerCount = campaign.PlayerCharacters.Count;
+            int playerCount = 0;
+
+            // Iterate through the room layout
+            for (int i = 0; i < room.Layout.GetLength(0); i++)
+            {
+                for (int j = 0; j < room.Layout.GetLength(1); j++)
+                {
+                    if (room.Layout[i, j] == 'S')
+                    {
+                        // Update character's X and Y based on 'S' position
+                        Character character = campaign.PlayerCharacters[playerCount];
+                        character.X = j;
+                        character.Y = i;
+
+                        room.Layout[i, j] = ' ';
+
+                        Console.WriteLine($"{character.X}, {character.Y}");
+
+                        playerCount++;
+
+                        if (playerCount >= desiredPlayerCount)
+                        {
+                            // Replace all remaining 'S' occurrences with spaces
+                            for (int m = i; m < room.Layout.GetLength(0); m++)
+                            {
+                                for (int n = 0; n < room.Layout.GetLength(1); n++)
+                                {
+                                    if (room.Layout[m, n] == 'S')
+                                    {
+                                        room.Layout[m, n] = ' ';
+                                    }
+                                }
+                            }
+
+                            return campaign;
+                        }
+                    }
+                }
+            }
+
+            Console.WriteLine($"Could not find enough 'S' in the room layout for all players. Found: {playerCount}");
+            return campaign;
+        }
+
+        public static void GetAvailablePlayerActions(Character character)
+        {
+            //check [character.x, character.y] ++ -- room.Layout
+            int x = character.X;
+            int y = character.Y;
+            
+        }
+
         /// <summary>
         /// Handles player movement and actions
         /// w = move up, a = move left, s = move down, d = move right
         /// t = search for traps, f = search for treasure v = attack
         /// </summary>
         /// <param name="keyInfo"></param>
-        public static void HandlePlayerMovement(ConsoleKeyInfo keyInfo, Campaign campaign, Character character)
+        public static void HandlePlayerMovement(ConsoleKeyInfo keyInfo, Campaign campaign)
         {
-            int currentX = character.X;
-            int currentY = character.Y;
+            int i = campaign.ActivePlayer -1;
+            int currentX = campaign.PlayerCharacters[i].X;
+            int currentY = campaign.PlayerCharacters[i].Y;
 
             Console.WriteLine();
             switch (keyInfo.Key)
             {
                 case ConsoleKey.W:
                     // Move up logic                  
-                    TryMovePlayer(campaign, character, currentX, currentY - 1);
+                    TryMovePlayer(campaign, campaign.PlayerCharacters[i], currentX, currentY - 1);
                     break;
 
                 case ConsoleKey.A:
                     // Move left logic
-                    TryMovePlayer(campaign, character, currentX - 1, currentY);
+                    TryMovePlayer(campaign, campaign.PlayerCharacters[i], currentX - 1, currentY);
                     break;
 
                 case ConsoleKey.S:
                     // Move down logic
-                    TryMovePlayer(campaign, character, currentX, currentY + 1);
+                    TryMovePlayer(campaign, campaign.PlayerCharacters[i], currentX, currentY + 1);
                     break;
 
                 case ConsoleKey.D:
                     // Move right logic
-                    TryMovePlayer(campaign, character, currentX + 1, currentY);
+                    TryMovePlayer(campaign, campaign.PlayerCharacters[i], currentX + 1, currentY);
                     break;
 
                 case ConsoleKey.T:
@@ -98,16 +160,26 @@ namespace AI_GM.Map
         {
             if (IsTargetInBounds(room, campaign, targetX, targetY))
             {
-                if (room.Layout[targetY, targetX] == 'D')
+                switch (room.Layout[targetY, targetX])
                 {
-                    LoadNewRoom();
-                    newRoom = true;
-                }
-                else
-                {
-                    //update player location 
-                    character.X = targetX;
-                    character.Y = targetY;
+                    
+                    case 'C':
+                        Console.WriteLine("The path is blocked by a chest");
+                        break;
+                    case 'T':
+                        Console.WriteLine("You have triggered a trap");
+                        character.X = targetX;
+                        character.Y = targetY;
+                        break;
+                    case 'D':
+                        LoadNewRoom();
+                        newRoom = true;
+                        playerLocationUpdated = false;
+                        break;
+                    default:
+                        character.X = targetX;
+                        character.Y = targetY;
+                        break;
                 }
             }
             else
@@ -116,17 +188,9 @@ namespace AI_GM.Map
             }
         }
 
-        private static void UpdateRoomLayout(Character character, int targetX, int targetY)
-        {
-            //room.Layout[character.Y, character.X] = ' ';
-            //room.Layout[targetY, targetX] = 'X';
-
-        }
-
         private static void LoadNewRoom()
         {
-            List<Room> rooms = GetRoomsFromTextFile(@"C:\Repos\Rakete mentoring work\AI-GM\Map\Maps.txt");
-            room = GetRandomRoom(rooms);
+            GetRandomRoom(mainRooms);
         }
 
         /// <summary>
@@ -157,11 +221,10 @@ namespace AI_GM.Map
         /// </summary>
         /// <param name="rooms"></param>
         /// <returns></returns>
-        private static Room GetRandomRoom(List<Room> rooms)
+        private static void GetRandomRoom(List<Room> rooms)
         {
             int randomRoomNumber = Dice.DiceRoll(rooms.Count) - 1;
-            Room room = rooms[randomRoomNumber];
-            return room;
+            room = rooms[randomRoomNumber];
         }
 
         /// <summary>
@@ -232,53 +295,75 @@ namespace AI_GM.Map
         }
 
 
-        public static void PrintRoomLayout(Room room, Character character)
+        public static void CheckRoomLayout(Campaign campaign)
         {
-            for (int i = 0; i < room.Layout.GetLength(0); i++)
+            for(int z = 0; z< campaign.PlayerCount; z++)
             {
-                for (int j = 0; j < room.Layout.GetLength(1); j++)
+                for (int i = 0; i < room.Layout.GetLength(0); i++)
                 {
-                    if (newRoom == true)
+                    for (int j = 0; j < room.Layout.GetLength(1); j++)
                     {
-                        if (room.Layout[i, j] == 'D')
+                        if (newRoom == true)
                         {
-                            if (j + 1 < room.Layout.GetLength(1) && room.Layout[i, j + 1] != '#')
+                            if (room.Layout[i, j] == 'D')
                             {
-                                character.Y = i;
-                                character.X = j + 1;
+                                switch (FindDoorSide(room, i, j))
+                                {
+                                    case DoorSide.Right:
+                                        campaign.PlayerCharacters[z].Y = i;
+                                        campaign.PlayerCharacters[z].X = j - 1;
+                                        break;
+                                    case DoorSide.Left:
+                                        campaign.PlayerCharacters[z].Y = i;
+                                        campaign.PlayerCharacters[z].X = j + 1;
+                                        break;
+                                    case DoorSide.Bottom:
+                                        campaign.PlayerCharacters[z].Y = i - 1;
+                                        campaign.PlayerCharacters[z].X = j;
+                                        break;
+                                    case DoorSide.Top:
+                                        campaign.PlayerCharacters[z].Y = i + 1;
+                                        campaign.PlayerCharacters[z].X = j;
+                                        break;
+                                }
+                                playerLocationUpdated = true;
+                                newRoom = false;
                             }
-                            else if (i + 1 < room.Layout.GetLength(1) && room.Layout[i + 1, j] != '#')
-                            {
-                                character.Y = i + 1;
-                                character.X = j;
-                            }
-                            newRoom = false;
                         }
-                        if (i == character.Y && j == character.X)
-                        {
-                            Console.Write('X');
-                        }
-                        else
-                        {
-                            Print(i, j, character);
-                        }
+                        PrintRoomLayout(i, j, campaign.PlayerCharacters[z]);
                     }
-                    else
-                    {
-                        Print(i, j, character);
-                    }
-
-
-
+                    Console.WriteLine();
                 }
-                Console.WriteLine();
             }
+
+            
 
         }
 
-        public static void Print(int i, int j, Character character)
+        private static DoorSide FindDoorSide(Room room, int i, int j)
         {
-            if (i == character.Y && j == character.X)
+            if (j == room.Layout.GetLength(1) - 1)
+                return DoorSide.Right;
+
+            if (j == 0)
+                return DoorSide.Left;
+
+            if (i == room.Layout.GetLength(0) - 1)
+                return DoorSide.Bottom;
+
+            if (i == 0)
+                return DoorSide.Top;
+
+            return DoorSide.Right; 
+        }
+
+
+
+
+
+        public static void PrintRoomLayout(int i, int j, Character character)
+        {
+            if (i == character.Y && j == character.X && playerLocationUpdated)
             {
                 Console.Write('X');
             }
