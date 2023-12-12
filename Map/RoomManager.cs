@@ -13,8 +13,8 @@ namespace AI_GM.Map
         public static bool playerLocationUpdated = true;
         public static bool InitialiseMaps(Campaign campaign)
         {
-            mainRooms = GetRoomsFromTextFile(@"C:\Repos\Rakete mentoring work\AI-GM\Map\Maps.txt");
-            List<Room> startingRooms = GetRoomsFromTextFile(@"C:\Repos\Rakete mentoring work\AI-GM\Map\FirstRoomMaps.txt");
+            mainRooms = GetRoomsFromTextFile(FilePaths.MAINROOMS);
+            List<Room> startingRooms = GetRoomsFromTextFile(FilePaths.STARTINGROOMS);
             GetRandomRoom(startingRooms);
             Character character = campaign.PlayerCharacters.FirstOrDefault();
 
