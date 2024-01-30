@@ -76,12 +76,49 @@ namespace AI_GM.Map
             return campaign;
         }
 
-        public static void GetAvailablePlayerActions(Character character)
+        public static List<Characters.Action> GetListAvailablePlayerActions(Campaign campaign)
         {
             //check [character.x, character.y] ++ -- room.Layout
-            int x = character.X;
-            int y = character.Y;
-            
+            int playerX = campaign.PlayerCharacters[campaign.ActivePlayer].X;
+            int playerY = campaign.PlayerCharacters[campaign.ActivePlayer].Y;
+            List<Characters.Action> availableActions = new List<Characters.Action>();
+            bool moveAdded = false;
+
+
+            for (int checkX = playerX - 1; checkX <= playerX + 1; checkX++)
+            {
+                for (int checkY = playerY - 1; checkY <= playerY + 1; checkY++)
+                {
+                    if (checkX == playerX && checkY == playerY)
+                    {
+                        // Skip the current position (character's position)
+                        continue;
+                    }
+
+                    switch (room.Layout[checkY, checkX])
+                    {
+                        case ' ':
+                            if (!moveAdded)  // Check if move option hasn't been added yet
+                            {
+                                availableActions.Add(Characters.Action.Move);
+                                moveAdded = true;  // Set the flag to true after adding move option
+                            }
+                            break;
+                        case 'm':
+                            availableActions.Add (Characters.Action.Attack);
+                            break;
+                        case 'C':
+                            availableActions.Add(Characters.Action.SearchChest);
+                            break;
+
+                        default:
+
+                            break;
+                    }
+                }
+            }
+            return availableActions;
+
         }
 
         /// <summary>
@@ -92,7 +129,7 @@ namespace AI_GM.Map
         /// <param name="keyInfo"></param>
         public static void HandlePlayerMovement(ConsoleKeyInfo keyInfo, Campaign campaign)
         {
-            int i = campaign.ActivePlayer -1;
+            int i = campaign.ActivePlayer;
             int currentX = campaign.PlayerCharacters[i].X;
             int currentY = campaign.PlayerCharacters[i].Y;
 
@@ -158,6 +195,8 @@ namespace AI_GM.Map
                         Console.WriteLine("You have triggered a trap");
                         character.X = targetX;
                         character.Y = targetY;
+                        //deal damage to player here
+                        character.DamageTaken += 1;
                         break;
                     case 'D':
                         LoadNewRoom();
@@ -369,6 +408,12 @@ namespace AI_GM.Map
             }
         }
 
-
+        internal static void DisplayAvailableActions(List<Characters.Action> availableActions, Campaign campaign)
+        {
+            for (int i = 0; i < availableActions.Count; i++)
+            {
+                Console.WriteLine(availableActions[i]);
+            }
+        }
     }
 }

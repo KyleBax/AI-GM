@@ -42,13 +42,18 @@ namespace AI_GM
             {
                 campaign = RoomManager.SpawnPlayer(campaign);
                 RoomManager.CheckRoomLayout(campaign);
+                List<Characters.Action> availableActions = RoomManager.GetListAvailablePlayerActions(campaign);
+                RoomManager.DisplayAvailableActions(availableActions, campaign);
+
+
                 ConsoleKeyInfo keyInfo;
 
                 while ((keyInfo = Console.ReadKey()).Key != ConsoleKey.Escape)
                 {
                     RoomManager.HandlePlayerMovement(keyInfo, campaign);
                     RoomManager.CheckRoomLayout(campaign);
-                    RoomManager.GetAvailablePlayerActions(character);
+                    availableActions = RoomManager.GetListAvailablePlayerActions(campaign);
+                    RoomManager.DisplayAvailableActions(availableActions, campaign);
                 }
             }
         }
