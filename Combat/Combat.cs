@@ -52,24 +52,26 @@ namespace AI_GM.Combat
         }
 
         /// <summary>
-        /// Adds all combat participants and then sorts them by initiative highest to lowest
+        /// Adds player characters to cambatparticipant list
         /// </summary>
-        /// <param name="character"></param>
+        /// <param name="campaign"></param>
         /// <returns></returns>
         public static List<IFightable> GetCombatParticipantsList(Campaign campaign)
         {
-            Monster monster = new Monster();
-            List<Monster> monsters = new List<Monster>();
-            monsters = GetMonsters();
-            List<IFightable> combatParticipants = new List<IFightable>();
             foreach (Character character in campaign.PlayerCharacters)
             {
                 combatParticipants.Add(character);
             }
+            //temporarily not needed. commented out as may be needed again later in some way
+/*            Monster monster = new Monster();
+            List<Monster> monsters = new List<Monster>();
+            monsters = GetMonsters();
+            List<IFightable> combatParticipants = new List<IFightable>();
+
             foreach (Monster m in monsters)
             {
                 combatParticipants.Add(m);
-            }
+            }*/
 
             return combatParticipants;
         }
@@ -138,7 +140,7 @@ namespace AI_GM.Combat
 
         }
 
-        private static void PlayerAttackAction(ref List<IFightable> combatParticipants, Character character)
+        public static void PlayerAttackAction(ref List<IFightable> combatParticipants, Character character)
         {
             IFightable selectedMonster = SelectMonsterFromParticipants(combatParticipants);
             int hits = GetHits(character.AttackDice, "attack");

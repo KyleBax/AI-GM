@@ -40,20 +40,30 @@ namespace AI_GM
             }
             if(initSuccess == true)
             {
+                //start game here, player 1 goes first, have 3 actions, when all 3 actions are done next player, when all players are done monsters
+                //actions include move, attack and search, can not leave a room until all monsters are dead
+                List<IFightable> combatParticipants = Combat.Combat.GetCombatParticipantsList(campaign);
+               
                 campaign = RoomManager.SpawnPlayer(campaign);
                 RoomManager.CheckRoomLayout(campaign);
                 List<Characters.Action> availableActions = RoomManager.GetListAvailablePlayerActions(campaign);
                 RoomManager.DisplayAvailableActions(availableActions, campaign);
 
-
+                int actionsTaken = 0;
+                int availableMovementSpaces = 0;// Dice.DiceCount("2d4");
                 ConsoleKeyInfo keyInfo;
 
                 while ((keyInfo = Console.ReadKey()).Key != ConsoleKey.Escape)
                 {
-                    RoomManager.HandlePlayerMovement(keyInfo, campaign);
+                    availableMovementSpaces = RoomManager.HandlePlayerMovement(keyInfo, campaign, availableMovementSpaces);
                     RoomManager.CheckRoomLayout(campaign);
-                    availableActions = RoomManager.GetListAvailablePlayerActions(campaign);
+                    availableActions = RoomManager.GetListAvailablePlayerActions(campaign, availableMovementSpaces);
                     RoomManager.DisplayAvailableActions(availableActions, campaign);
+                    if (actionsTaken >= 3)
+                    {
+                    //next active player code goes here
+                    }
+                    
                 }
             }
         }
