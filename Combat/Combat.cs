@@ -58,6 +58,7 @@ namespace AI_GM.Combat
         /// <returns></returns>
         public static List<IFightable> GetCombatParticipantsList(Campaign campaign)
         {
+            List<IFightable> combatParticipants = new List<IFightable>();
             foreach (Character character in campaign.PlayerCharacters)
             {
                 combatParticipants.Add(character);

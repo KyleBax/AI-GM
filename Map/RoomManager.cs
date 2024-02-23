@@ -103,8 +103,12 @@ namespace AI_GM.Map
                                 if (availableMovementSpaces > 0)
                                 {
                                     availableActions.Add(Characters.Action.Move);
-                                }                       
-                                moveAdded = true;  // Set the flag to true after adding move option
+                                }
+                                else
+                                {
+                                    availableActions.Add (Characters.Action.RollToMove);
+                                }
+                                moveAdded = true;  // Set the flag to true after adding move option to prevent duplicates
                             }
                             break;
                         case 'm':
@@ -140,23 +144,55 @@ namespace AI_GM.Map
             switch (keyInfo.Key)
             {
                 case ConsoleKey.W:
-                    // Move up logic                  
-                    TryMovePlayer(campaign, campaign.PlayerCharacters[i], currentX, currentY - 1);
+                    // Move up logic
+                    if (availableMovementSpaces > 0)
+                    {
+                        TryMovePlayer(campaign, campaign.PlayerCharacters[i], currentX, currentY - 1);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Please Roll before moving");
+                    }
+                    
                     break;
 
                 case ConsoleKey.A:
                     // Move left logic
-                    TryMovePlayer(campaign, campaign.PlayerCharacters[i], currentX - 1, currentY);
+                    if (availableMovementSpaces > 0)
+                    {
+                        TryMovePlayer(campaign, campaign.PlayerCharacters[i], currentX - 1, currentY);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Please Roll before moving");
+                    }
+                    
                     break;
 
                 case ConsoleKey.S:
                     // Move down logic
-                    TryMovePlayer(campaign, campaign.PlayerCharacters[i], currentX, currentY + 1);
+                    if (availableMovementSpaces > 0)
+                    {
+                        TryMovePlayer(campaign, campaign.PlayerCharacters[i], currentX, currentY + 1);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Please Roll before moving");
+                    }
+                    
                     break;
 
                 case ConsoleKey.D:
                     // Move right logic
-                    TryMovePlayer(campaign, campaign.PlayerCharacters[i], currentX + 1, currentY);
+                    if (availableMovementSpaces > 0)
+                    {
+                        TryMovePlayer(campaign, campaign.PlayerCharacters[i], currentX + 1, currentY);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Please Roll before moving");
+                    }
+                    
                     break;
 
                 case ConsoleKey.T:

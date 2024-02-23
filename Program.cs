@@ -8,7 +8,7 @@ namespace AI_GM
     {
         public static void Main()
         {
-         
+
             Campaign campaign = new Campaign();
             Character character = new Character();
             bool newCharacter = UI.GetConfirmation("press Y to start a new campaign");
@@ -38,33 +38,37 @@ namespace AI_GM
             {
                 AI_GM.Combat.Combat.CombatMain(campaign);
             }
-            if(initSuccess == true)
+            if (initSuccess == true)
             {
                 //start game here, player 1 goes first, have 3 actions, when all 3 actions are done next player, when all players are done monsters
                 //actions include move, attack and search, can not leave a room until all monsters are dead
                 List<IFightable> combatParticipants = Combat.Combat.GetCombatParticipantsList(campaign);
-               
                 campaign = RoomManager.SpawnPlayer(campaign);
                 RoomManager.CheckRoomLayout(campaign);
-                List<Characters.Action> availableActions = RoomManager.GetListAvailablePlayerActions(campaign);
-                RoomManager.DisplayAvailableActions(availableActions, campaign);
-
-                int actionsTaken = 0;
-                int availableMovementSpaces = 0;// Dice.DiceCount("2d4");
-                ConsoleKeyInfo keyInfo;
-
-                while ((keyInfo = Console.ReadKey()).Key != ConsoleKey.Escape)
+                while (true)
                 {
-                    availableMovementSpaces = RoomManager.HandlePlayerMovement(keyInfo, campaign, availableMovementSpaces);
-                    RoomManager.CheckRoomLayout(campaign);
-                    availableActions = RoomManager.GetListAvailablePlayerActions(campaign, availableMovementSpaces);
+                    int actionsTaken = 0;
+                    int availableMovementSpaces = 0;// Dice.DiceCount("2d4");
+
+                    List<Characters.Action> availableActions = RoomManager.GetListAvailablePlayerActions(campaign, availableMovementSpaces);
                     RoomManager.DisplayAvailableActions(availableActions, campaign);
-                    if (actionsTaken >= 3)
+
+                    ConsoleKeyInfo keyInfo;
+
+                    while ((keyInfo = Console.ReadKey()).Key != ConsoleKey.Escape)
                     {
-                    //next active player code goes here
+                        availableMovementSpaces = RoomManager.HandlePlayerMovement(keyInfo, campaign, availableMovementSpaces);
+                        RoomManager.CheckRoomLayout(campaign);
+                        availableActions = RoomManager.GetListAvailablePlayerActions(campaign, availableMovementSpaces);
+                        RoomManager.DisplayAvailableActions(availableActions, campaign);
+                        if (actionsTaken >= 3)
+                        {
+                            //next active player code goes here
+                        }
+
                     }
-                    
                 }
+                
             }
         }
     }
