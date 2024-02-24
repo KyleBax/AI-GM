@@ -134,7 +134,7 @@ namespace AI_GM.Map
         /// t = search for traps, f = search for treasure v = attack
         /// </summary>
         /// <param name="keyInfo"></param>
-        public static int HandlePlayerMovement(ConsoleKeyInfo keyInfo, Campaign campaign, int availableMovementSpaces)
+        public static int HandlePlayerActions(ConsoleKeyInfo keyInfo, Campaign campaign, int availableMovementSpaces)
         {
             int i = campaign.ActivePlayer;
             int currentX = campaign.PlayerCharacters[i].X;
@@ -212,7 +212,11 @@ namespace AI_GM.Map
                     // Combat.Combat.PlayerAttackAction(campaign.PlayerCharacters[i]);
                     Console.WriteLine("Player attacks");
                     break;
-
+                case ConsoleKey.R:
+                    //Roll for movement logic
+                    availableMovementSpaces = Dice.DiceCount("2d4");
+                    Console.WriteLine("Player rolls");
+                    break;
                 // Add more cases for other keys as needed
 
                 default:

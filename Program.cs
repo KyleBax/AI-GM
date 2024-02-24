@@ -57,7 +57,7 @@ namespace AI_GM
 
                     while ((keyInfo = Console.ReadKey()).Key != ConsoleKey.Escape)
                     {
-                        availableMovementSpaces = RoomManager.HandlePlayerMovement(keyInfo, campaign, availableMovementSpaces);
+                        availableMovementSpaces = RoomManager.HandlePlayerActions(keyInfo, campaign, availableMovementSpaces);
                         RoomManager.CheckRoomLayout(campaign);
                         availableActions = RoomManager.GetListAvailablePlayerActions(campaign, availableMovementSpaces);
                         RoomManager.DisplayAvailableActions(availableActions, campaign);
