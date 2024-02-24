@@ -231,7 +231,8 @@ namespace AI_GM.Map
             }
             else
             {
-                return availableMovementSpaces--;
+                availableMovementSpaces--;
+                return availableMovementSpaces;
             }
         }
         private static void TryMovePlayer(Campaign campaign, Character character, int targetX, int targetY)
