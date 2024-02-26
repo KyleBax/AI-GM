@@ -47,28 +47,38 @@ namespace AI_GM
                 RoomManager.CheckRoomLayout(campaign);
                 while (true)
                 {
-                    int actionsTaken = 0;
-                    int availableMovementSpaces = 0;// Dice.DiceCount("2d4");
-
-                    List<Characters.Action> availableActions = RoomManager.GetListAvailablePlayerActions(campaign, availableMovementSpaces);
-                    RoomManager.DisplayAvailableActions(availableActions, campaign);
-
-                    ConsoleKeyInfo keyInfo;
-
-                    while ((keyInfo = Console.ReadKey()).Key != ConsoleKey.Escape)
+                    for (int i = 0; i < combatParticipants.Count; i++)
                     {
-                        availableMovementSpaces = RoomManager.HandlePlayerActions(keyInfo, campaign, availableMovementSpaces);
-                        RoomManager.CheckRoomLayout(campaign);
-                        availableActions = RoomManager.GetListAvailablePlayerActions(campaign, availableMovementSpaces);
-                        RoomManager.DisplayAvailableActions(availableActions, campaign);
-                        if (actionsTaken >= 3)
+                        if (combatParticipants[i].Identifier == Identifier.Player)
                         {
-                            //next active player code goes here
-                        }
+                            
+                            int actionsTaken = 0;
+                            int availableMovementSpaces = 0;
 
+                            List<Characters.Action> availableActions = RoomManager.GetListAvailablePlayerActions(campaign, availableMovementSpaces);
+                            RoomManager.DisplayAvailableActions(availableActions, campaign);
+
+                            ConsoleKeyInfo keyInfo;
+
+                            while ((keyInfo = Console.ReadKey()).Key != ConsoleKey.Escape)
+                            {
+                                int movementchecker = availableMovementSpaces;
+                                campaign = RoomManager.HandlePlayerActions(keyInfo, campaign);
+                                if (availableMovementSpaces == movementchecker)
+                                {
+                                    actionsTaken++;
+                                }
+                                RoomManager.CheckRoomLayout(campaign);
+                                availableActions = RoomManager.GetListAvailablePlayerActions(campaign, availableMovementSpaces);
+                                RoomManager.DisplayAvailableActions(availableActions, campaign);
+                                if (actionsTaken >= 3)
+                                {
+                                    //next active player code goes here
+                                }
+                            }
+                        }                     
                     }
                 }
-                
             }
         }
     }

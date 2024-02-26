@@ -12,71 +12,168 @@ namespace AI_GM.Characters
         private int _maxHitPoints;
         public int MaxHitPoints
         {
-            get { return _maxHitPoints; }
-            set { _maxHitPoints = value; }
+            get
+            {
+                return _maxHitPoints;
+            }
+            set
+            {
+                _maxHitPoints = value;
+            }
         }
 
         private int _damageTaken;
         public int DamageTaken
         {
-            get { return _damageTaken; }
-            set { _damageTaken = value; }
+            get
+            {
+                return _damageTaken;
+            }
+            set
+            {
+                _damageTaken = value;
+            }
         }
 
         private Identifier _identifier = Identifier.Player;
         public Identifier Identifier
         {
-            get { return _identifier; }
-            set { _identifier = value; }
+            get
+            {
+                return _identifier;
+            }
+            set
+            {
+                _identifier = value;
+            }
         }
 
         private int _attackDice;
         public int AttackDice
         {
-            get { return _attackDice; }
-            set { _attackDice = value; }
+            get
+            {
+                return _attackDice;
+            }
+            set
+            {
+                _attackDice = value;
+            }
         }
 
         private int _defendDice;
         public int DefendDice
         {
-            get { return _defendDice; }
-            set { _defendDice = value; }
+            get
+            {
+                return _defendDice;
+            }
+            set
+            {
+                _defendDice = value;
+            }
         }
 
         private int _playerNumber;
         public int PlayerNumber
         {
-            get { return _playerNumber; }
-            set { _playerNumber = value; }
+            get
+            {
+                return _playerNumber;
+            }
+            set
+            {
+                _playerNumber = value;
+            }
         }
 
         private Classes _class = new Classes();
         public Classes Class
         {
-            get { return _class; }
-            set { _class = value; }
+            get
+            {
+                return _class;
+            }
+            set
+            {
+                _class = value;
+            }
         }
 
         private Species _species = new Species();
         public Species Species
         {
-            get { return _species; }
-            set { _species = value; }
+            get
+            {
+                return _species;
+            }
+            set
+            {
+                _species = value;
+            }
         }
 
         private int _speed;
         public int Speed
         {
-            get { return _speed; }
-            set { _speed = value; }
+            get
+            {
+                return _speed;
+            }
+            set
+            {
+                _speed = value;
+            }
         }
 
         private List<Item> _inventory = new List<Item>();
         public List<Item> Inventory
         {
-            get { return _inventory; }
-            set { _inventory = value; }
+            get
+            {
+                return _inventory;
+            }
+            set
+            {
+                _inventory = value;
+            }
+        }
+
+        private int _availableMovement = 0;
+        public int AvailableMovement
+        {
+            get
+            {
+                return _availableMovement;
+            }
+            set
+            {
+                _availableMovement = value;
+            }
+        }
+        private int _actionsTaken = 0;
+        public int ActionsTaken
+        {
+            get
+            {
+                return _actionsTaken;
+            }
+            set
+            {
+                _actionsTaken = value;
+            }
+        }
+        private int _maxActions = 3;
+        public int MaxActions
+        {
+            get
+            {
+                return _maxActions;
+            }
+            set
+            {
+                _maxActions = value;
+            }
         }
 
     }

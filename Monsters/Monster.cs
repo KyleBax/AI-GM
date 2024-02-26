@@ -67,5 +67,41 @@ namespace AI_GM.Monsters
             get { return _damageTaken; }
             set { _damageTaken = value; }
         }
+        private int _availableMovement = 0;
+        public int AvailableMovement
+        {
+            get
+            {
+                return _availableMovement;
+            }
+            set
+            {
+                _availableMovement = value;
+            }
+        }
+        private int _actionsTaken = 0;
+        public int ActionsTaken
+        {
+            get
+            {
+                return _actionsTaken;
+            }
+            set
+            {
+                _actionsTaken = value;
+            }
+        }
+        private int _maxActions = 1;
+        public int MaxActions
+        {
+            get
+            {
+                return _maxActions;
+            }
+            set
+            {
+                _maxActions = value;
+            }
+        }
     }
 }

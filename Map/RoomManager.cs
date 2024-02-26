@@ -106,7 +106,7 @@ namespace AI_GM.Map
                                 }
                                 else
                                 {
-                                    availableActions.Add (Characters.Action.RollToMove);
+                                    availableActions.Add(Characters.Action.RollToMove);
                                 }
                                 moveAdded = true;  // Set the flag to true after adding move option to prevent duplicates
                             }
@@ -134,7 +134,7 @@ namespace AI_GM.Map
         /// t = search for traps, f = search for treasure v = attack
         /// </summary>
         /// <param name="keyInfo"></param>
-        public static int HandlePlayerActions(ConsoleKeyInfo keyInfo, Campaign campaign, int availableMovementSpaces)
+        public static Campaign HandlePlayerActions(ConsoleKeyInfo keyInfo, Campaign campaign)
         {
             int i = campaign.ActivePlayer;
             int currentX = campaign.PlayerCharacters[i].X;
@@ -145,54 +145,22 @@ namespace AI_GM.Map
             {
                 case ConsoleKey.W:
                     // Move up logic
-                    if (availableMovementSpaces > 0)
-                    {
-                        TryMovePlayer(campaign, campaign.PlayerCharacters[i], currentX, currentY - 1);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Please Roll before moving");
-                    }
-                    
+                    campaign.PlayerCharacters[i].AvailableMovement = TryMovePlayer(campaign, campaign.PlayerCharacters[i], currentX, currentY - 1, campaign.PlayerCharacters[i].AvailableMovement);
                     break;
 
                 case ConsoleKey.A:
                     // Move left logic
-                    if (availableMovementSpaces > 0)
-                    {
-                        TryMovePlayer(campaign, campaign.PlayerCharacters[i], currentX - 1, currentY);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Please Roll before moving");
-                    }
-                    
+                    campaign.PlayerCharacters[i].AvailableMovement = TryMovePlayer(campaign, campaign.PlayerCharacters[i], currentX - 1, currentY, campaign.PlayerCharacters[i].AvailableMovement);
                     break;
 
                 case ConsoleKey.S:
                     // Move down logic
-                    if (availableMovementSpaces > 0)
-                    {
-                        TryMovePlayer(campaign, campaign.PlayerCharacters[i], currentX, currentY + 1);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Please Roll before moving");
-                    }
-                    
+                    campaign.PlayerCharacters[i].AvailableMovement = TryMovePlayer(campaign, campaign.PlayerCharacters[i], currentX, currentY + 1, campaign.PlayerCharacters[i].AvailableMovement);
                     break;
 
                 case ConsoleKey.D:
                     // Move right logic
-                    if (availableMovementSpaces > 0)
-                    {
-                        TryMovePlayer(campaign, campaign.PlayerCharacters[i], currentX + 1, currentY);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Please Roll before moving");
-                    }
-                    
+                    campaign.PlayerCharacters[i].AvailableMovement = TryMovePlayer(campaign, campaign.PlayerCharacters[i], currentX + 1, currentY, campaign.PlayerCharacters[i].AvailableMovement);
                     break;
 
                 case ConsoleKey.T:
@@ -214,8 +182,9 @@ namespace AI_GM.Map
                     break;
                 case ConsoleKey.R:
                     //Roll for movement logic
-                    availableMovementSpaces = Dice.DiceCount("2d4");
-                    Console.WriteLine("Player rolls");
+                    int roll = Dice.DiceCount("2d4");
+                    campaign.PlayerCharacters[i].AvailableMovement += roll;
+                    Console.WriteLine($"You have rolled {roll}, {campaign.PlayerCharacters[i].AvailableMovement} movement available");
                     break;
                 // Add more cases for other keys as needed
 
@@ -224,52 +193,52 @@ namespace AI_GM.Map
                     Console.WriteLine($"Unknown key: {keyInfo.Key}");
                     break;
             }
-
-            if (currentX == campaign.PlayerCharacters[i].X && currentY == campaign.PlayerCharacters[i].Y)
-            {
-                return availableMovementSpaces;
-            }
-            else
-            {
-                availableMovementSpaces--;
-                return availableMovementSpaces;
-            }
+            return campaign;
         }
-        private static void TryMovePlayer(Campaign campaign, Character character, int targetX, int targetY)
+        private static int TryMovePlayer(Campaign campaign, Character character, int targetX, int targetY, int availableMovementSpaces)
         {
-            if (IsTargetInBounds(room, campaign, targetX, targetY))
+            if (availableMovementSpaces > 0)
             {
-                switch (room.Layout[targetY, targetX])
+                if (IsTargetInBounds(room, campaign, targetX, targetY))
                 {
+                    switch (room.Layout[targetY, targetX])
+                    {
 
-                    case 'C':
-                        Console.WriteLine("The path is blocked by a chest");
-                        break;
-                    case 'T':
-                        Console.WriteLine("You have triggered a trap");
-                        character.X = targetX;
-                        character.Y = targetY;
-                        //deal damage to player here
-                        character.DamageTaken += 1;
-                        break;
-                    case 'D':
-                        LoadNewRoom();
-                        newRoom = true;
-                        playerLocationUpdated = false;
-                        break;
-                    case 'm':
-                        Console.WriteLine("There is a monster in the way");
-                        break;
-                    default:
-                        character.X = targetX;
-                        character.Y = targetY;
-                        break;
+                        case 'C':
+                            Console.WriteLine("The path is blocked by a chest");
+                            break;
+                        case 'T':
+                            Console.WriteLine("You have triggered a trap");
+                            character.X = targetX;
+                            character.Y = targetY;
+                            //deal damage to player here
+                            character.DamageTaken += 1;
+                            break;
+                        case 'D':
+                            LoadNewRoom();
+                            newRoom = true;
+                            playerLocationUpdated = false;
+                            break;
+                        case 'm':
+                            Console.WriteLine("There is a monster in the way");
+                            break;
+                        default:
+                            character.X = targetX;
+                            character.Y = targetY;
+                            break;
+                    }
+                    availableMovementSpaces--;
+                }
+                else
+                {
+                    Console.WriteLine("The path is blocked");
                 }
             }
             else
             {
-                Console.WriteLine("The path is blocked");
+                Console.WriteLine("Please Roll before moving");
             }
+            return availableMovementSpaces;
         }
 
         private static void LoadNewRoom()
