@@ -10,62 +10,110 @@ namespace AI_GM.Monsters
 {
     public class Monster : GameObject, IFightable
     {
-        
+
 
         private Identifier _identifier = Identifier.Monster;
         public Identifier Identifier
         {
-            get { return _identifier; }
-            set { _identifier = value; }
+            get
+            {
+                return _identifier;
+            }
+            set
+            {
+                _identifier = value;
+            }
         }
 
         private int _attackDice;
         public int AttackDice
         {
-            get { return _attackDice; }
-            set { _attackDice = value; }
+            get
+            {
+                return _attackDice;
+            }
+            set
+            {
+                _attackDice = value;
+            }
         }
 
         private int _defendDice;
         public int DefendDice
         {
-            get { return _defendDice; }
-            set { _defendDice = value; }
+            get
+            {
+                return _defendDice;
+            }
+            set
+            {
+                _defendDice = value;
+            }
         }
 
         private string _description;
         public string Description
         {
-            get { return _description; }
-            set { _description = value; }
+            get
+            {
+                return _description;
+            }
+            set
+            {
+                _description = value;
+            }
         }
 
         private int _speed;
         public int Speed
         {
-            get { return _speed; }
-            set { _speed = value; }
+            get
+            {
+                return _speed;
+            }
+            set
+            {
+                _speed = value;
+            }
         }
 
         private List<MonsterAttack> _attacks = new List<MonsterAttack>();
         public List<MonsterAttack> Attacks //TODO: attack class? (attack has some properties like damage value, range, name etc
         {
-            get { return _attacks; }
-            set { _attacks = value; }
+            get
+            {
+                return _attacks;
+            }
+            set
+            {
+                _attacks = value;
+            }
         }
 
         private int _maxHitPoints;
         public int MaxHitPoints
         {
-            get { return _maxHitPoints; }
-            set { _maxHitPoints = value; }
+            get
+            {
+                return _maxHitPoints;
+            }
+            set
+            {
+                _maxHitPoints = value;
+            }
         }
 
         private int _damageTaken;
         public int DamageTaken
         {
-            get { return _damageTaken; }
-            set { _damageTaken = value; }
+            get
+            {
+                return _damageTaken;
+            }
+            set
+            {
+                _damageTaken = value;
+            }
         }
         private int _availableMovement = 0;
         public int AvailableMovement
@@ -101,6 +149,19 @@ namespace AI_GM.Monsters
             set
             {
                 _maxActions = value;
+            }
+        }
+
+        private int _roomNumber = 0;
+        public int RoomNumber
+        {
+            get
+            {
+                return _roomNumber;
+            }
+            set
+            {
+                _roomNumber = value;
             }
         }
     }

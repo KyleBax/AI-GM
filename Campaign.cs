@@ -25,6 +25,21 @@ namespace AI_GM
             set { _activeMonsters = value; }
         }
 
+        private List<IFightable> _combatParticipants;
+
+        public List<IFightable> CombatParticipants
+        {
+            get
+            {
+                return _combatParticipants;
+            }
+            set
+            {
+                _combatParticipants = value;
+            }
+        }
+
+
         private int _playerCount = 1;
         public int PlayerCount
         {
@@ -38,9 +53,19 @@ namespace AI_GM
             get { return _activePlayer; }
             set { _activePlayer = value; }
         }
-        
 
+        private List<Room> _openRooms = new List<Room>();
 
-
+        public List<Room> OpenRooms
+        {
+            get
+            {
+                return _openRooms;
+            }
+            set
+            {
+                _openRooms = value;
+            }
+        }
     }
 }

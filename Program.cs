@@ -51,32 +51,28 @@ namespace AI_GM
                     {
                         if (combatParticipants[i].Identifier == Identifier.Player)
                         {
-                            
-                            int actionsTaken = 0;
-                            int availableMovementSpaces = 0;
-
-                            List<Characters.Action> availableActions = RoomManager.GetListAvailablePlayerActions(campaign, availableMovementSpaces);
+                            List<Characters.Action> availableActions = RoomManager.GetListAvailablePlayerActions(campaign, campaign.PlayerCharacters[i].AvailableMovement);
                             RoomManager.DisplayAvailableActions(availableActions, campaign);
 
                             ConsoleKeyInfo keyInfo;
 
                             while ((keyInfo = Console.ReadKey()).Key != ConsoleKey.Escape)
                             {
-                                int movementchecker = availableMovementSpaces;
                                 campaign = RoomManager.HandlePlayerActions(keyInfo, campaign);
-                                if (availableMovementSpaces == movementchecker)
-                                {
-                                    actionsTaken++;
-                                }
                                 RoomManager.CheckRoomLayout(campaign);
-                                availableActions = RoomManager.GetListAvailablePlayerActions(campaign, availableMovementSpaces);
+                                availableActions = RoomManager.GetListAvailablePlayerActions(campaign, campaign.PlayerCharacters[i].AvailableMovement);
                                 RoomManager.DisplayAvailableActions(availableActions, campaign);
-                                if (actionsTaken >= 3)
+                                if (campaign.PlayerCharacters[i].ActionsTaken >= campaign.PlayerCharacters[i].MaxActions)
                                 {
-                                    //next active player code goes here
+                                    campaign.PlayerCharacters[i].ActionsTaken = 0;
+                                  break;
                                 }
                             }
-                        }                     
+                        }
+                        else
+                        {
+                            //do monster stuff here
+                        }
                     }
                 }
             }

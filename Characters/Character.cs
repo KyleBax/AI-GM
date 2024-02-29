@@ -176,5 +176,17 @@ namespace AI_GM.Characters
             }
         }
 
+        private int _roomNumber = 0;
+        public int RoomNumber
+        {
+            get
+            {
+                return _roomNumber;
+            }
+            set
+            {
+                _roomNumber = value;
+            }
+        }
     }
 }

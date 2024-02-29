@@ -165,25 +165,27 @@ namespace AI_GM.Map
 
                 case ConsoleKey.T:
                     // Search for traps logic
-                    Console.WriteLine("Player searches for traps.");
-
-
+                    campaign.PlayerCharacters[i].ActionsTaken++;
+                    Console.WriteLine("Player searches for traps.");           
                     break;
 
                 case ConsoleKey.F:
                     // Search for treasure logic
+                    campaign.PlayerCharacters[i].ActionsTaken++;
                     Console.WriteLine("Player searches for treasure.");
                     break;
 
                 case ConsoleKey.V:
                     // combat logic
                     // Combat.Combat.PlayerAttackAction(campaign.PlayerCharacters[i]);
+                    campaign.PlayerCharacters[i].ActionsTaken++;
                     Console.WriteLine("Player attacks");
                     break;
                 case ConsoleKey.R:
                     //Roll for movement logic
                     int roll = Dice.DiceCount("2d4");
                     campaign.PlayerCharacters[i].AvailableMovement += roll;
+                    campaign.PlayerCharacters[i].ActionsTaken++;
                     Console.WriteLine($"You have rolled {roll}, {campaign.PlayerCharacters[i].AvailableMovement} movement available");
                     break;
                 // Add more cases for other keys as needed
