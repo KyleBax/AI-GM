@@ -45,10 +45,5 @@
         {
             get; set;
         }
-
-        public int RoomNumber
-        {
-            get; set;
-        }
     }
 }

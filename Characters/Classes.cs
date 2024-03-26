@@ -1,5 +1,6 @@
 ﻿namespace AI_GM.Characters
 {
+    [Serializable]
     public class Classes
     {
         private Class _name;

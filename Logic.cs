@@ -1,4 +1,6 @@
 ﻿using AI_GM.Characters;
+using KGySoft.Serialization.Binary;
+using KGySoft.Serialization.Xml;
 
 namespace AI_GM
 {
@@ -6,34 +8,43 @@ namespace AI_GM
     {
         public static void SerializeCampaign(Campaign campaign)
         {
-            System.Xml.Serialization.XmlSerializer xmlSerializer = new System.Xml.Serialization.XmlSerializer(typeof(Campaign));
+            
             try
             {
+                //System.Xml.Serialization.XmlSerializer xmlSerializer = new System.Xml.Serialization.XmlSerializer(typeof(Campaign));
                 using (FileStream file = File.Create(FilePaths.SAVEDCHARACTERS))
                 {
-                    xmlSerializer.Serialize(file, campaign);
+                    
+                    BinarySerializationFormatter formatter = new BinarySerializationFormatter();
+                    formatter.SerializeToStream(file, campaign);
+                  //  xmlSerializer.Serialize(file, campaign);
                 }
             }
             catch (Exception exception)
             {
                 Console.WriteLine(exception.Message);
+                Console.WriteLine(exception);
             }
         }
 
         public static Campaign DeserializeCampaign()
         {
             Campaign campaign = new Campaign();
-            System.Xml.Serialization.XmlSerializer xmlSerializer = new System.Xml.Serialization.XmlSerializer(typeof(Campaign));
+            
             try
             {
+                //System.Xml.Serialization.XmlSerializer xmlSerializer = new System.Xml.Serialization.XmlSerializer(typeof(Campaign));
                 using (FileStream file = File.OpenRead(FilePaths.SAVEDCHARACTERS))
                 {
-                    campaign = xmlSerializer.Deserialize(file) as Campaign;
+                    BinarySerializationFormatter formatter = new();
+                    campaign = formatter.DeserializeFromStream(file) as Campaign;
+                    // campaign = xmlSerializer.Deserialize(file) as Campaign;
                 }
             }
             catch (Exception exception)
             {
                 Console.WriteLine(exception.Message);
+                Console.WriteLine(exception);
             }
             return campaign;
         }

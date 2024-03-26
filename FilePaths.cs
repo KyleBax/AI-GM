@@ -20,7 +20,7 @@ namespace AI_GM
             return currentDirectory;
         }
 
-        public static readonly string SAVEDCHARACTERS = Path.Combine(BaseDirectory, "SavedCharacters");
+        public static readonly string SAVEDCHARACTERS = Path.Combine(BaseDirectory, "SavedCampaigns");
         public static readonly string STARTINGROOMS = Path.Combine(BaseDirectory, "Map", "FirstRoomMaps.txt");
         public static readonly string MAINROOMS = Path.Combine(BaseDirectory, "Map", "Maps.txt");
     }

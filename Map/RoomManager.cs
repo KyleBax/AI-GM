@@ -166,7 +166,7 @@ namespace AI_GM.Map
                 case ConsoleKey.T:
                     // Search for traps logic
                     campaign.PlayerCharacters[i].ActionsTaken++;
-                    Console.WriteLine("Player searches for traps.");           
+                    Console.WriteLine("Player searches for traps.");
                     break;
 
                 case ConsoleKey.F:
@@ -360,39 +360,54 @@ namespace AI_GM.Map
                     {
                         if (newRoom == true)
                         {
-                            if (room.Layout[i, j] == 'D')
+                            if (playerLocationUpdated == false)
                             {
-                                switch (FindDoorSide(room, i, j))
+                                if (room.Layout[i, j] == 'D')
                                 {
-                                    case DoorSide.Right:
-                                        campaign.PlayerCharacters[z].Y = i;
-                                        campaign.PlayerCharacters[z].X = j - 1;
-                                        break;
-                                    case DoorSide.Left:
-                                        campaign.PlayerCharacters[z].Y = i;
-                                        campaign.PlayerCharacters[z].X = j + 1;
-                                        break;
-                                    case DoorSide.Bottom:
-                                        campaign.PlayerCharacters[z].Y = i - 1;
-                                        campaign.PlayerCharacters[z].X = j;
-                                        break;
-                                    case DoorSide.Top:
-                                        campaign.PlayerCharacters[z].Y = i + 1;
-                                        campaign.PlayerCharacters[z].X = j;
-                                        break;
+                                    switch (FindDoorSide(room, i, j))
+                                    {
+                                        case DoorSide.Right:
+                                            campaign.PlayerCharacters[z].Y = i;
+                                            campaign.PlayerCharacters[z].X = j - 1;
+                                            break;
+                                        case DoorSide.Left:
+                                            campaign.PlayerCharacters[z].Y = i;
+                                            campaign.PlayerCharacters[z].X = j + 1;
+                                            break;
+                                        case DoorSide.Bottom:
+                                            campaign.PlayerCharacters[z].Y = i - 1;
+                                            campaign.PlayerCharacters[z].X = j;
+                                            break;
+                                        case DoorSide.Top:
+                                            campaign.PlayerCharacters[z].Y = i + 1;
+                                            campaign.PlayerCharacters[z].X = j;
+                                            break;
+                                    }
+                                    playerLocationUpdated = true;
+
                                 }
-                                playerLocationUpdated = true;
-                                newRoom = false;
                             }
+
+/*                            if (room.Layout[i, j] == 'm')
+                            {
+                                GetMonster();
+                            }*/
                         }
+
                         PrintRoomLayout(i, j, campaign.PlayerCharacters[z]);
                     }
                     Console.WriteLine();
                 }
+                newRoom = false;
             }
 
 
 
+        }
+
+        private static void GetMonster()
+        {
+            throw new NotImplementedException();
         }
 
         private static DoorSide FindDoorSide(Room room, int i, int j)

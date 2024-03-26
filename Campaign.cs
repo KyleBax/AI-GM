@@ -9,6 +9,7 @@ using AI_GM.Monsters;
 
 namespace AI_GM
 {
+    [Serializable]
     public class Campaign
     {
         private List<Character> _playerCharacters = new List<Character>();

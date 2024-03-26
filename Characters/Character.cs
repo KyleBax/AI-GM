@@ -3,6 +3,7 @@ using AI_GM.Map;
 
 namespace AI_GM.Characters
 {
+    [Serializable]
     /// <summary>
     /// Holds the information of the characters
     /// </summary>
@@ -173,19 +174,6 @@ namespace AI_GM.Characters
             set
             {
                 _maxActions = value;
-            }
-        }
-
-        private int _roomNumber = 0;
-        public int RoomNumber
-        {
-            get
-            {
-                return _roomNumber;
-            }
-            set
-            {
-                _roomNumber = value;
             }
         }
     }

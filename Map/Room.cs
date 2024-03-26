@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AI_GM.Characters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,16 @@ namespace AI_GM.Map
         private char[,] _layout;
         public char[,] Layout
         {
-            get { return _layout; }
-            set { _layout = value; }
+            get
+            {
+                return _layout;
+            }
+            set
+            {
+                _layout = value;
+            }
         }
 
+        public List<IFightable> PresentPlayers = new();
     }
 }
