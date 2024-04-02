@@ -1,4 +1,6 @@
 ﻿using AI_GM.Characters;
+using AI_GM.Monsters;
+using System;
 using System.Drawing;
 using System.Numerics;
 using static AI_GM.Map.EnumDoorSide;
@@ -388,10 +390,10 @@ namespace AI_GM.Map
                                 }
                             }
 
-/*                            if (room.Layout[i, j] == 'm')
+                            if (room.Layout[i, j] == 'm')
                             {
-                                GetMonster();
-                            }*/
+                                GetRandomMonster();
+                            }
                         }
 
                         PrintRoomLayout(i, j, campaign.PlayerCharacters[z]);
@@ -405,9 +407,14 @@ namespace AI_GM.Map
 
         }
 
-        private static void GetMonster()
+        private static void GetRandomMonster()
         {
-            throw new NotImplementedException();
+            Monster monster = new Monster();
+            Type type = typeof(MonsterName);
+            Array monsterNames = type.GetEnumValues();
+            int randomIndex = Dice.DiceRoll(monsterNames.Length);
+            MonsterName monsterType = (MonsterName)monsterNames.GetValue(randomIndex);
+            //use monster name to get monster stats
         }
 
         private static DoorSide FindDoorSide(Room room, int i, int j)

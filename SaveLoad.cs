@@ -4,7 +4,7 @@ using KGySoft.Serialization.Xml;
 
 namespace AI_GM
 {
-    internal class Logic
+    internal class SaveLoad
     {
         public static void SerializeCampaign(Campaign campaign)
         {
@@ -12,7 +12,7 @@ namespace AI_GM
             try
             {
                 //System.Xml.Serialization.XmlSerializer xmlSerializer = new System.Xml.Serialization.XmlSerializer(typeof(Campaign));
-                using (FileStream file = File.Create(FilePaths.SAVEDCHARACTERS))
+                using (FileStream file = File.Create(FilePaths.SAVEDCAMPAIGNS))
                 {
                     
                     BinarySerializationFormatter formatter = new BinarySerializationFormatter();
@@ -34,11 +34,10 @@ namespace AI_GM
             try
             {
                 //System.Xml.Serialization.XmlSerializer xmlSerializer = new System.Xml.Serialization.XmlSerializer(typeof(Campaign));
-                using (FileStream file = File.OpenRead(FilePaths.SAVEDCHARACTERS))
+                using (FileStream file = File.OpenRead(FilePaths.SAVEDCAMPAIGNS))
                 {
-                    BinarySerializationFormatter formatter = new();
+                    BinarySerializationFormatter formatter = new BinarySerializationFormatter();
                     campaign = formatter.DeserializeFromStream(file) as Campaign;
-                    // campaign = xmlSerializer.Deserialize(file) as Campaign;
                 }
             }
             catch (Exception exception)

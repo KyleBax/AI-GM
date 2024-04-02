@@ -16,11 +16,11 @@ namespace AI_GM
             {
                 character = CharacterCreation.NewCharacter(character);
                 campaign.PlayerCharacters.Add(character);
-                Logic.SerializeCampaign(campaign);
+                SaveLoad.SerializeCampaign(campaign);
             }
             else
             {
-                campaign = Logic.DeserializeCampaign();
+                campaign = SaveLoad.DeserializeCampaign();
                 foreach (Character character1 in campaign.PlayerCharacters)
                 {
                     CharacterCreationUI.CharacterComplete(character1, false);
