@@ -392,7 +392,10 @@ namespace AI_GM.Map
 
                             if (room.Layout[i, j] == 'm')
                             {
-                                GetRandomMonster();
+                                Monster monster = GetRandomMonster();
+                                monster.X = j;
+                                monster.Y = i;
+                                campaign.ActiveMonsters.Add(monster);
                             }
                         }
 
@@ -406,15 +409,18 @@ namespace AI_GM.Map
 
 
         }
-
-        private static void GetRandomMonster()
+        /// <summary>
+        /// Gets a random monster from the monster enum and returns it
+        /// </summary>
+        /// <returns></returns>
+        private static Monster GetRandomMonster()
         {
-            Monster monster = new Monster();
             Type type = typeof(MonsterName);
             Array monsterNames = type.GetEnumValues();
             int randomIndex = Dice.DiceRoll(monsterNames.Length);
             MonsterName monsterType = (MonsterName)monsterNames.GetValue(randomIndex);
-            //use monster name to get monster stats
+            Monster monster = MonsterStats.GetMonsterStats(monsterType);
+            return monster;
         }
 
         private static DoorSide FindDoorSide(Room room, int i, int j)
