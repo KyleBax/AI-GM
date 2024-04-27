@@ -59,19 +59,20 @@ namespace AI_GM
                             while ((keyInfo = Console.ReadKey()).Key != ConsoleKey.Escape)
                             {
                                 campaign = RoomManager.HandlePlayerActions(keyInfo, campaign);
-                                RoomManager.CheckRoomLayout(campaign);
+                                campaign = RoomManager.CheckRoomLayout(campaign);
                                 availableActions = RoomManager.GetListAvailablePlayerActions(campaign, campaign.PlayerCharacters[i].AvailableMovement);
                                 RoomManager.DisplayAvailableActions(availableActions, campaign);
                                 if (campaign.PlayerCharacters[i].ActionsTaken >= campaign.PlayerCharacters[i].MaxActions)
                                 {
                                     campaign.PlayerCharacters[i].ActionsTaken = 0;
-                                  break;
+                                    break;
                                 }
                             }
                         }
                         else
                         {
-                            //do monster stuff here
+                            //TODO monster stuff here
+
                         }
                     }
                 }

@@ -352,7 +352,7 @@ namespace AI_GM.Map
         }
 
 
-        public static void CheckRoomLayout(Campaign campaign)
+        public static Campaign CheckRoomLayout(Campaign campaign)
         {
             for (int z = 0; z < campaign.PlayerCount; z++)
             {
@@ -389,13 +389,13 @@ namespace AI_GM.Map
 
                                 }
                             }
-
+                            //TODO ensure this works as intended
                             if (room.Layout[i, j] == 'm')
                             {
                                 Monster monster = GetRandomMonster();
                                 monster.X = j;
                                 monster.Y = i;
-                                campaign.ActiveMonsters.Add(monster);
+                                campaign.CombatParticipants.Add(monster);
                             }
                         }
 
@@ -405,9 +405,7 @@ namespace AI_GM.Map
                 }
                 newRoom = false;
             }
-
-
-
+            return campaign;
         }
         /// <summary>
         /// Gets a random monster from the monster enum and returns it
@@ -418,7 +416,7 @@ namespace AI_GM.Map
             Type type = typeof(MonsterName);
             Array monsterNames = type.GetEnumValues();
             int randomIndex = Dice.DiceRoll(monsterNames.Length);
-            MonsterName monsterType = (MonsterName)monsterNames.GetValue(randomIndex);
+            MonsterName monsterType = (MonsterName)monsterNames.GetValue(randomIndex-1);
             Monster monster = MonsterStats.GetMonsterStats(monsterType);
             return monster;
         }

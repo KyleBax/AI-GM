@@ -78,7 +78,7 @@ namespace AI_GM.Monsters
         }
 
         private List<MonsterAttack> _attacks = new List<MonsterAttack>();
-        public List<MonsterAttack> Attacks //TODO: attack class? (attack has some properties like damage value, range, name etc
+        public List<MonsterAttack> Attacks
         {
             get
             {
