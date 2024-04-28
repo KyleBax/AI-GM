@@ -438,10 +438,6 @@ namespace AI_GM.Map
             return DoorSide.Right;
         }
 
-
-
-
-
         public static void PrintRoomLayout(int i, int j, Character character)
         {
             if (i == character.Y && j == character.X && playerLocationUpdated)

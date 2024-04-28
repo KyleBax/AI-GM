@@ -26,7 +26,7 @@ namespace AI_GM
             set { _activeMonsters = value; }
         }
 
-        private List<IFightable> _combatParticipants;
+        private List<IFightable> _combatParticipants = new List<IFightable>();
 
         public List<IFightable> CombatParticipants
         {
