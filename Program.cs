@@ -42,37 +42,23 @@ namespace AI_GM
             {
                 //start game here, player 1 goes first, have 3 actions, when all 3 actions are done next player, when all players are done monsters
                 //actions include move, attack and search, can not leave a room until all monsters are dead
-                List<IFightable> combatParticipants = Combat.Combat.GetCombatParticipantsList(campaign);
+                campaign.CombatParticipants = Combat.Combat.GetCombatParticipantsList(campaign);
                 campaign = RoomManager.SpawnPlayer(campaign);
                 RoomManager.CheckRoomLayout(campaign);
                 while (true)
                 {
-                    for (int i = 0; i < combatParticipants.Count; i++)
+                    for (int i = 0; i < campaign.CombatParticipants.Count; i++)
                     {
-                        if (combatParticipants[i].Identifier == Identifier.Player)
+                        if (campaign.CombatParticipants[i].Identifier == Identifier.Player)
                         {
-                            List<Characters.Action> availableActions = RoomManager.GetListAvailablePlayerActions(campaign, campaign.PlayerCharacters[i].AvailableMovement);
-                            RoomManager.DisplayAvailableActions(availableActions, campaign);
-
-                            ConsoleKeyInfo keyInfo;
-
-                            while ((keyInfo = Console.ReadKey()).Key != ConsoleKey.Escape)
-                            {
-                                campaign = RoomManager.HandlePlayerActions(keyInfo, campaign);
-                                campaign = RoomManager.CheckRoomLayout(campaign);
-                                availableActions = RoomManager.GetListAvailablePlayerActions(campaign, campaign.PlayerCharacters[i].AvailableMovement);
-                                RoomManager.DisplayAvailableActions(availableActions, campaign);
-                                if (campaign.PlayerCharacters[i].ActionsTaken >= campaign.PlayerCharacters[i].MaxActions)
-                                {
-                                    campaign.PlayerCharacters[i].ActionsTaken = 0;
-                                    break;
-                                }
-                            }
+                            campaign = RoomManager.PlayersTurn(campaign, i);
                         }
                         else
                         {
+                            Console.WriteLine("monster turn");
                             //TODO monster stuff here
-
+                            //monster moves
+                            //monster attacks
                         }
                     }
                 }

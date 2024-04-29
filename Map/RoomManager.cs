@@ -458,12 +458,34 @@ namespace AI_GM.Map
             }
         }
 
-        internal static void DisplayAvailableActions(List<Characters.Action> availableActions, Campaign campaign)
+        public static void DisplayAvailableActions(List<Characters.Action> availableActions, Campaign campaign)
         {
             for (int i = 0; i < availableActions.Count; i++)
             {
                 Console.WriteLine(availableActions[i]);
             }
+        }
+
+        public static Campaign PlayersTurn(Campaign campaign, int i)
+        {
+            List<Characters.Action> availableActions = GetListAvailablePlayerActions(campaign, campaign.PlayerCharacters[i].AvailableMovement);
+            DisplayAvailableActions(availableActions, campaign);
+
+            ConsoleKeyInfo keyInfo;
+
+            while ((keyInfo = Console.ReadKey()).Key != ConsoleKey.Escape)
+            {
+                campaign = HandlePlayerActions(keyInfo, campaign);
+                campaign = CheckRoomLayout(campaign);
+                availableActions = GetListAvailablePlayerActions(campaign, campaign.PlayerCharacters[i].AvailableMovement);
+                DisplayAvailableActions(availableActions, campaign);
+                if (campaign.PlayerCharacters[i].ActionsTaken >= campaign.PlayerCharacters[i].MaxActions)
+                {
+                    campaign.PlayerCharacters[i].ActionsTaken = 0;
+                    break;
+                }
+            }
+            return campaign;
         }
     }
 }
