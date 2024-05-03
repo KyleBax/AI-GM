@@ -20,7 +20,7 @@ namespace AI_GM.Combat
 
                     if (combatParticipants[i] is Character character)
                     {
-                        PlayerTurn(combatParticipants, character);
+                        PlayerTurn(ref combatParticipants, character);
                     }
                     if (combatParticipants[i] is Monster monster)
                     {
@@ -64,15 +64,15 @@ namespace AI_GM.Combat
                 combatParticipants.Add(character);
             }
             //temporarily not needed. commented out as may be needed again later in some way
-/*            Monster monster = new Monster();
-            List<Monster> monsters = new List<Monster>();
-            monsters = GetMonsters();
-            List<IFightable> combatParticipants = new List<IFightable>();
+            /*            Monster monster = new Monster();
+                        List<Monster> monsters = new List<Monster>();
+                        monsters = GetMonsters();
+                        List<IFightable> combatParticipants = new List<IFightable>();
 
-            foreach (Monster m in monsters)
-            {
-                combatParticipants.Add(m);
-            }*/
+                        foreach (Monster m in monsters)
+                        {
+                            combatParticipants.Add(m);
+                        }*/
 
             return combatParticipants;
         }
@@ -82,7 +82,7 @@ namespace AI_GM.Combat
             if (monster.DamageTaken >= monster.MaxHitPoints)
             {
                 Console.WriteLine($"{monster.Name}, has died");
-                combatParticipants.Remove(monster);
+                combatParticipants.Remove(monster); //TODO see issue #44
                 return;
             }
             else
@@ -123,7 +123,7 @@ namespace AI_GM.Combat
             }
         }
 
-        public static void PlayerTurn(List<IFightable> combatParticipants, Character character)
+        public static void PlayerTurn(ref List<IFightable> combatParticipants, Character character)
         {
             Console.WriteLine($"it is your turn {character.Name}");
             if (character.DamageTaken >= character.MaxHitPoints)
@@ -133,7 +133,7 @@ namespace AI_GM.Combat
             else
             {
                 Console.WriteLine("Select an action");
-                Console.WriteLine("move, attack, search"); //to be fully implemented
+                Console.WriteLine("move, attack, search"); //TODO to be fully implemented and move it into below method
 
                 PlayerAttackAction(ref combatParticipants, character);
 

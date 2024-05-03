@@ -43,7 +43,7 @@ namespace AI_GM
                 //start game here, player 1 goes first, have 3 actions, when all 3 actions are done next player, when all players are done monsters
                 //actions include move, attack and search, can not leave a room until all monsters are dead
                 campaign.CombatParticipants = Combat.Combat.GetCombatParticipantsList(campaign);
-                campaign = RoomManager.SpawnPlayer(campaign);
+                RoomManager.SpawnPlayer(campaign);
                 RoomManager.CheckRoomLayout(campaign);
                 while (true)
                 {
@@ -55,9 +55,10 @@ namespace AI_GM
                         }
                         else
                         {
-                            Console.WriteLine("monster turn");
+                            RoomManager.MonstersTurn(campaign, i);
                             //TODO monster stuff here
                             //monster moves
+                            // check surrounding area for nearest player, once player found move towards them.
                             //monster attacks
                         }
                     }

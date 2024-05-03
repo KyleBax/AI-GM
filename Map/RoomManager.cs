@@ -9,7 +9,7 @@ namespace AI_GM.Map
 {
     internal class RoomManager
     {
-        public static List<Room>? mainRooms;
+        public static List<Room> mainRooms;
         public static Room room = new Room();
         public static bool newRoom = false;
         public static bool playerLocationUpdated = true;
@@ -29,10 +29,9 @@ namespace AI_GM.Map
                 Console.WriteLine("No character has been found, starting a new campaign");
                 return false;
             }
-
-
         }
-        public static Campaign SpawnPlayer(Campaign campaign)
+
+        public static void SpawnPlayer(Campaign campaign)
         {
             int desiredPlayerCount = campaign.PlayerCharacters.Count;
             int playerCount = 0;
@@ -68,14 +67,14 @@ namespace AI_GM.Map
                                     }
                                 }
                             }
-                            return campaign;
+                            return;
                         }
                     }
                 }
             }
 
             Console.WriteLine($"Could not find enough 'S' in the room layout for all players. Found: {playerCount}");
-            return campaign;
+            return;
         }
 
         public static List<Characters.Action> GetListAvailablePlayerActions(Campaign campaign, int availableMovementSpaces)
@@ -178,6 +177,7 @@ namespace AI_GM.Map
                     break;
 
                 case ConsoleKey.V:
+                    //TODO combat here
                     // combat logic
                     // Combat.Combat.PlayerAttackAction(campaign.PlayerCharacters[i]);
                     campaign.PlayerCharacters[i].ActionsTaken++;
@@ -396,6 +396,7 @@ namespace AI_GM.Map
                                 monster.X = j;
                                 monster.Y = i;
                                 campaign.CombatParticipants.Add(monster);
+                                campaign.ActiveMonsters.Add(monster);
                             }
                         }
 
@@ -416,7 +417,7 @@ namespace AI_GM.Map
             Type type = typeof(MonsterName);
             Array monsterNames = type.GetEnumValues();
             int randomIndex = Dice.DiceRoll(monsterNames.Length);
-            MonsterName monsterType = (MonsterName)monsterNames.GetValue(randomIndex-1);
+            MonsterName monsterType = (MonsterName)monsterNames.GetValue(randomIndex - 1);
             Monster monster = MonsterStats.GetMonsterStats(monsterType);
             return monster;
         }
@@ -486,6 +487,49 @@ namespace AI_GM.Map
                 }
             }
             return campaign;
+        }
+
+        internal static void MonstersTurn(Campaign campaign, int i)
+        {
+            Console.WriteLine("monster turn");
+            int a = i - campaign.PlayerCount;
+            int target = FindTarget(campaign, a);
+            
+        }
+
+        private static int FindTarget(Campaign campaign, int a)
+        {
+            int monsterX = campaign.ActiveMonsters[a].X;
+            int monsterY = campaign.ActiveMonsters[a].Y;
+
+            for (int count = 1; count <= 10; count++)
+            {
+                for (int checkX = monsterX - count; checkX <= monsterX + count; checkX++)
+                {
+                    for (int checkY = monsterY - count; checkY <= monsterY + count; checkY++)
+                    {
+                        if (checkX == monsterX && checkY == monsterY)
+                        {
+                            // Skip the current position (monsters position)
+                            continue;
+                        }
+                        for (int b = 0; b < campaign.CombatParticipants.Count; b++)
+                        {
+                            var target = campaign.CombatParticipants[b];
+
+                            if (checkX == target.X && checkY == target.Y)
+                            {
+                                if (target.Identifier == Identifier.Player)
+                                {
+                                    Console.WriteLine("target acquired");
+                                    return b;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return 0;
         }
     }
 }
