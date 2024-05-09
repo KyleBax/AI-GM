@@ -132,9 +132,7 @@ namespace AI_GM.Combat
             }
             else
             {
-                Console.WriteLine("Select an action");
-                Console.WriteLine("move, attack, search"); //TODO to be fully implemented and move it into below method
-
+                
                 PlayerAttackAction(ref combatParticipants, character);
 
             }
@@ -143,6 +141,10 @@ namespace AI_GM.Combat
 
         public static void PlayerAttackAction(ref List<IFightable> combatParticipants, Character character)
         {
+            Console.WriteLine("Select an action");
+            Console.WriteLine("move, attack, search"); //TODO fully implement attack and search functions
+
+
             IFightable selectedMonster = SelectMonsterFromParticipants(combatParticipants);
             int hits = GetHits(character.AttackDice, "attack");
 

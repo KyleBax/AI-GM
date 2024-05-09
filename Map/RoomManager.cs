@@ -223,7 +223,8 @@ namespace AI_GM.Map
                             newRoom = true;
                             playerLocationUpdated = false;
                             break;
-                        case 'm':
+                            //TODO fix this
+                        case 'M':
                             Console.WriteLine("There is a monster in the way");
                             break;
                         default:
@@ -354,6 +355,8 @@ namespace AI_GM.Map
 
         public static Campaign CheckRoomLayout(Campaign campaign)
         {
+            bool monsterSpawned = false;
+
             for (int z = 0; z < campaign.PlayerCount; z++)
             {
                 for (int i = 0; i < room.Layout.GetLength(0); i++)
@@ -362,6 +365,12 @@ namespace AI_GM.Map
                     {
                         if (newRoom == true)
                         {
+                            if (monsterSpawned == false)
+                            {
+                                campaign = Spawnmonster(campaign);
+                                monsterSpawned = true;
+                            }
+
                             if (playerLocationUpdated == false)
                             {
                                 if (room.Layout[i, j] == 'D')
@@ -389,18 +398,9 @@ namespace AI_GM.Map
 
                                 }
                             }
-                            //TODO ensure this works as intended
-                            if (room.Layout[i, j] == 'm')
-                            {
-                                Monster monster = GetRandomMonster();
-                                monster.X = j;
-                                monster.Y = i;
-                                campaign.CombatParticipants.Add(monster);
-                                campaign.ActiveMonsters.Add(monster);
-                            }
                         }
 
-                        PrintRoomLayout(i, j, campaign.PlayerCharacters[z]);
+                        PrintRoomLayout(i, j, campaign);
                     }
                     Console.WriteLine();
                 }
@@ -408,6 +408,32 @@ namespace AI_GM.Map
             }
             return campaign;
         }
+        public static Campaign Spawnmonster(Campaign campaign)
+        {
+
+            // Iterate through the room layout
+            for (int i = 0; i < room.Layout.GetLength(0); i++)
+            {
+                for (int j = 0; j < room.Layout.GetLength(1); j++)
+                {
+                    if (room.Layout[i, j] == 'm')
+                    {
+                        // Update monster's X and Y based on 'm' position
+                        Monster monster = GetRandomMonster();
+                        monster.X = j;
+                        monster.Y = i;
+                        campaign.CombatParticipants.Add(monster);
+                        campaign.ActiveMonsters.Add(monster);
+
+                        room.Layout[i, j] = ' ';
+
+                        Console.WriteLine($"{monster.X}, {monster.Y}");
+                    }
+                }
+            }
+            return campaign;
+        }
+
         /// <summary>
         /// Gets a random monster from the monster enum and returns it
         /// </summary>
@@ -439,23 +465,30 @@ namespace AI_GM.Map
             return DoorSide.Right;
         }
 
-        public static void PrintRoomLayout(int i, int j, Character character)
+        public static void PrintRoomLayout(int i, int j, Campaign campaign)
         {
-            if (i == character.Y && j == character.X && playerLocationUpdated)
+            for (int a = 0; a < campaign.CombatParticipants.Count; a++)
             {
-                Console.Write('X');
+                if (i == campaign.CombatParticipants[a].Y && j == campaign.CombatParticipants[a].X)
+                {
+                    if (campaign.CombatParticipants[a].Identifier == Identifier.Player)
+                    {
+                        Console.Write('X');
+                    }
+                    if (campaign.CombatParticipants[a].Identifier == Identifier.Monster)
+                    {
+                        Console.Write('M');
+                    }
+                    return;
+                }
+            }
+            if (room.Layout[i, j] == 'T')
+            {
+                Console.Write(' ');
             }
             else
             {
-                if (room.Layout[i, j] == 'T')
-                {
-                    Console.Write(' ');
-                }
-                else
-                {
-                    Console.Write(room.Layout[i, j]);
-                }
-
+                Console.Write(room.Layout[i, j]);
             }
         }
 
