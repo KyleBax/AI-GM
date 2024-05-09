@@ -491,12 +491,65 @@ namespace AI_GM.Map
 
         internal static void MonstersTurn(Campaign campaign, int i)
         {
+            //TODO monster stuff here
+            //monster moves
+            //monster attacks
             Console.WriteLine("monster turn");
             int a = i - campaign.PlayerCount;
             int target = FindTarget(campaign, a);
-            
+            MoveToTarget(campaign, target, i);
+
         }
 
+        private static void MoveToTarget(Campaign campaign, int target, int i)
+        {
+            int targetX = campaign.CombatParticipants[target].X;
+            int targetY = campaign.CombatParticipants[target].Y;
+
+            int currentX = campaign.CombatParticipants[i].X;
+            int currentY = campaign.CombatParticipants[i].Y;
+
+
+            for (int moves = 0; moves < campaign.CombatParticipants[i].Speed; moves++)
+            {
+                if ((currentY == targetY && Math.Abs(currentX - targetX) == 1) || (currentX == targetX && Math.Abs(currentY - targetY) == 1))
+                {
+                    break;
+                }
+                switch (currentX.CompareTo(targetX))
+                {
+                    case 0:
+                        switch (currentY.CompareTo(targetY))
+                        {
+                            case 0:
+                                break;
+                            case 1:
+                                currentY -= 1;
+                                break;
+                            case -1:
+                                currentY += 1;
+                                break;
+                        }
+                        break;
+                    case 1:
+                        currentX -= 1;
+                        break;
+                    case -1:
+                        currentX += 1;
+                        break;
+                }
+
+            }
+
+            campaign.CombatParticipants[i].X = currentX;
+            campaign.CombatParticipants[i].Y = currentY;
+        }
+        /// <summary>
+        /// finds the nearest player 
+        /// </summary>
+        /// <param name="campaign"></param>
+        /// <param name="a"></param>
+        /// <returns></returns>
         private static int FindTarget(Campaign campaign, int a)
         {
             int monsterX = campaign.ActiveMonsters[a].X;

@@ -56,10 +56,6 @@ namespace AI_GM
                         else
                         {
                             RoomManager.MonstersTurn(campaign, i);
-                            //TODO monster stuff here
-                            //monster moves
-                            // check surrounding area for nearest player, once player found move towards them.
-                            //monster attacks
                         }
                     }
                 }
