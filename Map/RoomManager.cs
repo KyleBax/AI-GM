@@ -13,6 +13,7 @@ namespace AI_GM.Map
         public static Room room = new Room();
         public static bool newRoom = false;
         public static bool playerLocationUpdated = true;
+        public static bool endTurnEarly = false;
         public static bool InitialiseMaps(Campaign campaign)
         {
             mainRooms = GetRoomsFromTextFile(FilePaths.MAINROOMS);
@@ -177,7 +178,6 @@ namespace AI_GM.Map
                     break;
 
                 case ConsoleKey.V:
-                    //TODO combat here
                     // combat logic
                     Combat.Combat.PlayerAttackAction(ref campaign, i);
                     campaign.PlayerCharacters[i].ActionsTaken++;
@@ -189,6 +189,12 @@ namespace AI_GM.Map
                     campaign.PlayerCharacters[i].AvailableMovement += roll;
                     campaign.PlayerCharacters[i].ActionsTaken++;
                     Console.WriteLine($"You have rolled {roll}, {campaign.PlayerCharacters[i].AvailableMovement} movement available");
+                    break;
+                case ConsoleKey.N:
+                    //End turn early
+                    Console.WriteLine("Are you sure you want to end your turn?");
+                    Console.WriteLine("Too bad I haven't implemented a confirmation check yet");
+                    endTurnEarly = true;
                     break;
                 // Add more cases for other keys as needed
 
@@ -513,7 +519,12 @@ namespace AI_GM.Map
                 campaign = CheckRoomLayout(campaign);
                 availableActions = GetListAvailablePlayerActions(campaign, campaign.PlayerCharacters[i].AvailableMovement);
                 DisplayAvailableActions(availableActions, campaign);
-                if (campaign.PlayerCharacters[i].ActionsTaken >= campaign.PlayerCharacters[i].MaxActions)
+                if (campaign.PlayerCharacters[i].ActionsTaken >= campaign.PlayerCharacters[i].MaxActions && campaign.PlayerCharacters[i].AvailableMovement <=0)
+                {
+                    campaign.PlayerCharacters[i].ActionsTaken = 0;
+                    break;
+                }
+                if (endTurnEarly)
                 {
                     campaign.PlayerCharacters[i].ActionsTaken = 0;
                     break;
