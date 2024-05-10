@@ -179,7 +179,7 @@ namespace AI_GM.Map
                 case ConsoleKey.V:
                     //TODO combat here
                     // combat logic
-                    // Combat.Combat.PlayerAttackAction(campaign.PlayerCharacters[i]);
+                    Combat.Combat.PlayerAttackAction(ref campaign, i);
                     campaign.PlayerCharacters[i].ActionsTaken++;
                     Console.WriteLine("Player attacks");
                     break;
@@ -223,7 +223,7 @@ namespace AI_GM.Map
                             newRoom = true;
                             playerLocationUpdated = false;
                             break;
-                            //TODO fix this
+                        //TODO fix this
                         case 'M':
                             Console.WriteLine("There is a monster in the way");
                             break;
@@ -526,12 +526,11 @@ namespace AI_GM.Map
         {
             //TODO monster stuff here
             //monster moves
-            //monster attacks
             Console.WriteLine("monster turn");
             int a = i - campaign.PlayerCount;
             int target = FindTarget(campaign, a);
             MoveToTarget(campaign, target, i);
-
+            //monster attacks
         }
 
         private static void MoveToTarget(Campaign campaign, int target, int i)

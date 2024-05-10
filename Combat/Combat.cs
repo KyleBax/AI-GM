@@ -11,23 +11,7 @@ namespace AI_GM.Combat
         /// <param name="campaign"></param>
         public static void CombatMain(Campaign campaign)
         {
-            List<IFightable> combatParticipants = GetCombatParticipantsList(campaign);
 
-            while (combatParticipants.Count >= 1)
-            {
-                for (int i = 0; i < combatParticipants.Count; i++)
-                {
-
-                    if (combatParticipants[i] is Character character)
-                    {
-                        PlayerTurn(ref combatParticipants, character);
-                    }
-                    if (combatParticipants[i] is Monster monster)
-                    {
-                        MonsterTurn(ref combatParticipants, monster);
-                    }
-                }
-            }
         }
 
         /// <summary>
@@ -63,16 +47,6 @@ namespace AI_GM.Combat
             {
                 combatParticipants.Add(character);
             }
-            //temporarily not needed. commented out as may be needed again later in some way
-            /*            Monster monster = new Monster();
-                        List<Monster> monsters = new List<Monster>();
-                        monsters = GetMonsters();
-                        List<IFightable> combatParticipants = new List<IFightable>();
-
-                        foreach (Monster m in monsters)
-                        {
-                            combatParticipants.Add(m);
-                        }*/
 
             return combatParticipants;
         }
@@ -92,61 +66,34 @@ namespace AI_GM.Combat
                 int target = 0;
                 while (true)
                 {
-                    if (combatParticipants[target].Identifier == Identifier.Monster)
+
+                    int hits = GetHits(monster.AttackDice, "attack");
+                    Console.WriteLine($"The monster has {hits} hits");
+                    int defended = 0;
+                    if (hits > 0)
                     {
-                        target++;
+                        defended = GetHits(combatParticipants[target].DefendDice, "monsterDefend");
+                        Console.WriteLine($"You have defended {defended} hits ");
+                    }
+                    if (defended > hits)
+                    {
+                        defended = hits;
                     }
 
-                    if (combatParticipants[target].Identifier == Identifier.Player)
-                    {
-                        Console.WriteLine("target aqcuired");
-                        int hits = GetHits(monster.AttackDice, "attack");
-                        Console.WriteLine($"The monster has {hits} hits");
-                        int defended = 0;
-                        if (hits > 0)
-                        {
-                            defended = GetHits(combatParticipants[target].DefendDice, "monsterDefend");
-                            Console.WriteLine($"You have defended {defended} hits ");
-                        }
-                        if (defended > hits)
-                        {
-                            defended = hits;
-                        }
+                    int damage = hits - defended;
+                    Console.WriteLine($"You have taken {damage} damage");
+                    combatParticipants[target].DamageTaken += damage;
+                    break;
 
-                        int damage = hits - defended;
-                        Console.WriteLine($"You have taken {damage} damage");
-                        combatParticipants[target].DamageTaken += damage;
-                        break;
-                    }
                 }
 
             }
         }
 
-        public static void PlayerTurn(ref List<IFightable> combatParticipants, Character character)
+        public static void PlayerAttackAction( ref Campaign campaign, int i)
         {
-            Console.WriteLine($"it is your turn {character.Name}");
-            if (character.DamageTaken >= character.MaxHitPoints)
-            {
-                Console.WriteLine("you have died");
-            }
-            else
-            {
-                
-                PlayerAttackAction(ref combatParticipants, character);
-
-            }
-
-        }
-
-        public static void PlayerAttackAction(ref List<IFightable> combatParticipants, Character character)
-        {
-            Console.WriteLine("Select an action");
-            Console.WriteLine("move, attack, search"); //TODO fully implement attack and search functions
-
-
-            IFightable selectedMonster = SelectMonsterFromParticipants(combatParticipants);
-            int hits = GetHits(character.AttackDice, "attack");
+            IFightable selectedMonster = SelectMonsterFromParticipants(campaign.CombatParticipants);
+            int hits = GetHits(campaign.PlayerCharacters[i].AttackDice, "attack");
 
             Console.WriteLine($"You have {hits} hits");
             int defended = 0;
@@ -169,7 +116,7 @@ namespace AI_GM.Combat
             {
                 Console.WriteLine("you have killed this monster");
                 //removes the selectedMonster from combatParticipants
-                combatParticipants.Remove(selectedMonster);
+                campaign.CombatParticipants.Remove(selectedMonster);
             }
 
         }
