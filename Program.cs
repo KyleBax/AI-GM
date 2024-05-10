@@ -34,10 +34,6 @@ namespace AI_GM
             {
                 initSuccess = RoomManager.InitialiseMaps(campaign);
             }
-            if (input == "combat")
-            {
-                AI_GM.Combat.Combat.CombatMain(campaign);
-            }
             if (initSuccess == true)
             {
                 //start game here, player 1 goes first, have 3 actions, when all 3 actions are done next player, when all players are done monsters

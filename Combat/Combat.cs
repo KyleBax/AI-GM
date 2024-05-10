@@ -6,15 +6,6 @@ namespace AI_GM.Combat
     internal class Combat
     {
         /// <summary>
-        /// The main method for the combat process
-        /// </summary>
-        /// <param name="campaign"></param>
-        public static void CombatMain(Campaign campaign)
-        {
-
-        }
-
-        /// <summary>
         /// Gets a random selection of monsters, and adds them to a list
         /// </summary>
         /// <returns></returns>
