@@ -231,6 +231,7 @@ namespace AI_GM.Map
         {
             if (campaign.PlayerCharacters[i].ActionsTaken >= 3)
             {
+                Console.WriteLine("You are out of actions, move or end turn with N");
                 return false;
             }
             else
