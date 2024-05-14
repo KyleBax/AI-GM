@@ -6,27 +6,6 @@ namespace AI_GM.Combat
     internal class Combat
     {
         /// <summary>
-        /// Gets a random selection of monsters, and adds them to a list
-        /// </summary>
-        /// <returns></returns>
-        public static List<Monster> GetMonsters()
-        {
-            Random random = new Random();
-            List<Monster> monsters = new List<Monster>();
-            Type type = typeof(MonsterName);
-            Array monsterNames = type.GetEnumValues();
-            for (int i = 0; i < 3; i++)
-            {
-                int randomIndex = random.Next(monsterNames.Length);
-                MonsterName monsterType = (MonsterName)monsterNames.GetValue(randomIndex);
-
-                monsters.Add(GetMonsterStats(monsterType));
-            }
-
-            return monsters;
-        }
-
-        /// <summary>
         /// Adds player characters to cambatparticipant list
         /// </summary>
         /// <param name="campaign"></param>
@@ -42,46 +21,35 @@ namespace AI_GM.Combat
             return combatParticipants;
         }
 
-        public static void MonsterTurn(ref List<IFightable> combatParticipants, Monster monster)
+        public static void MonsterAttack(ref Campaign campaign, int target, int i)
         {
-            if (monster.DamageTaken >= monster.MaxHitPoints)
+            Monster monster = (Monster)campaign.CombatParticipants[i];
+            Console.WriteLine($"{monster.Name}");
+            while (true)
             {
-                Console.WriteLine($"{monster.Name}, has died");
-                combatParticipants.Remove(monster); //TODO see issue #44
-                return;
-            }
-            else
-            {
-                Console.WriteLine($"{monster.Name}");
-                //after making a map for the system, target closest oponnent
-                int target = 0;
-                while (true)
+
+                int hits = GetHits(monster.AttackDice, "attack");
+                Console.WriteLine($"The monster has {hits} hits");
+                int defended = 0;
+                if (hits > 0)
                 {
-
-                    int hits = GetHits(monster.AttackDice, "attack");
-                    Console.WriteLine($"The monster has {hits} hits");
-                    int defended = 0;
-                    if (hits > 0)
-                    {
-                        defended = GetHits(combatParticipants[target].DefendDice, "monsterDefend");
-                        Console.WriteLine($"You have defended {defended} hits ");
-                    }
-                    if (defended > hits)
-                    {
-                        defended = hits;
-                    }
-
-                    int damage = hits - defended;
-                    Console.WriteLine($"You have taken {damage} damage");
-                    combatParticipants[target].DamageTaken += damage;
-                    break;
-
+                    defended = GetHits(campaign.CombatParticipants[target].DefendDice, "monsterDefend");
+                    Console.WriteLine($"You have defended {defended} hits ");
                 }
+                if (defended > hits)
+                {
+                    defended = hits;
+                }
+
+                int damage = hits - defended;
+                Console.WriteLine($"You have taken {damage} damage");
+                campaign.CombatParticipants[target].DamageTaken += damage;
+                break;
 
             }
         }
 
-        public static void PlayerAttackAction( ref Campaign campaign, int i)
+        public static void PlayerAttackAction(ref Campaign campaign, int i)
         {
             IFightable selectedMonster = SelectMonsterFromParticipants(campaign.CombatParticipants);
             int hits = GetHits(campaign.PlayerCharacters[i].AttackDice, "attack");

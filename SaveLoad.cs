@@ -11,13 +11,11 @@ namespace AI_GM
             
             try
             {
-                //System.Xml.Serialization.XmlSerializer xmlSerializer = new System.Xml.Serialization.XmlSerializer(typeof(Campaign));
                 using (FileStream file = File.Create(FilePaths.SAVEDCAMPAIGNS))
                 {
                     
                     BinarySerializationFormatter formatter = new BinarySerializationFormatter();
                     formatter.SerializeToStream(file, campaign);
-                  //  xmlSerializer.Serialize(file, campaign);
                 }
             }
             catch (Exception exception)
@@ -33,7 +31,6 @@ namespace AI_GM
             
             try
             {
-                //System.Xml.Serialization.XmlSerializer xmlSerializer = new System.Xml.Serialization.XmlSerializer(typeof(Campaign));
                 using (FileStream file = File.OpenRead(FilePaths.SAVEDCAMPAIGNS))
                 {
                     BinarySerializationFormatter formatter = new BinarySerializationFormatter();

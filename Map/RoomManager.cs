@@ -516,6 +516,12 @@ namespace AI_GM.Map
             while ((keyInfo = Console.ReadKey()).Key != ConsoleKey.Escape)
             {
                 campaign = HandlePlayerActions(keyInfo, campaign);
+                if (endTurnEarly)
+                {
+                    campaign.PlayerCharacters[i].ActionsTaken = 0;
+                    endTurnEarly = false;
+                    break;
+                }
                 campaign = CheckRoomLayout(campaign);
                 availableActions = GetListAvailablePlayerActions(campaign, campaign.PlayerCharacters[i].AvailableMovement);
                 DisplayAvailableActions(availableActions, campaign);
@@ -524,24 +530,18 @@ namespace AI_GM.Map
                     campaign.PlayerCharacters[i].ActionsTaken = 0;
                     break;
                 }
-                if (endTurnEarly)
-                {
-                    campaign.PlayerCharacters[i].ActionsTaken = 0;
-                    break;
-                }
+
             }
             return campaign;
         }
 
         internal static void MonstersTurn(Campaign campaign, int i)
         {
-            //TODO monster stuff here
-            //monster moves
             Console.WriteLine("monster turn");
             int a = i - campaign.PlayerCount;
             int target = FindTarget(campaign, a);
             MoveToTarget(campaign, target, i);
-            //monster attacks
+            Combat.Combat.MonsterAttack(ref campaign, target, i);
         }
 
         private static void MoveToTarget(Campaign campaign, int target, int i)
