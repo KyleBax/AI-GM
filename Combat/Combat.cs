@@ -112,8 +112,6 @@ namespace AI_GM.Combat
             return hits;
         }
 
-
-
         private static IFightable SelectMonsterFromParticipants(List<IFightable> combatParticipants)
         {
             Console.WriteLine("choose a target");
@@ -141,74 +139,6 @@ namespace AI_GM.Combat
                     Console.WriteLine("Select one of these options");
                 }
             }
-
-
-        }
-
-        public static Monster GetMonsterStats(MonsterName monsterName)
-        {
-            Monster monster = new Monster();
-            switch (monsterName)
-            {
-                case MonsterName.Goblin:
-                    monster.Name = MonsterName.Goblin.ToString();
-                    monster.AttackDice = 2;
-                    monster.DefendDice = 2;
-                    monster.Speed = 10;
-                    monster.MaxHitPoints = 1;
-                    monster.Attacks.Add(GetMonsterAttack(MonsterAttackType.Scimitar));
-                    break;
-
-                case MonsterName.PoisonousSnake:
-                    monster.Name = MonsterName.PoisonousSnake.ToString();
-                    monster.AttackDice = 2;
-                    monster.DefendDice = 1;
-                    monster.Speed = 5;
-                    monster.MaxHitPoints = 1;
-                    monster.Attacks.Add(GetMonsterAttack(MonsterAttackType.PoisonousSnakeBite));
-                    break;
-
-                case MonsterName.Rat:
-                    monster.Name = MonsterName.Rat.ToString();
-                    monster.AttackDice = 1;
-                    monster.DefendDice = 1;
-                    monster.Speed = 12;
-                    monster.MaxHitPoints = 1;
-                    monster.Attacks.Add(GetMonsterAttack(MonsterAttackType.RatBite));
-                    break;
-                default:
-                    break;
-            }
-            return monster;
-        }
-
-        public static MonsterAttack GetMonsterAttack(MonsterAttackType attackType)
-        {
-            MonsterAttack attack = new MonsterAttack();
-            attack.Name = attackType;
-            switch (attackType)
-            {
-                case MonsterAttackType.RatBite:
-                    attack.HitModifier = 0;
-                    attack.DamageModifier = 0;
-                    attack.DamageDice = "1d4";
-                    attack.DamageType = DamageType.Piercing;
-                    break;
-                case MonsterAttackType.PoisonousSnakeBite:
-                    attack.HitModifier = 5;
-                    attack.DamageModifier = 0;
-                    attack.DamageDice = "2d4";
-                    attack.DamageType = DamageType.Poison;
-                    break;
-                case MonsterAttackType.Scimitar:
-                    attack.HitModifier = 4;
-                    attack.DamageModifier = 2;
-                    attack.DamageDice = "1d6";
-                    attack.DamageType = DamageType.Slashing;
-                    break;
-            }
-
-            return attack;
         }
     }
 }

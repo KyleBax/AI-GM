@@ -3,6 +3,7 @@ using AI_GM.Monsters;
 using System;
 using System.Drawing;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using static AI_GM.Map.EnumDoorSide;
 
 namespace AI_GM.Map
@@ -525,7 +526,7 @@ namespace AI_GM.Map
                 campaign = CheckRoomLayout(campaign);
                 availableActions = GetListAvailablePlayerActions(campaign, campaign.PlayerCharacters[i].AvailableMovement);
                 DisplayAvailableActions(availableActions, campaign);
-                if (campaign.PlayerCharacters[i].ActionsTaken >= campaign.PlayerCharacters[i].MaxActions && campaign.PlayerCharacters[i].AvailableMovement <=0)
+                if (campaign.PlayerCharacters[i].ActionsTaken >= campaign.PlayerCharacters[i].MaxActions && campaign.PlayerCharacters[i].AvailableMovement <= 0)
                 {
                     campaign.PlayerCharacters[i].ActionsTaken = 0;
                     break;
@@ -545,6 +546,12 @@ namespace AI_GM.Map
             Combat.Combat.MonsterAttack(ref campaign, target, i);
         }
 
+        /// <summary>
+        /// moves the monster to the targeted player
+        /// </summary>
+        /// <param name="campaign"></param>
+        /// <param name="target"></param>
+        /// <param name="i"></param>
         private static void MoveToTarget(Campaign campaign, int target, int i)
         {
             int targetX = campaign.CombatParticipants[target].X;
@@ -553,6 +560,7 @@ namespace AI_GM.Map
             int currentX = campaign.CombatParticipants[i].X;
             int currentY = campaign.CombatParticipants[i].Y;
 
+            bool pathClear = true;
 
             for (int moves = 0; moves < campaign.CombatParticipants[i].Speed; moves++)
             {
@@ -568,18 +576,37 @@ namespace AI_GM.Map
                             case 0:
                                 break;
                             case 1:
-                                currentY -= 1;
+                                pathClear = TryMoveMonster(campaign, i, currentX, currentY - 1);
+                                if (pathClear)
+                                {
+                                    currentY -= 1;
+                                }
+
                                 break;
                             case -1:
-                                currentY += 1;
+                                pathClear = TryMoveMonster(campaign, i, currentX, currentY + 1);
+                                if (pathClear)
+                                {
+                                    currentY += 1;
+                                }
+
                                 break;
                         }
                         break;
                     case 1:
-                        currentX -= 1;
+                        pathClear = TryMoveMonster(campaign, i, currentX - 1, currentY);
+                        if (pathClear)
+                        {
+                            currentX -= 1;
+                        }
+
                         break;
                     case -1:
-                        currentX += 1;
+                        pathClear = TryMoveMonster(campaign, i, currentX + 1, currentY);
+                        if (pathClear)
+                        {
+                            currentX += 1;
+                        }
                         break;
                 }
 
@@ -588,6 +615,39 @@ namespace AI_GM.Map
             campaign.CombatParticipants[i].X = currentX;
             campaign.CombatParticipants[i].Y = currentY;
         }
+
+        private static bool TryMoveMonster(Campaign campaign, int i, int targetX, int targetY)
+        {
+            bool clear = true;
+            switch (room.Layout[targetY, targetX])
+            {
+
+                case 'C':
+                    clear = false;
+                    break;
+                case 'D':
+                    clear = false;
+                    break;
+                //TODO fix this
+                case 'M':
+                    clear = false;
+                    break;
+                default:
+                    clear = true;
+                    break;
+            }
+            for (int a = 0; a < campaign.CombatParticipants.Count; a++)
+            {
+                if (campaign.CombatParticipants[a].X == targetX && campaign.CombatParticipants[a].Y == targetY)
+                {
+                    clear = false;
+                }
+            }
+
+
+            return clear;
+        }
+
         /// <summary>
         /// finds the nearest player 
         /// </summary>
