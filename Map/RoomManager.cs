@@ -541,6 +541,7 @@ namespace AI_GM.Map
             int a = i - campaign.PlayerCount;
             int target = FindTarget(campaign, a);
             MoveToTarget(campaign, target, i);
+            CheckRoomLayout(campaign);
             Combat.Combat.MonsterAttack(ref campaign, target, i);
         }
 
