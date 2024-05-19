@@ -1,48 +1,81 @@
 ﻿using AI_GM.Characters;
+using AI_GM.Map;
+using AI_GM.Monsters;
 using KGySoft.Serialization.Binary;
-using KGySoft.Serialization.Xml;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace AI_GM
 {
-    internal class SaveLoad
+    internal static class SaveLoad
     {
         public static void SerializeCampaign(Campaign campaign)
         {
-            
-            try
-            {
+
                 using (FileStream file = File.Create(FilePaths.SAVEDCAMPAIGNS))
                 {
-                    
-                    BinarySerializationFormatter formatter = new BinarySerializationFormatter();
+                    var formatter = new BinarySerializationFormatter();
                     formatter.SerializeToStream(file, campaign);
                 }
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception.Message);
-                Console.WriteLine(exception);
-            }
         }
-
         public static Campaign DeserializeCampaign()
         {
             Campaign campaign = new Campaign();
-            
-            try
+            using (FileStream file = File.OpenRead(FilePaths.SAVEDCAMPAIGNS))
             {
-                using (FileStream file = File.OpenRead(FilePaths.SAVEDCAMPAIGNS))
-                {
-                    BinarySerializationFormatter formatter = new BinarySerializationFormatter();
-                    campaign = formatter.DeserializeFromStream(file) as Campaign;
-                }
+                var formatter = new BinarySerializationFormatter();
+                // Add the expected custom types here
+                Type[] customTypes = {
+                    typeof(Campaign),
+                    typeof(Character),
+                    typeof(Identifier),
+                    typeof(Classes),
+                    typeof(Species),
+                    typeof(Item),
+                    typeof(Monster),
+                    typeof(IFightable),
+                    typeof(Room)
+                };
+                 campaign = formatter.DeserializeFromStream<Campaign>(file, customTypes);
             }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception.Message);
-                Console.WriteLine(exception);
-            }
+
             return campaign;
         }
+
+
+       /* public static Campaign DeserializeCampaign()
+        {
+            Campaign campaign = new Campaign();
+
+                using (FileStream file = File.OpenRead(FilePaths.SAVEDCAMPAIGNS))
+                {
+                    // Define custom types if needed
+                    var customTypes = new List<Type>
+                    {
+                        typeof(Campaign),
+                        typeof(Character),
+                        typeof(Identifier),
+                        typeof(Classes),
+                        typeof(Species),
+                        typeof(Item),
+                        typeof(Monster),
+                        typeof(IFightable),
+                        typeof(Room),
+                        // Add other custom types here if necessary
+                    };
+
+                    // Create a ForwardedTypesSerializationBinder with custom types
+
+
+                    var formatter = new BinarySerializationFormatter();
+
+                    campaign = formatter.DeserializeFromStream<Campaign>(file, customTypes);
+
+                }
+
+
+            return campaign;
+        }*/
     }
 }

@@ -21,9 +21,16 @@ namespace AI_GM
             else
             {
                 campaign = SaveLoad.DeserializeCampaign();
-                foreach (Character character1 in campaign.PlayerCharacters)
+                if (campaign != null)
                 {
-                    CharacterCreationUI.CharacterComplete(character1, false);
+                    foreach (Character character1 in campaign.PlayerCharacters)
+                    {
+                        CharacterCreationUI.CharacterComplete(character1, false);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Something went wrong");
                 }
 
             }

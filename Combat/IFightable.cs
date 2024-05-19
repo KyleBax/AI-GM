@@ -1,5 +1,6 @@
 ﻿namespace AI_GM
 {
+    
     public interface IFightable
     {
         public int AttackDice

@@ -437,7 +437,7 @@ namespace AI_GM.Map
                             }
                         }
 
-                        PrintRoomLayout(i, j, campaign);
+                        PrintRoomCell(i, j, campaign);
                     }
                     Console.WriteLine();
                 }
@@ -501,8 +501,11 @@ namespace AI_GM.Map
 
             return DoorSide.Right;
         }
-
-        public static void PrintRoomLayout(int i, int j, Campaign campaign)
+        void PrintRoomLayout(Campaign campaign)
+        {
+        //nested loop to call PrintRoomcell
+        }
+        public static void PrintRoomCell(int i, int j, Campaign campaign)
         {
             for (int a = 0; a < campaign.CombatParticipants.Count; a++)
             {
@@ -556,7 +559,8 @@ namespace AI_GM.Map
                 campaign = CheckRoomLayout(campaign);
                 availableActions = GetListAvailablePlayerActions(campaign, campaign.PlayerCharacters[i].AvailableMovement);
                 DisplayAvailableActions(availableActions, campaign);
-                if (campaign.PlayerCharacters[i].ActionsTaken >= campaign.PlayerCharacters[i].MaxActions && campaign.PlayerCharacters[i].AvailableMovement <= 0)
+                if (campaign.PlayerCharacters[i].ActionsTaken >= campaign.PlayerCharacters[i].MaxActions && 
+                    campaign.PlayerCharacters[i].AvailableMovement <= 0)
                 {
                     campaign.PlayerCharacters[i].ActionsTaken = 0;
                     break;
@@ -594,7 +598,9 @@ namespace AI_GM.Map
 
             for (int moves = 0; moves < campaign.CombatParticipants[i].Speed; moves++)
             {
-                if ((currentY == targetY && Math.Abs(currentX - targetX) == 1) || (currentX == targetX && Math.Abs(currentY - targetY) == 1))
+                //checks if the monster is adjacent to target player
+                if ((currentY == targetY && Math.Abs(currentX - targetX) == 1) || 
+                    (currentX == targetX && Math.Abs(currentY - targetY) == 1))
                 {
                     break;
                 }

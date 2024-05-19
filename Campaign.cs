@@ -9,7 +9,7 @@ using AI_GM.Monsters;
 
 namespace AI_GM
 {
-    [Serializable]
+    [Serializable()]
     public class Campaign
     {
         private List<Character> _playerCharacters = new List<Character>();
@@ -19,14 +19,14 @@ namespace AI_GM
             set { _playerCharacters = value; }
         }
 
-        private List<Monster> _activeMonsters = new List<Monster>();
+        [NonSerialized()] private List<Monster> _activeMonsters = new List<Monster>();
         public List<Monster> ActiveMonsters
         {
             get { return _activeMonsters; }
             set { _activeMonsters = value; }
         }
 
-        private List<IFightable> _combatParticipants = new List<IFightable>();
+        [NonSerialized()] private List<IFightable> _combatParticipants = new List<IFightable>();
 
         public List<IFightable> CombatParticipants
         {
@@ -55,7 +55,7 @@ namespace AI_GM
             set { _activePlayer = value; }
         }
 
-        private List<Room> _openRooms = new List<Room>();
+        [NonSerialized()] private List<Room> _openRooms = new List<Room>();
 
         public List<Room> OpenRooms
         {
@@ -67,6 +67,21 @@ namespace AI_GM
             {
                 _openRooms = value;
             }
+        }
+
+        public void OnDeserialization(object sender)
+        {
+            // Ensure lists are initialized after deserialization
+            if (_playerCharacters == null)
+                _playerCharacters = new List<Character>();
+
+            if (_activeMonsters == null)
+                _activeMonsters = new List<Monster>();
+
+            if (_openRooms == null)
+                _openRooms = new List<Room>();
+
+            // Any other initialization can be done here
         }
     }
 }

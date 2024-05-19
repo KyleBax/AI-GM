@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using AI_GM.Combat;
 using AI_GM.Map;
@@ -12,7 +13,7 @@ namespace AI_GM.Monsters
     {
 
 
-        private Identifier _identifier = Identifier.Monster;
+        [JsonIgnore] private Identifier _identifier = Identifier.Monster;
         public Identifier Identifier
         {
             get
@@ -25,7 +26,7 @@ namespace AI_GM.Monsters
             }
         }
 
-        private int _attackDice;
+        [JsonIgnore] private int _attackDice;
         public int AttackDice
         {
             get
@@ -38,7 +39,7 @@ namespace AI_GM.Monsters
             }
         }
 
-        private int _defendDice;
+        [JsonIgnore] private int _defendDice;
         public int DefendDice
         {
             get
@@ -51,7 +52,7 @@ namespace AI_GM.Monsters
             }
         }
 
-        private string _description;
+        [JsonIgnore] private string _description;
         public string Description
         {
             get
@@ -64,7 +65,7 @@ namespace AI_GM.Monsters
             }
         }
 
-        private int _speed;
+        [JsonIgnore] private int _speed;
         public int Speed
         {
             get
@@ -77,20 +78,7 @@ namespace AI_GM.Monsters
             }
         }
 
-        private List<MonsterAttack> _attacks = new List<MonsterAttack>();
-        public List<MonsterAttack> Attacks
-        {
-            get
-            {
-                return _attacks;
-            }
-            set
-            {
-                _attacks = value;
-            }
-        }
-
-        private int _maxHitPoints;
+        [JsonIgnore] private int _maxHitPoints;
         public int MaxHitPoints
         {
             get
@@ -103,7 +91,7 @@ namespace AI_GM.Monsters
             }
         }
 
-        private int _damageTaken;
+        [JsonIgnore] private int _damageTaken;
         public int DamageTaken
         {
             get
@@ -115,7 +103,7 @@ namespace AI_GM.Monsters
                 _damageTaken = value;
             }
         }
-        private int _availableMovement = 0;
+        [JsonIgnore] private int _availableMovement = 0;
         public int AvailableMovement
         {
             get
@@ -127,7 +115,7 @@ namespace AI_GM.Monsters
                 _availableMovement = value;
             }
         }
-        private int _actionsTaken = 0;
+        [JsonIgnore] private int _actionsTaken = 0;
         public int ActionsTaken
         {
             get
@@ -139,7 +127,7 @@ namespace AI_GM.Monsters
                 _actionsTaken = value;
             }
         }
-        private int _maxActions = 1;
+        [JsonIgnore] private int _maxActions = 1;
         public int MaxActions
         {
             get
