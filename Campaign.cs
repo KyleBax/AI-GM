@@ -19,14 +19,14 @@ namespace AI_GM
             set { _playerCharacters = value; }
         }
 
-        [NonSerialized()] private List<Monster> _activeMonsters = new List<Monster>();
+        private List<Monster> _activeMonsters = new List<Monster>();
         public List<Monster> ActiveMonsters
         {
             get { return _activeMonsters; }
             set { _activeMonsters = value; }
         }
 
-        [NonSerialized()] private List<IFightable> _combatParticipants = new List<IFightable>();
+        private List<IFightable> _combatParticipants = new List<IFightable>();
 
         public List<IFightable> CombatParticipants
         {
@@ -67,21 +67,6 @@ namespace AI_GM
             {
                 _openRooms = value;
             }
-        }
-
-        public void OnDeserialization(object sender)
-        {
-            // Ensure lists are initialized after deserialization
-            if (_playerCharacters == null)
-                _playerCharacters = new List<Character>();
-
-            if (_activeMonsters == null)
-                _activeMonsters = new List<Monster>();
-
-            if (_openRooms == null)
-                _openRooms = new List<Room>();
-
-            // Any other initialization can be done here
         }
     }
 }

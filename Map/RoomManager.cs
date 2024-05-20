@@ -260,7 +260,8 @@ namespace AI_GM.Map
                             character.DamageTaken += 1;
                             break;
                         case 'D':
-                            campaign.CombatParticipants.RemoveRange(campaign.PlayerCount, campaign.CombatParticipants.Count - campaign.PlayerCount);
+                            campaign.CombatParticipants.RemoveRange(campaign.PlayerCount,
+                                campaign.CombatParticipants.Count - campaign.PlayerCount);
                             GetRandomRoom(mainRooms);
                             newRoom = true;
                             playerLocationUpdated = false;
@@ -462,8 +463,6 @@ namespace AI_GM.Map
                         campaign.CombatParticipants.Add(monster);
                         campaign.ActiveMonsters.Add(monster);
 
-                        room.Layout[i, j] = ' ';
-
                         Console.WriteLine($"{monster.X}, {monster.Y}");
                     }
                 }
@@ -522,10 +521,15 @@ namespace AI_GM.Map
                     return;
                 }
             }
+            //TODO make a switch
             if (room.Layout[i, j] == 'T')
             {
                 Console.Write(' ');
             }
+/*            if (room.Layout[i, j] == 'm')
+            {
+                Console.Write(' ');
+            }*/
             else
             {
                 Console.Write(room.Layout[i, j]);

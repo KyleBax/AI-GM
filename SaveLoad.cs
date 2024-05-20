@@ -39,43 +39,7 @@ namespace AI_GM
                 };
                  campaign = formatter.DeserializeFromStream<Campaign>(file, customTypes);
             }
-
             return campaign;
         }
-
-
-       /* public static Campaign DeserializeCampaign()
-        {
-            Campaign campaign = new Campaign();
-
-                using (FileStream file = File.OpenRead(FilePaths.SAVEDCAMPAIGNS))
-                {
-                    // Define custom types if needed
-                    var customTypes = new List<Type>
-                    {
-                        typeof(Campaign),
-                        typeof(Character),
-                        typeof(Identifier),
-                        typeof(Classes),
-                        typeof(Species),
-                        typeof(Item),
-                        typeof(Monster),
-                        typeof(IFightable),
-                        typeof(Room),
-                        // Add other custom types here if necessary
-                    };
-
-                    // Create a ForwardedTypesSerializationBinder with custom types
-
-
-                    var formatter = new BinarySerializationFormatter();
-
-                    campaign = formatter.DeserializeFromStream<Campaign>(file, customTypes);
-
-                }
-
-
-            return campaign;
-        }*/
     }
 }

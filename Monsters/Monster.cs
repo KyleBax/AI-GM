@@ -9,11 +9,12 @@ using AI_GM.Map;
 
 namespace AI_GM.Monsters
 {
+    [Serializable()]
     public class Monster : GameObject, IFightable
     {
 
 
-        [JsonIgnore] private Identifier _identifier = Identifier.Monster;
+        private Identifier _identifier = Identifier.Monster;
         public Identifier Identifier
         {
             get
@@ -26,7 +27,7 @@ namespace AI_GM.Monsters
             }
         }
 
-        [JsonIgnore] private int _attackDice;
+        private int _attackDice;
         public int AttackDice
         {
             get
@@ -39,7 +40,7 @@ namespace AI_GM.Monsters
             }
         }
 
-        [JsonIgnore] private int _defendDice;
+        private int _defendDice;
         public int DefendDice
         {
             get
@@ -52,7 +53,7 @@ namespace AI_GM.Monsters
             }
         }
 
-        [JsonIgnore] private string _description;
+        private string _description;
         public string Description
         {
             get
@@ -65,7 +66,7 @@ namespace AI_GM.Monsters
             }
         }
 
-        [JsonIgnore] private int _speed;
+        private int _speed;
         public int Speed
         {
             get
@@ -78,7 +79,7 @@ namespace AI_GM.Monsters
             }
         }
 
-        [JsonIgnore] private int _maxHitPoints;
+        private int _maxHitPoints;
         public int MaxHitPoints
         {
             get
@@ -91,7 +92,7 @@ namespace AI_GM.Monsters
             }
         }
 
-        [JsonIgnore] private int _damageTaken;
+        private int _damageTaken;
         public int DamageTaken
         {
             get
@@ -103,7 +104,7 @@ namespace AI_GM.Monsters
                 _damageTaken = value;
             }
         }
-        [JsonIgnore] private int _availableMovement = 0;
+        private int _availableMovement = 0;
         public int AvailableMovement
         {
             get
@@ -115,7 +116,7 @@ namespace AI_GM.Monsters
                 _availableMovement = value;
             }
         }
-        [JsonIgnore] private int _actionsTaken = 0;
+        private int _actionsTaken = 0;
         public int ActionsTaken
         {
             get
@@ -127,7 +128,7 @@ namespace AI_GM.Monsters
                 _actionsTaken = value;
             }
         }
-        [JsonIgnore] private int _maxActions = 1;
+        private int _maxActions = 1;
         public int MaxActions
         {
             get
