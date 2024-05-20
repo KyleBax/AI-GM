@@ -178,27 +178,5 @@ namespace AI_GM.Characters
                 _maxActions = value;
             }
         }
-
-        public void OnDeserialization(object sender)
-        {
-           
-            // Ensure lists are initialized after deserialization
-            if (_identifier == null)
-                _identifier = Identifier.Player;
-
-            if (_class == null)
-                _class = new Classes();
-
-            if (_species == null)
-                _species = new Species();
-
-            if (_inventory == null)
-                _inventory = new List<Item>();
-
-            if (_availableMovement != 0)
-                _availableMovement = 0;
-
-            // Any other initialization can be done here
-        }
     }
 }

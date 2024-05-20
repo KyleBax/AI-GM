@@ -502,10 +502,11 @@ namespace AI_GM.Map
         }
         void PrintRoomLayout(Campaign campaign)
         {
-        //nested loop to call PrintRoomcell
+            //nested loop to call PrintRoomcell
         }
         public static void PrintRoomCell(int i, int j, Campaign campaign)
         {
+
             for (int a = 0; a < campaign.CombatParticipants.Count; a++)
             {
                 if (i == campaign.CombatParticipants[a].Y && j == campaign.CombatParticipants[a].X)
@@ -521,18 +522,18 @@ namespace AI_GM.Map
                     return;
                 }
             }
-            //TODO make a switch
-            if (room.Layout[i, j] == 'T')
+
+            switch (room.Layout[i, j])
             {
-                Console.Write(' ');
-            }
-/*            if (room.Layout[i, j] == 'm')
-            {
-                Console.Write(' ');
-            }*/
-            else
-            {
-                Console.Write(room.Layout[i, j]);
+                case 'T':
+                    Console.Write(' ');
+                    break;
+                case 'm':
+                    Console.Write(' ');
+                    break;
+                default:
+                    Console.Write(room.Layout[i, j]);
+                    break;
             }
         }
 
@@ -563,7 +564,7 @@ namespace AI_GM.Map
                 campaign = CheckRoomLayout(campaign);
                 availableActions = GetListAvailablePlayerActions(campaign, campaign.PlayerCharacters[i].AvailableMovement);
                 DisplayAvailableActions(availableActions, campaign);
-                if (campaign.PlayerCharacters[i].ActionsTaken >= campaign.PlayerCharacters[i].MaxActions && 
+                if (campaign.PlayerCharacters[i].ActionsTaken >= campaign.PlayerCharacters[i].MaxActions &&
                     campaign.PlayerCharacters[i].AvailableMovement <= 0)
                 {
                     campaign.PlayerCharacters[i].ActionsTaken = 0;
@@ -603,7 +604,7 @@ namespace AI_GM.Map
             for (int moves = 0; moves < campaign.CombatParticipants[i].Speed; moves++)
             {
                 //checks if the monster is adjacent to target player
-                if ((currentY == targetY && Math.Abs(currentX - targetX) == 1) || 
+                if ((currentY == targetY && Math.Abs(currentX - targetX) == 1) ||
                     (currentX == targetX && Math.Abs(currentY - targetY) == 1))
                 {
                     break;
