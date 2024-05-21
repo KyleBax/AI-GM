@@ -562,6 +562,7 @@ namespace AI_GM.Map
                     break;
                 }
                 campaign = CheckRoomLayout(campaign);
+                //PrintRoomLayout()
                 availableActions = GetListAvailablePlayerActions(campaign, campaign.PlayerCharacters[i].AvailableMovement);
                 DisplayAvailableActions(availableActions, campaign);
                 if (campaign.PlayerCharacters[i].ActionsTaken >= campaign.PlayerCharacters[i].MaxActions &&
