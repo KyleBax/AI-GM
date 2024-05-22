@@ -76,6 +76,11 @@ namespace AI_GM.Combat
                 Console.WriteLine("you have killed this monster");
                 //removes the selectedMonster from combatParticipants
                 campaign.CombatParticipants.Remove(selectedMonster);
+
+                Items.Item item = new Items.Item();
+                item = Items.Loot.GetRandomItem();
+                Console.WriteLine($"The monster has dropped a {item.Name}");
+                campaign.PlayerCharacters[i].Inventory.Add(item);
             }
 
         }

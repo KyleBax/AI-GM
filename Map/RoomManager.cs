@@ -182,11 +182,11 @@ namespace AI_GM.Map
                     canDoAction = AvailableActionCheck(campaign, i);
                     if (canDoAction)
                     {
-                        Items.Item item = new Items.Item();
+                        
                         campaign.PlayerCharacters[i].ActionsTaken++;
                         Console.WriteLine("Player searches for treasure.");
+                        Items.Item item = new Items.Item();
                         item = Items.Loot.GetRandomItem();
-
                         Console.WriteLine($"You have found a {item.Name}");
                         campaign.PlayerCharacters[i].Inventory.Add(item);
 
