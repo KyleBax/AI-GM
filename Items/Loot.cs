@@ -13,7 +13,7 @@ namespace AI_GM.Items
         {
             item.Rarity = GetRandomEnumValue<Rarity>();
             item.Type = GetRandomEnumValue<ItemType>();
-            item.Name = GetRandomName();
+            item.Name = GetItemName();
             item.Cost = GetRandomCost();
             item.Weight = GetRandomWeight();
             item.ExtraDice = GetRandomExtraDice();
@@ -59,7 +59,7 @@ namespace AI_GM.Items
                     cost = Dice.DiceRoll(10);
                     break;
                 case Rarity.Uncommon:
-                    cost = Dice.DiceRoll(15)+10;
+                    cost = Dice.DiceRoll(15) + 10;
                     break;
                 case Rarity.Rare:
                     cost = Dice.DiceRoll(25) + 25;
@@ -76,21 +76,62 @@ namespace AI_GM.Items
             return cost;
         }
         //TODO add name generation
-        private string GetRandomName()
+        private string GetItemName()
         {
+            string type;
+            string enhancement;
+            string name;
             switch (item.Type)
             {
                 case ItemType.Armour:
+                    enhancement = GetRandomName(EnhancementNames);
+                    type = GetRandomName(ArmourNames);
+                    name = $"{enhancement} {type}";
                     break;
                 case ItemType.Weapon:
+                    enhancement = GetRandomName(EnhancementNames);
+                    type = GetRandomName(WeaponNames);
+                    name = $"{enhancement} {type}";
                     break;
                 case ItemType.Potion:
+                    enhancement = GetRandomName(EnhancementNames);
+                    type = GetRandomName(PotionNames);
+                    name = $"{enhancement} {type}";
+                    break;
+                default:
+                    name = "broken item name";
                     break;
             }
 
-            return "broken item name";
+            return name;
         }
 
+        private string GetRandomName(string[] nameType)
+        {
+            int ranNum = Dice.DiceRoll(nameType.Length)-1;
+            string name = nameType[ranNum];
+            return name;
+        }
+
+        private static readonly string[] WeaponNames = new string[]
+        {
+            "sword","staff","stick","twig","wand","bow","dagger","spear"
+        };
+
+        private static readonly string[] ArmourNames = new string[]
+        {
+            "shirt","cloth","breastplate","helmet","pants","shoes","slippers","cloak"
+        };
+
+        private static readonly string[] PotionNames = new string[]
+        {
+            "potion"
+        };
+
+        private static readonly string[] EnhancementNames = new string[]
+        {
+            "flying","wicked","sticky","soggy","bright","talkative","hungry","bloodthirsty","rusty"
+        };
         public static T GetRandomEnumValue<T>() where T : Enum
         {
             Array values = Enum.GetValues(typeof(T));

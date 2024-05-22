@@ -266,7 +266,6 @@ namespace AI_GM.Map
                             newRoom = true;
                             playerLocationUpdated = false;
                             break;
-                        //TODO fix this
                         case 'M':
                             Console.WriteLine("There is a monster in the way");
                             break;
@@ -670,7 +669,6 @@ namespace AI_GM.Map
                 case 'D':
                     clear = false;
                     break;
-                //TODO fix this
                 case 'M':
                     clear = false;
                     break;
