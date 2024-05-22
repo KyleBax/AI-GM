@@ -8,8 +8,8 @@ namespace AI_GM.Items
 {
     internal class Loot
     {
-        Item item = new Item();
-        public Item GetRandomItem()
+        private static Item item = new Item();
+        public static Item GetRandomItem()
         {
             item.Rarity = GetRandomEnumValue<Rarity>();
             item.Type = GetRandomEnumValue<ItemType>();
@@ -20,7 +20,7 @@ namespace AI_GM.Items
             return item;
         }
 
-        private int GetRandomExtraDice()
+        private static int GetRandomExtraDice()
         {
             int extraDice;
             switch (item.Rarity)
@@ -45,12 +45,12 @@ namespace AI_GM.Items
             return extraDice;
         }
         //TODO add weight
-        private int GetRandomWeight()
+        private static int GetRandomWeight()
         {
             return 0;
         }
 
-        private int GetRandomCost()
+        private static int GetRandomCost()
         {
             int cost;
             switch (item.Rarity)
@@ -75,8 +75,7 @@ namespace AI_GM.Items
 
             return cost;
         }
-        //TODO add name generation
-        private string GetItemName()
+        private static string GetItemName()
         {
             string type;
             string enhancement;
@@ -106,7 +105,7 @@ namespace AI_GM.Items
             return name;
         }
 
-        private string GetRandomName(string[] nameType)
+        private static string GetRandomName(string[] nameType)
         {
             int ranNum = Dice.DiceRoll(nameType.Length)-1;
             string name = nameType[ranNum];
