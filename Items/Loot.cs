@@ -134,7 +134,7 @@ namespace AI_GM.Items
         public static T GetRandomEnumValue<T>() where T : Enum
         {
             Array values = Enum.GetValues(typeof(T));
-            int randomNum = Dice.DiceRoll(values.Length);
+            int randomNum = Dice.DiceRoll(values.Length)-1;
             return (T)values.GetValue(randomNum);
         }
     }

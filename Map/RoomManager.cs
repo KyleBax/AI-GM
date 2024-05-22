@@ -15,6 +15,7 @@ namespace AI_GM.Map
         public static bool newRoom = false;
         public static bool playerLocationUpdated = true;
         public static bool endTurnEarly = false;
+        public static bool playerDead = false;
         public static bool InitialiseMaps(Campaign campaign)
         {
             mainRooms = GetRoomsFromTextFile(FilePaths.MAINROOMS);
@@ -552,6 +553,12 @@ namespace AI_GM.Map
 
         public static Campaign PlayersTurn(Campaign campaign, int i)
         {
+            if (playerDead)
+            {
+                campaign.CombatParticipants.Clear();
+                campaign.PlayerCharacters.Clear();
+                return campaign;
+            }
             List<Characters.Action> availableActions = GetListAvailablePlayerActions(campaign, campaign.PlayerCharacters[i].AvailableMovement);
             DisplayAvailableActions(availableActions, campaign);
 
@@ -559,6 +566,13 @@ namespace AI_GM.Map
 
             while ((keyInfo = Console.ReadKey()).Key != ConsoleKey.Escape)
             {
+                //TODO create a method so the same code sn't used twice
+                if (playerDead)
+                {
+                    campaign.CombatParticipants.Clear();
+                    campaign.PlayerCharacters.Clear();
+                    return campaign;
+                }
                 campaign = HandlePlayerActions(keyInfo, campaign);
                 if (endTurnEarly)
                 {
@@ -579,6 +593,13 @@ namespace AI_GM.Map
 
             }
             return campaign;
+        }
+
+        //TODO make it so that player death can be done on a multiplayer game
+        public static void PlayerDeath()
+        {
+            Console.WriteLine("You have died");
+            playerDead = true;
         }
 
         internal static void MonstersTurn(Campaign campaign, int i)

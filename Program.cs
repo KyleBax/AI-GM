@@ -8,7 +8,7 @@ namespace AI_GM
     {
         public static void Main()
         {
-
+            bool campaignActive = true;
             Campaign campaign = new Campaign();
             Character character = new Character();
             bool newCharacter = UI.GetConfirmation("press Y to start a new campaign");
@@ -48,13 +48,19 @@ namespace AI_GM
                 campaign.CombatParticipants = Combat.Combat.GetCombatParticipantsList(campaign);
                 RoomManager.SpawnPlayer(campaign);
                 RoomManager.CheckRoomLayout(campaign);
-                while (true)
+                while (campaignActive)
                 {
                     for (int i = 0; i < campaign.CombatParticipants.Count; i++)
                     {
                         if (campaign.CombatParticipants[i].Identifier == Identifier.Player)
                         {
                             campaign = RoomManager.PlayersTurn(campaign, i);
+                            if (campaign.PlayerCharacters.Count <= 0)
+                            {
+                                Console.WriteLine("Game Over");
+                                campaignActive = false;
+                                break;
+                            }
                         }
                         else
                         {

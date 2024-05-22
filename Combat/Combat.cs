@@ -1,4 +1,5 @@
 ﻿using AI_GM.Characters;
+using AI_GM.Map;
 using AI_GM.Monsters;
 
 namespace AI_GM.Combat
@@ -44,6 +45,12 @@ namespace AI_GM.Combat
                 int damage = hits - defended;
                 Console.WriteLine($"You have taken {damage} damage");
                 campaign.CombatParticipants[target].DamageTaken += damage;
+
+                if (campaign.CombatParticipants[target].DamageTaken >= campaign.CombatParticipants[target].MaxHitPoints)
+                {
+                    RoomManager.PlayerDeath();
+                }
+
                 break;
 
             }
