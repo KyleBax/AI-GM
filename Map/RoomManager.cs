@@ -183,7 +183,7 @@ namespace AI_GM.Map
                     canDoAction = AvailableActionCheck(campaign, i);
                     if (canDoAction)
                     {
-                        
+
                         campaign.PlayerCharacters[i].ActionsTaken++;
                         Console.WriteLine("Player searches for treasure.");
                         Items.Item item = new Items.Item();
@@ -443,10 +443,7 @@ namespace AI_GM.Map
                                 }
                             }
                         }
-
-                        PrintRoomCell(i, j, campaign);
                     }
-                    Console.WriteLine();
                 }
                 newRoom = false;
             }
@@ -506,9 +503,18 @@ namespace AI_GM.Map
 
             return DoorSide.Right;
         }
-        void PrintRoomLayout(Campaign campaign)
+        public static void PrintRoomLayout(Campaign campaign)
         {
-            //nested loop to call PrintRoomcell
+
+            for (int i = 0; i < room.Layout.GetLength(0); i++)
+            {
+                for (int j = 0; j < room.Layout.GetLength(1); j++)
+                {
+                    PrintRoomCell(i, j, campaign);
+                }
+                Console.WriteLine();
+            }
+
         }
         public static void PrintRoomCell(int i, int j, Campaign campaign)
         {
@@ -581,7 +587,7 @@ namespace AI_GM.Map
                     break;
                 }
                 campaign = CheckRoomLayout(campaign);
-                //PrintRoomLayout()
+                PrintRoomLayout(campaign);
                 availableActions = GetListAvailablePlayerActions(campaign, campaign.PlayerCharacters[i].AvailableMovement);
                 DisplayAvailableActions(availableActions, campaign);
                 if (campaign.PlayerCharacters[i].ActionsTaken >= campaign.PlayerCharacters[i].MaxActions &&

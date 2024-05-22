@@ -48,6 +48,7 @@ namespace AI_GM
                 campaign.CombatParticipants = Combat.Combat.GetCombatParticipantsList(campaign);
                 RoomManager.SpawnPlayer(campaign);
                 RoomManager.CheckRoomLayout(campaign);
+                RoomManager.PrintRoomLayout(campaign);
                 while (campaignActive)
                 {
                     for (int i = 0; i < campaign.CombatParticipants.Count; i++)
