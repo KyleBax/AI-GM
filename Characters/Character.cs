@@ -130,6 +130,31 @@ namespace AI_GM.Characters
             }
         }
 
+        private Item _Weapon = new Item();
+        public Item Weapon
+        {
+            get
+            {
+                return _Weapon;
+            }
+            set
+            {
+                _Weapon = value;
+            }
+        }
+        private Item _Armour = new Item();
+        public Item Armour
+        {
+            get
+            {
+                return _Armour;
+            }
+            set
+            {
+                _Armour = value;
+            }
+        }
+
         private List<Item> _inventory = new List<Item>();
         public List<Item> Inventory
         {

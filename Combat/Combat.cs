@@ -1,6 +1,7 @@
 ﻿using AI_GM.Characters;
 using AI_GM.Map;
 using AI_GM.Monsters;
+using System.Xml.Linq;
 
 namespace AI_GM.Combat
 {
@@ -87,7 +88,21 @@ namespace AI_GM.Combat
                 Items.Item item = new Items.Item();
                 item = Items.Loot.GetRandomItem();
                 Console.WriteLine($"The monster has dropped a {item.Name}");
-                campaign.PlayerCharacters[i].Inventory.Add(item);
+
+                switch (item.Type)
+                {
+                    //TODO make a comparison and a check if the change is wanted
+                    case ItemType.Armour:
+                        campaign.PlayerCharacters[i].Armour = item;
+                        break;
+                    case ItemType.Weapon:
+                        campaign.PlayerCharacters[i].Weapon = item;
+                        break;
+                    default:
+                        campaign.PlayerCharacters[i].Inventory.Add(item);
+                        break;
+                }
+                
             }
 
         }
