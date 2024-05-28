@@ -186,10 +186,7 @@ namespace AI_GM.Map
 
                         campaign.PlayerCharacters[i].ActionsTaken++;
                         Console.WriteLine("Player searches for treasure.");
-                        Items.Item item = new Items.Item();
-                        item = Items.Loot.GetRandomItem();
-                        Console.WriteLine($"You have found a {item.Name}");
-                        campaign.PlayerCharacters[i].Inventory.Add(item);
+                        campaign = Items.Loot.AddNewItem(campaign, i, true);
 
                     }
 

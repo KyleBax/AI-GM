@@ -85,57 +85,7 @@ namespace AI_GM.Combat
                 //removes the selectedMonster from combatParticipants
                 campaign.CombatParticipants.Remove(selectedMonster);
 
-                Items.Item item = new Items.Item();
-                item = Items.Loot.GetRandomItem();
-                Console.WriteLine($"The monster has dropped a {item.Name}");
-
-                switch (item.Type)
-                {
-                    case ItemType.Armour:
-                        if (campaign.PlayerCharacters[i].Armour == null)
-                        {
-                            campaign.PlayerCharacters[i].Armour = item;
-                            Console.WriteLine($"You Have equipped {item.Name}");
-                        }
-                        else
-                        {
-                            Console.WriteLine("Would you like to swap armours?");
-                            Console.WriteLine($"Current {campaign.PlayerCharacters[i].Armour.Name} bonus{campaign.PlayerCharacters[i].Armour.ExtraDice}");
-                            Console.WriteLine($"new {item.Name} bonus{item.ExtraDice}");
-                            ConsoleKeyInfo input = Console.ReadKey();
-                            if (input.Key == ConsoleKey.Y)
-                            {
-                                campaign.PlayerCharacters[i].Armour = item;
-                                Console.WriteLine($"You Have equipped {item.Name}");
-                            }
-                        }
-                        break;
-                    case ItemType.Weapon:
-                        if (campaign.PlayerCharacters[i].Weapon == null)
-                        {
-                            campaign.PlayerCharacters[i].Weapon = item;
-                            Console.WriteLine($"You Have equipped {item.Name}");
-                        }
-                        else
-                        {
-                            Console.WriteLine("Would you like to swap weapons?");
-                            Console.WriteLine($"Current {campaign.PlayerCharacters[i].Weapon.Name} bonus{campaign.PlayerCharacters[i].Weapon.ExtraDice}");
-                            Console.WriteLine($"new {item.Name} bonus{item.ExtraDice}");
-                            ConsoleKeyInfo input = Console.ReadKey();
-                            if (input.Key == ConsoleKey.Y)
-                            {
-                                campaign.PlayerCharacters[i].Weapon = item;
-                                Console.WriteLine($"You Have equipped {item.Name}");
-                            }
-                        }
-                        campaign.PlayerCharacters[i].Weapon = item;
-                        break;
-                    default:
-                        campaign.PlayerCharacters[i].Inventory.Add(item);
-                        Console.WriteLine($"{item.Name} has been added to your inventory");
-                        break;
-                }
-                
+                campaign = Items.Loot.AddNewItem(campaign, i, false);                
             }
 
         }
