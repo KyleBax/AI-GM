@@ -35,7 +35,9 @@ namespace AI_GM.Combat
                 int defended = 0;
                 if (hits > 0)
                 {
-                    defended = GetHits(campaign.CombatParticipants[target].DefendDice, "monsterDefend");
+                    int diceToDefend = campaign.CombatParticipants[target].DefendDice + 
+                                        campaign.PlayerCharacters[target].Armour.ExtraDice;
+                    defended = GetHits(diceToDefend, "monsterDefend");
                     Console.WriteLine($"You have defended {defended} hits ");
                 }
                 if (defended > hits)
@@ -60,7 +62,8 @@ namespace AI_GM.Combat
         public static void PlayerAttackAction(ref Campaign campaign, int i)
         {
             IFightable selectedMonster = SelectMonsterFromParticipants(campaign.CombatParticipants);
-            int hits = GetHits(campaign.PlayerCharacters[i].AttackDice, "attack");
+            int diceToHit = campaign.PlayerCharacters[i].AttackDice + campaign.PlayerCharacters[i].Weapon.ExtraDice;
+            int hits = GetHits(diceToHit, "attack");
 
             Console.WriteLine($"You have {hits} hits");
             int defended = 0;
