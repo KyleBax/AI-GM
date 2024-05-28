@@ -8,10 +8,32 @@ namespace AI_GM.Items
 {
     internal class Loot
     {
-        private static Item item = new Item();
+        public static Item item = new Item();
+
+        public static Item GetStartingEquipment(bool weapon)
+        {
+            item = new Item();
+            item.Rarity = Rarity.Common;
+            item.Cost = 0;
+            item.Weight = 0;
+            item.ExtraDice = 0;
+            if (weapon)
+            {
+                item.Type = ItemType.Weapon;
+                item.Name = "Beginner stick";
+            }
+            else
+            {
+                item.Type = ItemType.Armour;
+                item.Name = "Beginner shirt";
+            }
+
+            return item;
+        }
 
         public static Campaign AddNewItem(Campaign campaign, int i, bool searched)
         {
+            item = new Item();
             GetRandomItem();
 
             if (searched == true)
@@ -22,47 +44,34 @@ namespace AI_GM.Items
             {
                 Console.WriteLine($"The monster has dropped a {item.Name}");
             }
-            
+            ConsoleKeyInfo input = new ConsoleKeyInfo();
 
             switch (item.Type)
             {
                 case ItemType.Armour:
-                    if (campaign.PlayerCharacters[i].Armour == null)
+
+                    Console.WriteLine("Would you like to swap armours?");
+                    Console.WriteLine($"Current {campaign.PlayerCharacters[i].Armour.Name} bonus +{campaign.PlayerCharacters[i].Armour.ExtraDice}");
+                    Console.WriteLine($"new {item.Name} bonus +{item.ExtraDice}");
+                    input = Console.ReadKey();
+                    if (input.Key == ConsoleKey.Y)
                     {
                         campaign.PlayerCharacters[i].Armour = item;
                         Console.WriteLine($"You Have equipped {item.Name}");
                     }
-                    else
-                    {
-                        Console.WriteLine("Would you like to swap armours?");
-                        Console.WriteLine($"Current {campaign.PlayerCharacters[i].Armour.Name} bonus{campaign.PlayerCharacters[i].Armour.ExtraDice}");
-                        Console.WriteLine($"new {item.Name} bonus{item.ExtraDice}");
-                        ConsoleKeyInfo input = Console.ReadKey();
-                        if (input.Key == ConsoleKey.Y)
-                        {
-                            campaign.PlayerCharacters[i].Armour = item;
-                            Console.WriteLine($"You Have equipped {item.Name}");
-                        }
-                    }
+
                     break;
                 case ItemType.Weapon:
-                    if (campaign.PlayerCharacters[i].Weapon == null)
+                    Console.WriteLine("Would you like to swap weapons?");
+                    Console.WriteLine($"Current {campaign.PlayerCharacters[i].Weapon.Name} bonus +{campaign.PlayerCharacters[i].Weapon.ExtraDice}");
+                    Console.WriteLine($"new {item.Name} bonus +{item.ExtraDice}");
+                    input = Console.ReadKey();
+                    if (input.Key == ConsoleKey.Y)
                     {
                         campaign.PlayerCharacters[i].Weapon = item;
                         Console.WriteLine($"You Have equipped {item.Name}");
                     }
-                    else
-                    {
-                        Console.WriteLine("Would you like to swap weapons?");
-                        Console.WriteLine($"Current {campaign.PlayerCharacters[i].Weapon.Name} bonus{campaign.PlayerCharacters[i].Weapon.ExtraDice}");
-                        Console.WriteLine($"new {item.Name} bonus{item.ExtraDice}");
-                        ConsoleKeyInfo input = Console.ReadKey();
-                        if (input.Key == ConsoleKey.Y)
-                        {
-                            campaign.PlayerCharacters[i].Weapon = item;
-                            Console.WriteLine($"You Have equipped {item.Name}");
-                        }
-                    }
+
                     break;
                 default:
                     campaign.PlayerCharacters[i].Inventory.Add(item);
@@ -168,7 +177,7 @@ namespace AI_GM.Items
 
         private static string GetRandomName(string[] nameType)
         {
-            int ranNum = Dice.DiceRoll(nameType.Length)-1;
+            int ranNum = Dice.DiceRoll(nameType.Length) - 1;
             string name = nameType[ranNum];
             return name;
         }
@@ -195,7 +204,7 @@ namespace AI_GM.Items
         public static T GetRandomEnumValue<T>() where T : Enum
         {
             Array values = Enum.GetValues(typeof(T));
-            int randomNum = Dice.DiceRoll(values.Length)-1;
+            int randomNum = Dice.DiceRoll(values.Length) - 1;
             return (T)values.GetValue(randomNum);
         }
     }

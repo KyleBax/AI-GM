@@ -18,6 +18,8 @@ namespace AI_GM.Characters
                 character = CharacterCreationUI.SelectCharacterSpecies(character);
                 character = CharacterCreationLogic.AddSpeciesFeatures(character);
                 bool characterComplete = CharacterCreationUI.CharacterComplete(character, true);
+                character.Weapon = Items.Loot.GetStartingEquipment(true);
+                character.Armour = Items.Loot.GetStartingEquipment(false);
                 if (characterComplete)
                 {
                     return character;
