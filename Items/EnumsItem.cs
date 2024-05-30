@@ -1,4 +1,4 @@
-﻿namespace AI_GM
+﻿namespace AI_GM.Items
 {
     public enum WeaponType
     {

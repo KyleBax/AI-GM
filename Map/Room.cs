@@ -17,6 +17,7 @@ namespace AI_GM.Map
         // C == Chest
         // T == Trap
         // S == Spawn Point
+        // E == Exit/Next Floor
 
         private char[,] _layout;
         public char[,] Layout

@@ -11,6 +11,7 @@ namespace AI_GM
             bool campaignActive = true;
             Campaign campaign = new Campaign();
             Character character = new Character();
+            Controls.PrintControls();
             bool newCharacter = UI.GetConfirmation("press Y to start a new campaign");
             if (newCharacter)
             {
