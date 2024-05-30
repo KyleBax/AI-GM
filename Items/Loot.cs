@@ -45,7 +45,7 @@ namespace AI_GM.Items
                 Console.WriteLine($"The monster has dropped a {item.Name}");
             }
             ConsoleKeyInfo input = new ConsoleKeyInfo();
-
+            //TODO make a method for what happens in the cases as they are extrememly similar
             switch (item.Type)
             {
                 case ItemType.Armour:
@@ -84,8 +84,8 @@ namespace AI_GM.Items
         }
         public static void GetRandomItem()
         {
-            item.Rarity = GetRandomEnumValue<Rarity>();
-            item.Type = GetRandomEnumValue<ItemType>();
+            item.Rarity = GetRandomEnumValue<Rarity>(true);
+            item.Type = GetRandomEnumValue<ItemType>(false);
             item.Name = GetItemName();
             item.Cost = GetRandomCost();
             item.Weight = GetRandomWeight();
@@ -196,18 +196,51 @@ namespace AI_GM.Items
 
         private static readonly string[] PotionNames = new string[]
         {
-            "potion"
+            "potion","scrap","trash","vial","bag","flask"
         };
 
         private static readonly string[] EnhancementNames = new string[]
         {
             "flying","wicked","sticky","soggy","bright","talkative","hungry","bloodthirsty","rusty"
         };
-        public static T GetRandomEnumValue<T>() where T : Enum
+        public static T GetRandomEnumValue<T>(bool rarity) where T : Enum
         {
             Array values = Enum.GetValues(typeof(T));
             int randomNum = Dice.DiceRoll(values.Length) - 1;
+            if (rarity)
+            {
+                int[] chances = GetChances<T>();
+                int chance = chances.Sum();
+                for (int i = 0; i < values.Length; i++)
+                {
+                    if (randomNum < chances[i])
+                    {
+                        return (T)values.GetValue(i);
+                    }
+                    randomNum -= chances[i];
+                }
+            }      
             return (T)values.GetValue(randomNum);
+        }
+
+        private static int[] GetChances<T>()
+        {
+            return typeof(T).GetEnumValues().Cast<T>().Select(value =>
+            {
+                switch (value)
+                {
+                    case Rarity.Common:
+                        return 50;  // Common is more likely
+                    case Rarity.Uncommon:
+                        return 30;
+                    case Rarity.Rare:
+                        return 15;
+                    case Rarity.VeryRare:
+                        return 5;   // Legendary is less likely
+                    default:
+                        return 1;   // Default chance
+                }
+            }).ToArray();
         }
     }
 }
