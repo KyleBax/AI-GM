@@ -8,6 +8,7 @@ namespace AI_GM
 {
     internal class Controls
     {
+        //TODO write tidier
         public static void PrintControls()
         {
             Console.WriteLine("Controls:");

@@ -285,6 +285,15 @@ namespace AI_GM.Map
                         case 'M':
                             Console.WriteLine("There is a monster in the way");
                             break;
+                        case 'E':
+                            Console.WriteLine("Are you sure you want to leave this floor?");
+                            //TODO confirmation check
+                            Console.WriteLine("Do you want to go to the next floor?");
+                            //TODO confirmation check
+                            Console.WriteLine("Do you want to leave the dungeon?");
+                            //TODO confirmation check
+                            Console.WriteLine("staying on this floor");
+                            break;
                         default:
                             character.X = targetX;
                             character.Y = targetY;
