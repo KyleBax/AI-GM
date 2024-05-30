@@ -16,6 +16,7 @@ namespace AI_GM.Map
         public static bool playerLocationUpdated = true;
         public static bool endTurnEarly = false;
         public static bool playerDead = false;
+        public static bool roomSearched = false;
         public static bool InitialiseMaps(Campaign campaign)
         {
             mainRooms = GetRoomsFromTextFile(FilePaths.MAINROOMS);
@@ -181,12 +182,22 @@ namespace AI_GM.Map
                 case ConsoleKey.F:
                     // Search for treasure logic
                     canDoAction = AvailableActionCheck(campaign, i);
+
                     if (canDoAction)
                     {
+                        if (roomSearched == false)
+                        {
+                            roomSearched = true;
 
-                        campaign.PlayerCharacters[i].ActionsTaken++;
-                        Console.WriteLine("Player searches for treasure.");
-                        campaign = Items.Loot.AddNewItem(campaign, i, true);
+                            campaign.PlayerCharacters[i].ActionsTaken++;
+                            Console.WriteLine("Player searches for treasure.");
+                            campaign = Items.Loot.AddNewItem(campaign, i, true);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Room is already searched try something else");
+                        }
+                        
 
                     }
 
@@ -267,6 +278,7 @@ namespace AI_GM.Map
                             campaign.CombatParticipants.RemoveRange(campaign.PlayerCount,
                                 campaign.CombatParticipants.Count - campaign.PlayerCount);
                             GetRandomRoom(mainRooms);
+                            roomSearched = false;
                             newRoom = true;
                             playerLocationUpdated = false;
                             break;
