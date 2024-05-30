@@ -36,12 +36,9 @@ namespace AI_GM
 
             }
 
-            bool initSuccess = false;
-            string input = UI.GetInput();
-            if (input == "start")
-            {
-                initSuccess = RoomManager.InitialiseMaps(campaign);
-            }
+            bool initSuccess = RoomManager.InitialiseMaps(campaign);
+            campaign.inTown = true;
+
             if (initSuccess == true)
             {
                 //start game here, player 1 goes first, have 3 actions, when all 3 actions are done next player, when all players are done monsters

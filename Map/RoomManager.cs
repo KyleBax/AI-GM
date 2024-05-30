@@ -10,7 +10,10 @@ namespace AI_GM.Map
 {
     internal class RoomManager
     {
+        public static List<Room> town;
         public static List<Room> mainRooms;
+        public static List<Room> startingRooms;
+        public static List<Room> exitRooms;
         public static Room room = new Room();
         public static bool newRoom = false;
         public static bool playerLocationUpdated = true;
@@ -19,9 +22,11 @@ namespace AI_GM.Map
         public static bool roomSearched = false;
         public static bool InitialiseMaps(Campaign campaign)
         {
+            town = GetRoomsFromTextFile(FilePaths.TOWN);
             mainRooms = GetRoomsFromTextFile(FilePaths.MAINROOMS);
-            List<Room> startingRooms = GetRoomsFromTextFile(FilePaths.STARTINGROOMS);
-            GetRandomRoom(startingRooms);
+            startingRooms = GetRoomsFromTextFile(FilePaths.STARTINGROOMS);
+            exitRooms = GetRoomsFromTextFile(FilePaths.EXITROOMS);
+            GetRandomRoom(town);
             Character character = campaign.PlayerCharacters.FirstOrDefault();
 
             if (character != null)
@@ -277,7 +282,14 @@ namespace AI_GM.Map
                         case 'D':
                             campaign.CombatParticipants.RemoveRange(campaign.PlayerCount,
                                 campaign.CombatParticipants.Count - campaign.PlayerCount);
-                            GetRandomRoom(mainRooms);
+                            if (campaign.inTown)
+                            {
+                                GetRandomRoom(startingRooms);
+                            }
+                            else
+                            {
+                                GetRandomRoom(mainRooms);
+                            }            
                             roomSearched = false;
                             newRoom = true;
                             playerLocationUpdated = false;
@@ -603,6 +615,12 @@ namespace AI_GM.Map
                     campaign.PlayerCharacters[i].ActionsTaken = 0;
                     endTurnEarly = false;
                     break;
+                }
+                if (campaign.inTown == true && playerLocationUpdated == false)
+                {
+                    SpawnPlayer(campaign);
+                    playerLocationUpdated = true;
+                    campaign.inTown = false;
                 }
                 campaign = CheckRoomLayout(campaign);
                 PrintRoomLayout(campaign);

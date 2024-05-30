@@ -12,6 +12,8 @@ namespace AI_GM
     [Serializable()]
     public class Campaign
     {
+        public bool inTown;
+
         private List<Character> _playerCharacters = new List<Character>();
         public List<Character> PlayerCharacters
         {
