@@ -54,6 +54,7 @@ namespace AI_GM.Items
                     Console.WriteLine($"Current {campaign.PlayerCharacters[i].Armour.Name} bonus +{campaign.PlayerCharacters[i].Armour.ExtraDice}");
                     Console.WriteLine($"new {item.Name} bonus +{item.ExtraDice}");
                     input = Console.ReadKey();
+                    Console.WriteLine();
                     if (input.Key == ConsoleKey.Y)
                     {
                         campaign.PlayerCharacters[i].Armour = item;
@@ -66,6 +67,7 @@ namespace AI_GM.Items
                     Console.WriteLine($"Current {campaign.PlayerCharacters[i].Weapon.Name} bonus +{campaign.PlayerCharacters[i].Weapon.ExtraDice}");
                     Console.WriteLine($"new {item.Name} bonus +{item.ExtraDice}");
                     input = Console.ReadKey();
+                    Console.WriteLine();
                     if (input.Key == ConsoleKey.Y)
                     {
                         campaign.PlayerCharacters[i].Weapon = item;
