@@ -49,7 +49,6 @@ namespace AI_GM.Items
             switch (item.Type)
             {
                 case ItemType.Armour:
-
                     Console.WriteLine("Would you like to swap armours?");
                     Console.WriteLine($"Current {campaign.PlayerCharacters[i].Armour.Name} bonus +{campaign.PlayerCharacters[i].Armour.ExtraDice}");
                     Console.WriteLine($"new {item.Name} bonus +{item.ExtraDice}");
@@ -82,6 +81,7 @@ namespace AI_GM.Items
             }
             return campaign;
         }
+
         public static void GetRandomItem()
         {
             item.Rarity = GetRandomEnumValue<Rarity>(true);

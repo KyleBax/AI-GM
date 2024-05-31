@@ -1,5 +1,6 @@
 ﻿using AI_GM.Characters;
 using AI_GM.Monsters;
+using AI_GM.UserInterface;
 using System;
 using System.Drawing;
 using System.Numerics;
@@ -288,7 +289,17 @@ namespace AI_GM.Map
                             }
                             else
                             {
-                                GetRandomRoom(mainRooms);
+                                //TODO change the set integer of 100 so it adjust depending on the floor you're on
+                                //creates a chance of an exit rooom spawning
+                                int ranNum = Dice.DiceRoll(50);
+                                if (ranNum >= 50)
+                                {
+                                    GetRandomRoom(exitRooms);
+                                }
+                                else
+                                {
+                                    GetRandomRoom(mainRooms);
+                                }        
                             }            
                             roomSearched = false;
                             newRoom = true;
@@ -298,13 +309,39 @@ namespace AI_GM.Map
                             Console.WriteLine("There is a monster in the way");
                             break;
                         case 'E':
-                            Console.WriteLine("Are you sure you want to leave this floor?");
-                            //TODO confirmation check
-                            Console.WriteLine("Do you want to go to the next floor?");
-                            //TODO confirmation check
-                            Console.WriteLine("Do you want to leave the dungeon?");
-                            //TODO confirmation check
+                            bool leaveFloor = UI.GetConfirmation("Are you sure you want to leave this floor?");
+                            if (leaveFloor)
+                            {
+                                bool nextFloor = UI.GetConfirmation("Do you want to go to the next floor?");
+                                if (nextFloor)
+                                {
+                                    
+                                    Console.WriteLine("Heading to the next floor");
+                                    GetRandomRoom(startingRooms);
+                                    roomSearched = false;
+                                    newRoom = true;
+                                    playerLocationUpdated = false;
+                                    campaign.inTown = true;
+                                    break;
+                                }
+                                bool leaveDungeon = UI.GetConfirmation("Do you want to return to town?");
+                                if (leaveDungeon)
+                                {
+                                    Console.WriteLine("Returning to town");
+                                    GetRandomRoom(town);
+                                    roomSearched = false;
+                                    newRoom = true;
+                                    playerLocationUpdated = false;
+                                    campaign.inTown = true;
+                                    break;
+                                }
+                            }
                             Console.WriteLine("staying on this floor");
+                            character.X = targetX;
+                            character.Y = targetY;
+                            break;
+                        case 'K':
+                            Console.WriteLine("You have entered the shop");
                             break;
                         default:
                             character.X = targetX;
