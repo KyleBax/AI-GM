@@ -267,6 +267,15 @@ namespace AI_GM.Map
             {
                 if (IsTargetInBounds(room, campaign, targetX, targetY))
                 {
+                    for (int i = 0; i < campaign.CombatParticipants.Count; i++)
+                    {
+                        if (campaign.CombatParticipants[i].X == targetX && campaign.CombatParticipants[i].Y == targetY)
+                        {
+                            Console.WriteLine("There is a monster in the way");
+                            return availableMovementSpaces;
+                        }
+                    }
+
                     switch (room.Layout[targetY, targetX])
                     {
 
