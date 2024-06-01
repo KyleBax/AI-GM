@@ -21,6 +21,7 @@ namespace AI_GM.Map
         public static bool endTurnEarly = false;
         public static bool playerDead = false;
         public static bool roomSearched = false;
+        public static bool chestFound = false;
         public static bool InitialiseMaps(Campaign campaign)
         {
             town = GetRoomsFromTextFile(FilePaths.TOWN);
@@ -317,8 +318,8 @@ namespace AI_GM.Map
                                 {
                                     GetRandomRoom(mainRooms);
                                 }        
-                            }            
-                            roomSearched = false;
+                            }  
+                            chestFound = false;
                             newRoom = true;
                             playerLocationUpdated = false;
                             break;
@@ -335,7 +336,7 @@ namespace AI_GM.Map
                                     
                                     Console.WriteLine("Heading to the next floor");
                                     GetRandomRoom(startingRooms);
-                                    roomSearched = false;
+                                    chestFound = false;
                                     newRoom = true;
                                     playerLocationUpdated = false;
                                     campaign.inTown = true;
@@ -346,7 +347,7 @@ namespace AI_GM.Map
                                 {
                                     Console.WriteLine("Returning to town");
                                     GetRandomRoom(town);
-                                    roomSearched = false;
+                                    chestFound = false;
                                     newRoom = true;
                                     playerLocationUpdated = false;
                                     campaign.inTown = true;
@@ -497,6 +498,15 @@ namespace AI_GM.Map
                             {
                                 campaign = Spawnmonster(campaign);
                                 monsterSpawned = true;
+                            }
+                            if (room.Layout[i, j] == 'C')
+                            {
+                                roomSearched = false;
+                                chestFound = true;
+                            }
+                            if (chestFound == false)
+                            {
+                                roomSearched = true;
                             }
 
                             if (playerLocationUpdated == false)
