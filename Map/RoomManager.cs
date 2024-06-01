@@ -192,20 +192,25 @@ namespace AI_GM.Map
 
                     if (canDoAction)
                     {
-                        if (roomSearched == false)
+                        if (campaign.CombatParticipants.Count > campaign.PlayerCharacters.Count)
                         {
-                            roomSearched = true;
-
-                            campaign.PlayerCharacters[i].ActionsTaken++;
-                            Console.WriteLine("Player searches for treasure.");
-                            campaign = Items.Loot.AddNewItem(campaign, i, true);
+                            Console.WriteLine("Unable to search while monsters are present");
                         }
                         else
                         {
-                            Console.WriteLine("Room is already searched try something else");
-                        }
-                        
+                            if (roomSearched == false)
+                            {
+                                roomSearched = true;
 
+                                campaign.PlayerCharacters[i].ActionsTaken++;
+                                Console.WriteLine("Player searches for treasure.");
+                                campaign = Items.Loot.AddNewItem(campaign, i, true);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Room is already searched try something else");
+                            }
+                        }
                     }
 
                     break;
