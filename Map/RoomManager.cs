@@ -214,9 +214,10 @@ namespace AI_GM.Map
                     canDoAction = AvailableActionCheck(campaign, i);
                     if (canDoAction)
                     {
+                        Console.WriteLine("Player attacks");
                         Combat.Combat.PlayerAttackAction(ref campaign, i);
                         campaign.PlayerCharacters[i].ActionsTaken++;
-                        Console.WriteLine("Player attacks");
+                        
                     }
 
                     break;
@@ -648,7 +649,6 @@ namespace AI_GM.Map
 
             while ((keyInfo = Console.ReadKey()).Key != ConsoleKey.Escape)
             {
-                //TODO create a method so the same code sn't used twice
                 if (playerDead)
                 {
                     campaign.CombatParticipants.Clear();
