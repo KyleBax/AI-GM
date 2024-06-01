@@ -214,9 +214,16 @@ namespace AI_GM.Map
                     canDoAction = AvailableActionCheck(campaign, i);
                     if (canDoAction)
                     {
-                        Console.WriteLine("Player attacks");
-                        Combat.Combat.PlayerAttackAction(ref campaign, i);
-                        campaign.PlayerCharacters[i].ActionsTaken++;
+                        if (campaign.CombatParticipants.Count > campaign.PlayerCharacters.Count)
+                        {
+                            Console.WriteLine("Player attacks");
+                            Combat.Combat.PlayerAttackAction(ref campaign, i);
+                            campaign.PlayerCharacters[i].ActionsTaken++;
+                        }
+                        else
+                        {
+                        Console.WriteLine("There are no monsters to attack");
+                        }
                         
                     }
 
