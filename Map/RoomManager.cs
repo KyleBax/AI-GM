@@ -693,13 +693,14 @@ namespace AI_GM.Map
                 campaign = CheckRoomLayout(campaign);
                 PrintRoomLayout(campaign);
                 availableActions = GetListAvailablePlayerActions(campaign, campaign.PlayerCharacters[i].AvailableMovement);
-                DisplayAvailableActions(availableActions, campaign);
+                
                 if (campaign.PlayerCharacters[i].ActionsTaken >= campaign.PlayerCharacters[i].MaxActions &&
                     campaign.PlayerCharacters[i].AvailableMovement <= 0)
                 {
                     campaign.PlayerCharacters[i].ActionsTaken = 0;
                     break;
                 }
+                DisplayAvailableActions(availableActions, campaign);
 
             }
             return campaign;
