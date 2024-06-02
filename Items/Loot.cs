@@ -109,6 +109,9 @@ namespace AI_GM.Items
                 case Rarity.VeryRare:
                     extraDice = Dice.DiceRoll(3);
                     break;
+                case Rarity.Epic:
+                    extraDice = Dice.DiceRoll(4);
+                    break;
                 default:
                     extraDice = 0;
                     break;
@@ -128,15 +131,18 @@ namespace AI_GM.Items
             switch (item.Rarity)
             {
                 case Rarity.Common:
-                    cost = Dice.DiceRoll(10);
+                    cost = Dice.DiceRoll(5);
                     break;
                 case Rarity.Uncommon:
-                    cost = Dice.DiceRoll(15) + 10;
+                    cost = Dice.DiceRoll(10) + 5;
                     break;
                 case Rarity.Rare:
-                    cost = Dice.DiceRoll(25) + 25;
+                    cost = Dice.DiceRoll(15) + 15;
                     break;
                 case Rarity.VeryRare:
+                    cost = Dice.DiceRoll(20) + 30;
+                    break;
+                    case Rarity.Epic:
                     cost = Dice.DiceRoll(50) + 50;
                     break;
                 default:
@@ -164,9 +170,9 @@ namespace AI_GM.Items
                     type = GetRandomName(WeaponNames);
                     name = $"{enhancement} {type}";
                     break;
-                case ItemType.Potion:
+                case ItemType.Junk:
                     enhancement = GetRandomName(EnhancementNames);
-                    type = GetRandomName(PotionNames);
+                    type = GetRandomName(JunkNames);
                     name = $"{enhancement} {type}";
                     break;
                 default:
@@ -194,7 +200,7 @@ namespace AI_GM.Items
             "shirt","cloth","breastplate","helmet","pants","shoes","slippers","cloak"
         };
 
-        private static readonly string[] PotionNames = new string[]
+        private static readonly string[] JunkNames = new string[]
         {
             "potion","scrap","trash","vial","bag","flask"
         };
@@ -219,7 +225,7 @@ namespace AI_GM.Items
                     }
                     randomNum -= chances[i];
                 }
-            }      
+            }
             return (T)values.GetValue(randomNum);
         }
 
@@ -236,11 +242,51 @@ namespace AI_GM.Items
                     case Rarity.Rare:
                         return 15;
                     case Rarity.VeryRare:
-                        return 5;   // Legendary is less likely
+                        return 5;
+                    case Rarity.Epic:
+                        return 0;
+                    // Legendary is less likely
                     default:
                         return 1;   // Default chance
                 }
             }).ToArray();
+        }
+
+        internal static Item GetRandomShopItem(int i)
+        {
+            switch (i)
+            {
+                case 0:
+                    item.Rarity = Rarity.Common;
+                    break;
+                case 1:
+                    item.Rarity = Rarity.Uncommon;
+                    break;
+                case 2:
+                    item.Rarity = Rarity.Rare;
+                    break;
+                case 3:
+                    item.Rarity = Rarity.VeryRare;
+                    break;
+                case 4:
+                    item.Rarity = Rarity.Epic;
+                    break;
+                default:
+                    break;
+            }
+            while (true)
+            {
+                item.Type = GetRandomEnumValue<ItemType>(false);
+                if (item.Type != ItemType.Junk)
+                {
+                    break;
+                }
+            }          
+            item.Cost = GetRandomCost();
+            item.Weight = GetRandomWeight();
+            item.ExtraDice = GetRandomExtraDice();
+            item.Name = GetItemName();
+            return item;
         }
     }
 }

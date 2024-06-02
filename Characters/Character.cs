@@ -168,6 +168,20 @@ namespace AI_GM.Characters
             }
         }
 
+        private int _coins = 0;
+
+        public int Coins
+        {
+            get
+            {
+                return _coins;
+            }
+            set
+            {
+                _coins = value;
+            }
+        }
+
         private int _availableMovement = 0;
         public int AvailableMovement
         {

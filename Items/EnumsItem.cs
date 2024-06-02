@@ -25,7 +25,7 @@
     {
         Weapon,
         Armour,
-        Potion
+        Junk
     }
 
     public enum Rarity
@@ -33,7 +33,8 @@
         Common,
         Uncommon,
         Rare,
-        VeryRare
+        VeryRare,
+        Epic
     }
 
     public enum Property

@@ -26,8 +26,8 @@
                     break;
 
                 case Class.Rogue:
-                    character.AttackDice = 1;
-                    character.DefendDice = 2;
+                    character.AttackDice = 3;
+                    character.DefendDice = 1;
                     character.MaxHitPoints = 6;
                     break;
 
