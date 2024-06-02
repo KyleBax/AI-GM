@@ -133,5 +133,18 @@ namespace AI_GM.Monsters
                 _maxActions = value;
             }
         }
+
+        private int _attackRange;
+        public int AttackRange
+        {
+            get
+            {
+                return _attackRange;
+            }
+            set
+            {
+                _attackRange = value;
+            }
+        }
     }
 }

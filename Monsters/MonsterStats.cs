@@ -19,6 +19,7 @@ namespace AI_GM.Monsters
                     monster.DefendDice = 2;
                     monster.Speed = 4;
                     monster.MaxHitPoints = 1;
+                    monster.AttackRange = 10;
                     break;
 
                 case MonsterName.PoisonousSnake:
@@ -27,6 +28,7 @@ namespace AI_GM.Monsters
                     monster.DefendDice = 1;
                     monster.Speed = 3;
                     monster.MaxHitPoints = 1;
+                    monster.AttackRange = 1;
                     break;
 
                 case MonsterName.Rat:
@@ -35,6 +37,7 @@ namespace AI_GM.Monsters
                     monster.DefendDice = 1;
                     monster.Speed = 6;
                     monster.MaxHitPoints = 1;
+                    monster.AttackRange = 1;
                     break;
                 default:
                     break;
