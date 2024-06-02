@@ -368,7 +368,7 @@ namespace AI_GM.Map
                             character.Y = targetY;
                             break;
                         case 'K':
-                            Console.WriteLine("You have entered the shop");
+                            character = Items.Shop.EnterShop(character);
                             break;
                         default:
                             character.X = targetX;

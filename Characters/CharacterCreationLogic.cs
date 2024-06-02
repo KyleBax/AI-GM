@@ -14,8 +14,8 @@
                     break;
 
                 case Class.Fighter:
-                    character.AttackDice = 2;
-                    character.DefendDice = 3;
+                    character.AttackDice = 4;
+                    character.DefendDice = 0;
                     character.MaxHitPoints = 8;
                     break;
 

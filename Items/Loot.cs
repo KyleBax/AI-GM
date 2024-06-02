@@ -271,6 +271,7 @@ namespace AI_GM.Items
 
         internal static Item GetRandomShopItem(int i)
         {
+            item = new Item();
             switch (i)
             {
                 case 0:
