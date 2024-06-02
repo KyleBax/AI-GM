@@ -17,7 +17,7 @@ namespace AI_GM.Monsters
                     monster.Name = MonsterName.Goblin.ToString();
                     monster.AttackDice = 2;
                     monster.DefendDice = 2;
-                    monster.Speed = 10;
+                    monster.Speed = 4;
                     monster.MaxHitPoints = 1;
                     break;
 
@@ -25,7 +25,7 @@ namespace AI_GM.Monsters
                     monster.Name = MonsterName.PoisonousSnake.ToString();
                     monster.AttackDice = 2;
                     monster.DefendDice = 1;
-                    monster.Speed = 5;
+                    monster.Speed = 3;
                     monster.MaxHitPoints = 1;
                     break;
 
@@ -33,7 +33,7 @@ namespace AI_GM.Monsters
                     monster.Name = MonsterName.Rat.ToString();
                     monster.AttackDice = 1;
                     monster.DefendDice = 1;
-                    monster.Speed = 12;
+                    monster.Speed = 6;
                     monster.MaxHitPoints = 1;
                     break;
                 default:
