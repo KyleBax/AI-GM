@@ -228,9 +228,9 @@ namespace AI_GM.Map
                         }
                         else
                         {
-                        Console.WriteLine("There are no monsters to attack");
+                            Console.WriteLine("There are no monsters to attack");
                         }
-                        
+
                     }
 
                     break;
@@ -248,9 +248,13 @@ namespace AI_GM.Map
                     break;
                 case ConsoleKey.N:
                     //End turn early
-                    Console.WriteLine("Are you sure you want to end your turn?");
-                    Console.WriteLine("Too bad I haven't implemented a confirmation check yet");
-                    endTurnEarly = true;
+                    Console.WriteLine("All your available actions and movement will be reset");
+                    endTurnEarly = UI.GetConfirmation("Are you sure you want to end your turn?");
+                    if (endTurnEarly)
+                    {
+                        campaign.PlayerCharacters[i].AvailableMovement = 0;
+                        Console.WriteLine("Ending turn");
+                    }
                     break;
                 // Add more cases for other keys as needed
 
@@ -322,8 +326,8 @@ namespace AI_GM.Map
                                 else
                                 {
                                     GetRandomRoom(mainRooms);
-                                }        
-                            }  
+                                }
+                            }
                             chestFound = false;
                             newRoom = true;
                             playerLocationUpdated = false;
@@ -338,7 +342,7 @@ namespace AI_GM.Map
                                 bool nextFloor = UI.GetConfirmation("Do you want to go to the next floor?");
                                 if (nextFloor)
                                 {
-                                    
+
                                     Console.WriteLine("Heading to the next floor");
                                     GetRandomRoom(startingRooms);
                                     chestFound = false;
@@ -693,7 +697,7 @@ namespace AI_GM.Map
                 campaign = CheckRoomLayout(campaign);
                 PrintRoomLayout(campaign);
                 availableActions = GetListAvailablePlayerActions(campaign, campaign.PlayerCharacters[i].AvailableMovement);
-                
+
                 if (campaign.PlayerCharacters[i].ActionsTaken >= campaign.PlayerCharacters[i].MaxActions &&
                     campaign.PlayerCharacters[i].AvailableMovement <= 0)
                 {
