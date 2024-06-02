@@ -21,22 +21,6 @@
         Heavy
     }
 
-    public enum ItemType
-    {
-        Weapon,
-        Armour,
-        Junk
-    }
-
-    public enum Rarity
-    {
-        Common,
-        Uncommon,
-        Rare,
-        VeryRare,
-        Epic
-    }
-
     public enum Property
     {
         Magic,

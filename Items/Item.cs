@@ -17,6 +17,7 @@ namespace AI_GM.Items
             set { _name = value; }
         }
 
+
         private ItemType _type;
         public ItemType Type
         {
@@ -59,6 +60,30 @@ namespace AI_GM.Items
         {
             get { return _damageType; }
             set { _damageType = value; }
+        }
+        private int _attackRange;
+        public int AttackRange
+        {
+            get
+            {
+                return _attackRange;
+            }
+            set
+            {
+                _attackRange = value;
+            }
+        }
+        private WeaponName _weaponNameType;
+        public WeaponName WeaponNameType
+        {
+            get
+            {
+                return _weaponNameType;
+            }
+            set
+            {
+                _weaponNameType = value;
+            }
         }
     }
 }

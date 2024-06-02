@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -90,6 +91,47 @@ namespace AI_GM.Items
             item.Cost = GetRandomCost();
             item.Weight = GetRandomWeight();
             item.ExtraDice = GetRandomExtraDice();
+            item.AttackRange = GetAttackRange();
+        }
+
+        private static int GetAttackRange()
+        {
+            int range = 0;
+            if (item.Type == ItemType.Weapon)
+            {
+                switch (item.WeaponNameType)
+                {
+                    case WeaponName.sword:
+                        range = 1;
+                        break;
+                    case WeaponName.staff:
+                        range = 2;
+                        break;
+                    case WeaponName.stick:
+                        range = 1;
+                        break;
+                    case WeaponName.wand:
+                        range = 10;
+                        break;
+                    case WeaponName.bow:
+                        range = 10;
+                        break;
+                    case WeaponName.dagger:
+                        range = 1;
+                        break;
+                    case WeaponName.spear:
+                        range = 2;
+                        break;
+                    default:
+                        range = 1;
+                        break;
+                }
+            }
+            else
+            {
+                range = 0;
+            }
+            return range;
         }
 
         private static int GetRandomExtraDice()
@@ -161,18 +203,19 @@ namespace AI_GM.Items
             switch (item.Type)
             {
                 case ItemType.Armour:
-                    enhancement = GetRandomName(EnhancementNames);
-                    type = GetRandomName(ArmourNames);
+                    enhancement = GetRandomEnumValue<EnhancementName>(false).ToString();
+                    type = GetRandomEnumValue<ArmourName>(false).ToString();
                     name = $"{enhancement} {type}";
                     break;
                 case ItemType.Weapon:
-                    enhancement = GetRandomName(EnhancementNames);
-                    type = GetRandomName(WeaponNames);
+                    enhancement = GetRandomEnumValue<EnhancementName>(false).ToString();
+                    item.WeaponNameType = GetRandomEnumValue<WeaponName>(false);
+                    type = item.WeaponNameType.ToString();
                     name = $"{enhancement} {type}";
                     break;
                 case ItemType.Junk:
-                    enhancement = GetRandomName(EnhancementNames);
-                    type = GetRandomName(JunkNames);
+                    enhancement = GetRandomEnumValue<EnhancementName>(false).ToString();
+                    type = GetRandomEnumValue<JunkName>(false).ToString();
                     name = $"{enhancement} {type}";
                     break;
                 default:
@@ -183,32 +226,6 @@ namespace AI_GM.Items
             return name;
         }
 
-        private static string GetRandomName(string[] nameType)
-        {
-            int ranNum = Dice.DiceRoll(nameType.Length) - 1;
-            string name = nameType[ranNum];
-            return name;
-        }
-
-        private static readonly string[] WeaponNames = new string[]
-        {
-            "sword","staff","stick","twig","wand","bow","dagger","spear"
-        };
-
-        private static readonly string[] ArmourNames = new string[]
-        {
-            "shirt","cloth","breastplate","helmet","pants","shoes","slippers","cloak"
-        };
-
-        private static readonly string[] JunkNames = new string[]
-        {
-            "potion","scrap","trash","vial","bag","flask"
-        };
-
-        private static readonly string[] EnhancementNames = new string[]
-        {
-            "flying","wicked","sticky","soggy","bright","talkative","hungry","bloodthirsty","rusty"
-        };
         public static T GetRandomEnumValue<T>(bool rarity) where T : Enum
         {
             Array values = Enum.GetValues(typeof(T));
