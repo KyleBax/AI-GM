@@ -140,17 +140,25 @@ namespace AI_GM.Combat
                     }
 
                 }
-                int selection = int.Parse(Console.ReadLine());
+                try
+                {
+                    int selection = int.Parse(Console.ReadLine());
 
-                if (selection >= 1 && selection <= selections.Count)
-                {
-                    return selections[selection - 1];
+                    if (selection >= 1 && selection <= selections.Count)
+                    {
+                        return selections[selection - 1];
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid Selection");
+                        Console.WriteLine("Select one of these options");
+                    }
                 }
-                else
+                catch
                 {
-                    Console.WriteLine("Invalid Selection");
-                    Console.WriteLine("Select one of these options");
+                    Console.WriteLine("Please enter a valid number");
                 }
+                
             }
         }
     }

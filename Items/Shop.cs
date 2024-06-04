@@ -12,6 +12,7 @@ namespace AI_GM.Items
     {
         public static Character EnterShop(Character character)
         {
+            Item selectedItem = new Item();
             List<Item> instock = new List<Item>();
             for (int i = 0; i < 5; i++)
             {
@@ -23,7 +24,27 @@ namespace AI_GM.Items
             }
             Console.WriteLine($"You have {character.Coins} coins");
             Console.WriteLine("Would you like to buy anything?");
+            try
+            {
+                int selection = int.Parse(Console.ReadLine());
+
+                if (selection >= 1 && selection <= instock.Count)
+                {
+                    selectedItem = instock[selection - 1];
+                }
+                else
+                {
+                    Console.WriteLine("Invalid Selection");
+                    Console.WriteLine("Select one of these options");
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Please enter a valid number");
+            }
+
             
+
             return character;
         }
     }

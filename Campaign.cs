@@ -17,15 +17,27 @@ namespace AI_GM
         private List<Character> _playerCharacters = new List<Character>();
         public List<Character> PlayerCharacters
         {
-            get { return _playerCharacters; }
-            set { _playerCharacters = value; }
+            get
+            {
+                return _playerCharacters;
+            }
+            set
+            {
+                _playerCharacters = value;
+            }
         }
 
         private List<Monster> _activeMonsters = new List<Monster>();
         public List<Monster> ActiveMonsters
         {
-            get { return _activeMonsters; }
-            set { _activeMonsters = value; }
+            get
+            {
+                return _activeMonsters;
+            }
+            set
+            {
+                _activeMonsters = value;
+            }
         }
 
         private List<IFightable> _combatParticipants = new List<IFightable>();
@@ -46,15 +58,39 @@ namespace AI_GM
         private int _playerCount = 1;
         public int PlayerCount
         {
-            get { return _playerCount; }
-            set { _playerCount = value; }
+            get
+            {
+                return _playerCount;
+            }
+            set
+            {
+                _playerCount = value;
+            }
         }
 
         private int _activePlayer = 0;
         public int ActivePlayer
         {
-            get { return _activePlayer; }
-            set { _activePlayer = value; }
+            get
+            {
+                return _activePlayer;
+            }
+            set
+            {
+                _activePlayer = value;
+            }
+        }
+        private int _floorLevel = 0;
+        public int FloorLevel
+        {
+            get
+            {
+                return _floorLevel;
+            }
+            set
+            {
+                _floorLevel = value;
+            }
         }
 
         [NonSerialized()] private List<Room> _openRooms = new List<Room>();
