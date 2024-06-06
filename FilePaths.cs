@@ -11,12 +11,6 @@ namespace AI_GM
         {
             string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
-            // Traverse up until "AI-GM" is found in the directory path
-            while (!string.IsNullOrEmpty(currentDirectory) && !currentDirectory.EndsWith(Path.DirectorySeparatorChar + "AI-GM"))
-            {
-                currentDirectory = Directory.GetParent(currentDirectory)?.FullName;
-            }
-
             return currentDirectory;
         }
 
