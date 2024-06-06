@@ -39,7 +39,7 @@ namespace AI_GM.Items
                 
                 Console.WriteLine($"item {i + 1} Name: {instock[i].Name}, Type: {instock[i].Type}, Bonus Dice: {instock[i].ExtraDice}, Rarity: {instock[i].Rarity}, Cost: {instock[i].Cost * shopSaleIncrease}");
             }
-            if (character.Coins >= 0)
+            if (character.Coins > 0)
             {
                 Console.WriteLine($"You have {character.Coins} coins");
                 Console.WriteLine("Would you like to buy anything?");
