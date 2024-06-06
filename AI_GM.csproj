@@ -12,4 +12,24 @@
     <PackageReference Include="KGySoft.CoreLibraries" Version="8.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- Include individual map files -->
+    <None Update="Map\FirstRoomMaps.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Map\Maps.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Map\TownMap.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Map\ExitRooms.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <!-- Include entire directories -->
+    <Folder Include="SavedCampaigns\" />
+    <None Include="SavedCampaigns\**\*" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+
 </Project>
