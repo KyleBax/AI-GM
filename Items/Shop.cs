@@ -54,6 +54,7 @@ namespace AI_GM.Items
                         {
                             character.Coins = character.Coins - selectedItem.Cost * shopSaleIncrease;
                             Console.WriteLine($"you have purchased {selectedItem.Name}");
+                            character = Loot.EquipItem(character, selectedItem);
                         }
                         else
                         {

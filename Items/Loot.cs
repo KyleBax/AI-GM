@@ -1,7 +1,9 @@
-﻿using System;
+﻿using AI_GM.Characters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -45,42 +47,47 @@ namespace AI_GM.Items
             {
                 Console.WriteLine($"The monster has dropped a {item.Name}");
             }
+            campaign.PlayerCharacters[i] = EquipItem(campaign.PlayerCharacters[i], item);          
+            return campaign;
+        }
+
+        public static Character EquipItem(Character character, Item item)
+        {
             ConsoleKeyInfo input = new ConsoleKeyInfo();
-            //TODO make a method for what happens in the cases as they are extrememly similar
             switch (item.Type)
             {
                 case ItemType.Armour:
                     Console.WriteLine("Would you like to swap armours?");
-                    Console.WriteLine($"Current {campaign.PlayerCharacters[i].Armour.Name} bonus +{campaign.PlayerCharacters[i].Armour.ExtraDice}");
+                    Console.WriteLine($"Current {character.Armour.Name} bonus +{character.Armour.ExtraDice}");
                     Console.WriteLine($"new {item.Name} bonus +{item.ExtraDice}");
                     input = Console.ReadKey();
                     Console.WriteLine();
                     if (input.Key == ConsoleKey.Y)
                     {
-                        campaign.PlayerCharacters[i].Armour = item;
+                        character.Armour = item;
                         Console.WriteLine($"You Have equipped {item.Name}");
                     }
 
                     break;
                 case ItemType.Weapon:
                     Console.WriteLine("Would you like to swap weapons?");
-                    Console.WriteLine($"Current {campaign.PlayerCharacters[i].Weapon.Name} bonus +{campaign.PlayerCharacters[i].Weapon.ExtraDice}");
+                    Console.WriteLine($"Current {character.Weapon.Name} bonus +{character.Weapon.ExtraDice}");
                     Console.WriteLine($"new {item.Name} bonus +{item.ExtraDice}");
                     input = Console.ReadKey();
                     Console.WriteLine();
                     if (input.Key == ConsoleKey.Y)
                     {
-                        campaign.PlayerCharacters[i].Weapon = item;
+                        character.Weapon = item;
                         Console.WriteLine($"You Have equipped {item.Name}");
                     }
 
                     break;
                 default:
-                    campaign.PlayerCharacters[i].Inventory.Add(item);
+                    character.Inventory.Add(item);
                     Console.WriteLine($"{item.Name} has been added to your inventory");
                     break;
             }
-            return campaign;
+            return character;
         }
 
         public static void GetRandomItem()
