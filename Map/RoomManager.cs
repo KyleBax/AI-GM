@@ -844,6 +844,9 @@ namespace AI_GM.Map
                 case 'M':
                     clear = false;
                     break;
+                case '#':
+                    clear = false;
+                    break;
                 default:
                     clear = true;
                     break;
