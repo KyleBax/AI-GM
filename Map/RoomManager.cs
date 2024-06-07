@@ -109,11 +109,11 @@ namespace AI_GM.Map
                                 if (campaign.CombatParticipants[i].Identifier == Identifier.Monster)
                                 {
                                     availableActions.Add(Characters.Action.Attack);
-                                }      
-                            }                            
-                        }                        
+                                }
+                            }
+                        }
                     }
-                }                        
+                }
             }
 
             for (int checkX = playerX - 1; checkX <= playerX + 1; checkX++)
@@ -153,9 +153,9 @@ namespace AI_GM.Map
                 }
             }
 
-            
 
-            
+
+
 
             return availableActions;
 
@@ -167,7 +167,8 @@ namespace AI_GM.Map
         /// t = search for traps, f = search for treasure v = attack
         /// </summary>
         /// <param name="keyInfo"></param>
-        public static Campaign HandlePlayerActions(ConsoleKeyInfo keyInfo, Campaign campaign)
+        public static Campaign HandlePlayerActions(ConsoleKeyInfo keyInfo, Campaign campaign,
+            List<Characters.Action> availableActions)
         {
             int i = campaign.ActivePlayer;
             int currentX = campaign.PlayerCharacters[i].X;
@@ -241,17 +242,25 @@ namespace AI_GM.Map
                     canDoAction = AvailableActionCheck(campaign, i);
                     if (canDoAction)
                     {
+
                         if (campaign.CombatParticipants.Count > campaign.PlayerCharacters.Count)
                         {
-                            Console.WriteLine("Player attacks");
-                            Combat.Combat.PlayerAttackAction(ref campaign, i);
-                            campaign.PlayerCharacters[i].ActionsTaken++;
+                            if (availableActions.Contains(Characters.Action.Attack))
+                            {
+                                Console.WriteLine("Player attacks");
+                                Combat.Combat.PlayerAttackAction(ref campaign, i);
+                                campaign.PlayerCharacters[i].ActionsTaken++;
+
+                            }
+                            else
+                            {
+                                Console.WriteLine("No monsters are within range");
+                            }
                         }
                         else
                         {
                             Console.WriteLine("There are no monsters to attack");
                         }
-
                     }
 
                     break;
@@ -702,7 +711,7 @@ namespace AI_GM.Map
                     campaign.PlayerCharacters.Clear();
                     return campaign;
                 }
-                campaign = HandlePlayerActions(keyInfo, campaign);
+                campaign = HandlePlayerActions(keyInfo, campaign, availableActions);
                 if (endTurnEarly)
                 {
                     campaign.PlayerCharacters[i].ActionsTaken = 0;
