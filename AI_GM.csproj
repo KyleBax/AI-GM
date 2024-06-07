@@ -27,7 +27,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <!-- Include entire directories -->
-    <Folder Include="SavedCampaigns\" />
     <None Include="SavedCampaigns\**\*" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
