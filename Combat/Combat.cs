@@ -30,14 +30,14 @@ namespace AI_GM.Combat
             while (true)
             {
 
-                int hits = GetHits(monster.AttackDice, "attack");
+                int hits = GetHits(monster.AttackDice, EnumCombat.attack);
                 Console.WriteLine($"The monster has {hits} hits");
                 int defended = 0;
                 if (hits > 0)
                 {
                     int diceToDefend = campaign.CombatParticipants[target].DefendDice + 
                                         campaign.PlayerCharacters[target].Armour.ExtraDice;
-                    defended = GetHits(diceToDefend, "monsterDefend");
+                    defended = GetHits(diceToDefend, EnumCombat.playerDefend);
                     Console.WriteLine($"You have defended {defended} hits ");
                 }
                 if (defended > hits)
@@ -63,13 +63,13 @@ namespace AI_GM.Combat
         {
             IFightable selectedMonster = SelectMonsterFromParticipants(campaign.CombatParticipants);
             int diceToHit = campaign.PlayerCharacters[i].AttackDice + campaign.PlayerCharacters[i].Weapon.ExtraDice;
-            int hits = GetHits(diceToHit, "attack");
+            int hits = GetHits(diceToHit, EnumCombat.attack);
 
             Console.WriteLine($"You have {hits} hits");
             int defended = 0;
             if (hits > 0)
             {
-                defended = GetHits(selectedMonster.DefendDice, "playerDefend");
+                defended = GetHits(selectedMonster.DefendDice, EnumCombat.monsterDefend);
                 Console.WriteLine($"The Monster has defended {defended} hits ");
             }
             if (defended > hits)
@@ -93,7 +93,7 @@ namespace AI_GM.Combat
 
         }
 
-        private static int GetHits(int diceCount, string roll)
+        private static int GetHits(int diceCount, EnumCombat roll)
         {
             int hits = 0;
             for (int i = 0; i < diceCount; i++)
@@ -101,19 +101,19 @@ namespace AI_GM.Combat
                 int result = Dice.DiceRoll(6);
                 switch (roll)
                 {
-                    case "attack":
+                    case EnumCombat.attack:
                         if (result <= 3)
                         {
                             hits++;
                         }
                         break;
-                    case "playerDefend":
+                    case EnumCombat.playerDefend:
                         if (result >= 5)
                         {
                             hits++;
                         }
                         break;
-                    case "monsterDefend":
+                    case EnumCombat.monsterDefend:
                         if (result == 4)
                         {
                             hits++;
