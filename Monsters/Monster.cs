@@ -1,4 +1,5 @@
-﻿using AI_GM.Map;
+﻿using AI_GM.Combat;
+using AI_GM.Map;
 
 namespace AI_GM.Monsters
 {

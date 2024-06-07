@@ -1,4 +1,5 @@
 ﻿using AI_GM.Characters;
+using AI_GM.Combat;
 using AI_GM.Monsters;
 using AI_GM.UserInterface;
 using System;

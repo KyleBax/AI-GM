@@ -32,8 +32,8 @@ namespace AI_GM.Combat
             set { _damageDice = value; }
         }
 
-        private DamageType _damageType;
-        public DamageType DamageType
+        private Items.DamageType _damageType;
+        public Items.DamageType DamageType
         {
             get { return _damageType; }
             set { _damageType = value; }
