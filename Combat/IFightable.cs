@@ -54,5 +54,9 @@
         {
             get; set;
         }
+        public int AttackRange
+        {
+            get; set;
+        }
     }
 }

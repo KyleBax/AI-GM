@@ -24,12 +24,15 @@ namespace AI_GM.Items
             {
                 item.Type = ItemType.Weapon;
                 item.Name = "Beginner stick";
+                item.AttackRange = 1;
             }
             else
             {
                 item.Type = ItemType.Armour;
                 item.Name = "Beginner shirt";
+                item.AttackRange = 0;
             }
+            
 
             return item;
         }

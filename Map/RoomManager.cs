@@ -95,7 +95,26 @@ namespace AI_GM.Map
             int playerY = campaign.PlayerCharacters[campaign.ActivePlayer].Y;
             List<Characters.Action> availableActions = new List<Characters.Action>();
             bool moveAdded = false;
-
+            int attackRange = campaign.PlayerCharacters[campaign.ActivePlayer].Weapon.AttackRange;
+            if (campaign.CombatParticipants.Count > campaign.PlayerCount)
+            {
+                for (int checkX = playerX - attackRange; checkX <= playerX + attackRange; checkX++)
+                {
+                    for (int checkY = playerY - attackRange; checkY <= playerY + attackRange; checkY++)
+                    {
+                        for (int i = 0; i < campaign.CombatParticipants.Count; i++)
+                        {
+                            if (campaign.CombatParticipants[i].X == checkX && campaign.CombatParticipants[i].Y == checkY)
+                            {
+                                if (campaign.CombatParticipants[i].Identifier == Identifier.Monster)
+                                {
+                                    availableActions.Add(Characters.Action.Attack);
+                                }      
+                            }                            
+                        }                        
+                    }
+                }                        
+            }
 
             for (int checkX = playerX - 1; checkX <= playerX + 1; checkX++)
             {
@@ -106,7 +125,6 @@ namespace AI_GM.Map
                         // Skip the current position (character's position)
                         continue;
                     }
-
                     switch (room.Layout[checkY, checkX])
                     {
                         case ' ':
@@ -116,15 +134,13 @@ namespace AI_GM.Map
                                 {
                                     availableActions.Add(Characters.Action.Move);
                                 }
-                                else
+                                if (campaign.PlayerCharacters[campaign.ActivePlayer].ActionsTaken <
+                                    campaign.PlayerCharacters[campaign.ActivePlayer].MaxActions)
                                 {
                                     availableActions.Add(Characters.Action.RollToMove);
                                 }
                                 moveAdded = true;  // Set the flag to true after adding move option to prevent duplicates
                             }
-                            break;
-                        case 'm':
-                            availableActions.Add(Characters.Action.Attack);
                             break;
                         case 'C':
                             availableActions.Add(Characters.Action.SearchChest);
@@ -136,6 +152,11 @@ namespace AI_GM.Map
                     }
                 }
             }
+
+            
+
+            
+
             return availableActions;
 
         }
