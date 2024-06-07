@@ -25,38 +25,61 @@ namespace AI_GM.Combat
 
         public static void MonsterAttack(ref Campaign campaign, int target, int i)
         {
+            bool canAttack = CheckIfMonsterCanAttack(campaign, target, i);
             Monster monster = (Monster)campaign.CombatParticipants[i];
             Console.WriteLine($"{monster.Name}");
-            while (true)
+            if (canAttack)
             {
-
-                int hits = GetHits(monster.AttackDice, EnumCombat.attack);
-                Console.WriteLine($"The monster has {hits} hits");
-                int defended = 0;
-                if (hits > 0)
+                while (true)
                 {
-                    int diceToDefend = campaign.CombatParticipants[target].DefendDice + 
-                                        campaign.PlayerCharacters[target].Armour.ExtraDice;
-                    defended = GetHits(diceToDefend, EnumCombat.playerDefend);
-                    Console.WriteLine($"You have defended {defended} hits ");
+
+                    int hits = GetHits(monster.AttackDice, EnumCombat.attack);
+                    Console.WriteLine($"The monster has {hits} hits");
+                    int defended = 0;
+                    if (hits > 0)
+                    {
+                        int diceToDefend = campaign.CombatParticipants[target].DefendDice +
+                                            campaign.PlayerCharacters[target].Armour.ExtraDice;
+                        defended = GetHits(diceToDefend, EnumCombat.playerDefend);
+                        Console.WriteLine($"You have defended {defended} hits ");
+                    }
+                    if (defended > hits)
+                    {
+                        defended = hits;
+                    }
+
+                    int damage = hits - defended;
+                    Console.WriteLine($"You have taken {damage} damage");
+                    campaign.CombatParticipants[target].DamageTaken += damage;
+
+                    if (campaign.CombatParticipants[target].DamageTaken >= campaign.CombatParticipants[target].MaxHitPoints)
+                    {
+                        RoomManager.PlayerDeath();
+                    }
+
+                    break;
+
                 }
-                if (defended > hits)
+            }     
+        }
+
+        private static bool CheckIfMonsterCanAttack(Campaign campaign, int target, int i)
+        {
+            int monsterX = campaign.CombatParticipants[i].X;
+            int monsterY = campaign.CombatParticipants[i].Y;
+            int attackRange = campaign.CombatParticipants[i].AttackRange;
+
+            for (int checkX = monsterX - attackRange; checkX <= monsterX + attackRange; checkX++)
+            {
+                for (int checkY = monsterY - attackRange; checkY <= monsterY + attackRange; checkY++)
                 {
-                    defended = hits;
+                    if (campaign.CombatParticipants[target].X == checkX && campaign.CombatParticipants[target].Y == checkY)
+                    {
+                    return true;
+                    }
                 }
-
-                int damage = hits - defended;
-                Console.WriteLine($"You have taken {damage} damage");
-                campaign.CombatParticipants[target].DamageTaken += damage;
-
-                if (campaign.CombatParticipants[target].DamageTaken >= campaign.CombatParticipants[target].MaxHitPoints)
-                {
-                    RoomManager.PlayerDeath();
-                }
-
-                break;
-
             }
+            return false;
         }
 
         public static void PlayerAttackAction(ref Campaign campaign, int i)
