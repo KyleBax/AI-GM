@@ -24,6 +24,7 @@ namespace AI_GM.Map
         public static bool playerDead = false;
         public static bool roomSearched = false;
         public static bool chestFound = false;
+        public static bool bossRoom = false;
         public static int floorLevel = 1;
         public static bool InitialiseMaps(Campaign campaign)
         {
@@ -381,10 +382,12 @@ namespace AI_GM.Map
                                     if (floorLevel % 5 == 0)
                                     {
                                         GetRandomRoom(bossRooms);
+                                        bossRoom = true;
                                     }
                                     else
                                     {
                                         GetRandomRoom(startingRooms);
+                                        bossRoom = false;
                                     }
                                     
                                     chestFound = false;
@@ -396,6 +399,7 @@ namespace AI_GM.Map
                                 bool leaveDungeon = UI.GetConfirmation("Do you want to return to town?");
                                 if (leaveDungeon)
                                 {
+                                    bossRoom = false;
                                     floorLevel = 1;
                                     Console.WriteLine("Returning to town");
                                     GetRandomRoom(town);
@@ -548,6 +552,7 @@ namespace AI_GM.Map
                         {
                             if (monsterSpawned == false)
                             {
+
                                 campaign = Spawnmonster(campaign);
                                 monsterSpawned = true;
                             }
@@ -605,8 +610,17 @@ namespace AI_GM.Map
                 {
                     if (room.Layout[i, j] == 'm')
                     {
+                        Monster monster = new();
                         // Update monster's X and Y based on 'm' position
-                        Monster monster = GetRandomMonster();
+                        if (bossRoom)
+                        {
+                            monster = GetBossMonster();
+                        }
+                        else
+                        {
+                            monster = GetRandomMonster();
+                        }
+                        
                         monster.X = j;
                         monster.Y = i;
                         campaign.CombatParticipants.Add(monster);
@@ -617,6 +631,16 @@ namespace AI_GM.Map
                 }
             }
             return campaign;
+        }
+
+        private static Monster GetBossMonster()
+        {
+            Type type = typeof(BossMonsterName);
+            Array monsterNames = type.GetEnumValues();
+            int randomIndex = Dice.DiceRoll(monsterNames.Length);
+            BossMonsterName monsterType = (BossMonsterName)monsterNames.GetValue(randomIndex - 1);
+            Monster monster = MonsterStats.GetBossMonsterStats(monsterType);
+            return monster;
         }
 
         /// <summary>

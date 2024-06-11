@@ -70,5 +70,24 @@ namespace AI_GM.Monsters
             }
             return monster;
         }
+
+        public static Monster GetBossMonsterStats(BossMonsterName monsterName)
+        {
+            Monster monster = new Monster();
+            switch (monsterName)
+            {
+                case BossMonsterName.AntQueen:
+                    monster.Name = BossMonsterName.AntQueen.ToString();
+                    monster.AttackDice = 4;
+                    monster.DefendDice = 5;
+                    monster.Speed = 10;
+                    monster.MaxHitPoints = 6;
+                    monster.AttackRange = 15;
+                    break;
+                default:
+                    break;
+            }
+            return monster;
+        }
     }
 }
