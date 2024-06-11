@@ -337,6 +337,8 @@ namespace AI_GM.Map
                             break;
                         case 'T':
                             Console.WriteLine("You have triggered a trap");
+                            Console.WriteLine("You have taken 1 damage");
+                            Console.WriteLine($"You have {character.MaxHitPoints = character.DamageTaken} health remain");
                             character.X = targetX;
                             character.Y = targetY;
                             //deal damage to player here
