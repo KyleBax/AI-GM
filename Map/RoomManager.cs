@@ -16,6 +16,7 @@ namespace AI_GM.Map
         public static List<Room> mainRooms;
         public static List<Room> startingRooms;
         public static List<Room> exitRooms;
+        public static List<Room> bossRooms;
         public static Room room = new Room();
         public static bool newRoom = false;
         public static bool playerLocationUpdated = true;
@@ -30,6 +31,7 @@ namespace AI_GM.Map
             mainRooms = GetRoomsFromTextFile(FilePaths.MAINROOMS);
             startingRooms = GetRoomsFromTextFile(FilePaths.STARTINGROOMS);
             exitRooms = GetRoomsFromTextFile(FilePaths.EXITROOMS);
+            bossRooms = GetRoomsFromTextFile(FilePaths.BOSSROOMS);
             GetRandomRoom(town);
             Character character = campaign.PlayerCharacters.FirstOrDefault();
 
@@ -374,26 +376,33 @@ namespace AI_GM.Map
                                 bool nextFloor = UI.GetConfirmation("Do you want to go to the next floor?");
                                 if (nextFloor)
                                 {
-
+                                    floorLevel += 1;
                                     Console.WriteLine("Heading to the next floor");
-                                    GetRandomRoom(startingRooms);
+                                    if (floorLevel % 5 == 0)
+                                    {
+                                        GetRandomRoom(bossRooms);
+                                    }
+                                    else
+                                    {
+                                        GetRandomRoom(startingRooms);
+                                    }
+                                    
                                     chestFound = false;
                                     newRoom = true;
                                     playerLocationUpdated = false;
-                                    campaign.inTown = true;
-                                    floorLevel += 1;
+                                    campaign.inTown = true;         
                                     break;
                                 }
                                 bool leaveDungeon = UI.GetConfirmation("Do you want to return to town?");
                                 if (leaveDungeon)
                                 {
+                                    floorLevel = 1;
                                     Console.WriteLine("Returning to town");
                                     GetRandomRoom(town);
                                     chestFound = false;
                                     newRoom = true;
                                     playerLocationUpdated = false;
-                                    campaign.inTown = true;
-                                    floorLevel = 1;
+                                    campaign.inTown = true;      
                                     break;
                                 }
                             }
