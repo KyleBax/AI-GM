@@ -5,9 +5,9 @@
     {
         Goblin,
         Rat,
-        PoisonousSnake
+        PoisonousSnake,
+        GiantAnt,
+        Zombie,
+        CrazedAdventurer
     }
-
-
-
 }

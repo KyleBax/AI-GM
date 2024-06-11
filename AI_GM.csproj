@@ -26,6 +26,9 @@
     <None Update="Map\ExitRooms.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+<None Update="Map\BossRoom.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <!-- Include entire directories -->
     <None Include="SavedCampaigns\**\*" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
