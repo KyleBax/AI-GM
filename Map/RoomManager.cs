@@ -23,6 +23,7 @@ namespace AI_GM.Map
         public static bool playerDead = false;
         public static bool roomSearched = false;
         public static bool chestFound = false;
+        public static int floorLevel = 1;
         public static bool InitialiseMaps(Campaign campaign)
         {
             town = GetRoomsFromTextFile(FilePaths.TOWN);
@@ -380,6 +381,7 @@ namespace AI_GM.Map
                                     newRoom = true;
                                     playerLocationUpdated = false;
                                     campaign.inTown = true;
+                                    floorLevel += 1;
                                     break;
                                 }
                                 bool leaveDungeon = UI.GetConfirmation("Do you want to return to town?");
@@ -391,6 +393,7 @@ namespace AI_GM.Map
                                     newRoom = true;
                                     playerLocationUpdated = false;
                                     campaign.inTown = true;
+                                    floorLevel = 1;
                                     break;
                                 }
                             }
