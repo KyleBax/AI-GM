@@ -50,6 +50,7 @@ namespace AI_GM.Combat
 
                     int damage = hits - defended;
                     Console.WriteLine($"You have taken {damage} damage");
+                    Console.WriteLine($"You have {campaign.PlayerCharacters[target].MaxHitPoints - campaign.PlayerCharacters[target].DamageTaken} health remain");
                     campaign.CombatParticipants[target].DamageTaken += damage;
 
                     if (campaign.CombatParticipants[target].DamageTaken >= campaign.CombatParticipants[target].MaxHitPoints)
