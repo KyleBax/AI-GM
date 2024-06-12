@@ -22,7 +22,7 @@ namespace AI_GM.Map
         public static bool playerLocationUpdated = true;
         public static bool endTurnEarly = false;
         public static bool playerDead = false;
-        public static bool roomSearched = false;
+        public static bool roomSearched = true;
         public static bool chestFound = false;
         public static bool bossRoom = false;
         public static int floorLevel = 1;
