@@ -353,10 +353,15 @@ namespace AI_GM.Map
                             }
                             else
                             {
+                                int exitChance = floorLevel * 5 + 5;
+                                if (exitChance >= 100)
+                                {
+                                    exitChance = 100;
+                                }
                                 //TODO change the set integer of 100 so it adjust depending on the floor you're on
                                 //creates a chance of an exit rooom spawning
-                                int ranNum = Dice.DiceRoll(50);
-                                if (ranNum >= 50)
+                                int ranNum = Dice.DiceRoll(exitChance);
+                                if (ranNum >= exitChance)
                                 {
                                     GetRandomRoom(exitRooms);
                                 }
@@ -391,11 +396,11 @@ namespace AI_GM.Map
                                         GetRandomRoom(startingRooms);
                                         bossRoom = false;
                                     }
-                                    
+
                                     chestFound = false;
                                     newRoom = true;
                                     playerLocationUpdated = false;
-                                    campaign.inTown = true;         
+                                    campaign.inTown = true;
                                     break;
                                 }
                                 bool leaveDungeon = UI.GetConfirmation("Do you want to return to town?");
@@ -408,7 +413,7 @@ namespace AI_GM.Map
                                     chestFound = false;
                                     newRoom = true;
                                     playerLocationUpdated = false;
-                                    campaign.inTown = true;      
+                                    campaign.inTown = true;
                                     break;
                                 }
                             }
@@ -622,7 +627,7 @@ namespace AI_GM.Map
                         {
                             monster = GetRandomMonster();
                         }
-                        
+
                         monster.X = j;
                         monster.Y = i;
                         campaign.CombatParticipants.Add(monster);
