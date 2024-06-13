@@ -25,6 +25,7 @@ namespace AI_GM.Map
         public static bool roomSearched = true;
         public static bool chestFound = false;
         public static bool bossRoom = false;
+        public static bool trapsSearched = false;
         public static int floorLevel = 1;
         public static bool InitialiseMaps(Campaign campaign)
         {
@@ -207,6 +208,7 @@ namespace AI_GM.Map
                     canDoAction = AvailableActionCheck(campaign, i);
                     if (canDoAction)
                     {
+                        trapsSearched = true;
                         campaign.PlayerCharacters[i].ActionsTaken++;
                         Console.WriteLine("Player searches for traps.");
                     }
@@ -370,6 +372,7 @@ namespace AI_GM.Map
                                     GetRandomRoom(mainRooms);
                                 }
                             }
+                            trapsSearched = false;
                             chestFound = false;
                             newRoom = true;
                             playerLocationUpdated = false;
@@ -715,7 +718,14 @@ namespace AI_GM.Map
             switch (room.Layout[i, j])
             {
                 case 'T':
-                    Console.Write(' ');
+                    if (trapsSearched)
+                    {
+                        Console.Write(room.Layout[i, j]);
+                    }
+                    else
+                    {
+                        Console.Write(' ');
+                    }
                     break;
                 case 'm':
                     Console.Write(' ');
