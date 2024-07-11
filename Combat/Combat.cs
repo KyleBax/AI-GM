@@ -23,25 +23,31 @@ namespace AI_GM.Combat
             return combatParticipants;
         }
 
-        public static void MonsterAttack(ref Campaign campaign, int target, int i)
+        public static MonsterAttackResult MonsterAttack(ref Campaign campaign, int target, int i)
         {
+            MonsterAttackResult result = new();
             bool canAttack = CheckIfMonsterCanAttack(campaign, target, i);
             Monster monster = (Monster)campaign.CombatParticipants[i];
-            Console.WriteLine($"{monster.Name}");
+            result.MonsterName = monster.Name;
+            
             if (canAttack)
             {
                 while (true)
                 {
-
                     int hits = GetHits(monster.AttackDice, EnumCombat.attack);
-                    Console.WriteLine($"The monster has {hits} hits");
+                    result.Hits = hits;
                     int defended = 0;
                     if (hits > 0)
                     {
+                        result.Missed = false;
                         int diceToDefend = campaign.CombatParticipants[target].DefendDice +
                                             campaign.PlayerCharacters[target].Armour.ExtraDice;
                         defended = GetHits(diceToDefend, EnumCombat.playerDefend);
-                        Console.WriteLine($"You have defended {defended} hits ");
+                        result.DefendDice = defended;                 
+                    }
+                    else
+                    {
+                        result.Missed = true;
                     }
                     if (defended > hits)
                     {
@@ -49,8 +55,9 @@ namespace AI_GM.Combat
                     }
 
                     int damage = hits - defended;
-                    Console.WriteLine($"You have taken {damage} damage");
-                    Console.WriteLine($"You have {campaign.PlayerCharacters[target].MaxHitPoints - campaign.PlayerCharacters[target].DamageTaken} health remain");
+                    result.Damage = damage;
+                    result.HealthRemaining = campaign.PlayerCharacters[target].MaxHitPoints - campaign.PlayerCharacters[target].DamageTaken;
+
                     campaign.CombatParticipants[target].DamageTaken += damage;
 
                     if (campaign.CombatParticipants[target].DamageTaken >= campaign.CombatParticipants[target].MaxHitPoints)
@@ -61,7 +68,8 @@ namespace AI_GM.Combat
                     break;
 
                 }
-            }     
+            }
+            return result;
         }
 
         private static bool CheckIfMonsterCanAttack(Campaign campaign, int target, int i)
@@ -83,18 +91,20 @@ namespace AI_GM.Combat
             return false;
         }
 
-        public static void PlayerAttackAction(ref Campaign campaign, int i)
+        public static PlayerAttackResult PlayerAttackAction(ref Campaign campaign, int activeCharactaer)
         {
-            IFightable selectedMonster = SelectMonsterFromParticipants(campaign.CombatParticipants);
-            int diceToHit = campaign.PlayerCharacters[i].AttackDice + campaign.PlayerCharacters[i].Weapon.ExtraDice;
-            int hits = GetHits(diceToHit, EnumCombat.attack);
+            PlayerAttackResult result = new();
 
-            Console.WriteLine($"You have {hits} hits");
+            IFightable selectedMonster = SelectMonsterFromParticipants(campaign.CombatParticipants);
+            int diceToHit = campaign.PlayerCharacters[activeCharactaer].AttackDice + campaign.PlayerCharacters[activeCharactaer].Weapon.ExtraDice;
+            int hits = GetHits(diceToHit, EnumCombat.attack);
+            result.Hits = hits; 
             int defended = 0;
             if (hits > 0)
             {
                 defended = GetHits(selectedMonster.DefendDice, EnumCombat.monsterDefend);
-                Console.WriteLine($"The Monster has defended {defended} hits ");
+                result.DefendDice = defended;
+
             }
             if (defended > hits)
             {
@@ -102,19 +112,20 @@ namespace AI_GM.Combat
             }
 
             int damage = hits - defended;
-
-            Console.WriteLine($"You have dealt {damage} damage to the monster");
-
+            result.Damage = damage;
             selectedMonster.DamageTaken += damage;
             if (selectedMonster.DamageTaken >= selectedMonster.MaxHitPoints)
             {
-                Console.WriteLine("you have killed this monster");
+                result.Dead = true;
                 //removes the selectedMonster from combatParticipants
                 campaign.CombatParticipants.Remove(selectedMonster);
-
-                campaign = Items.Loot.AddNewItem(campaign, i, false);                
+                campaign = Items.Loot.AddNewItem(campaign, activeCharactaer, false);                
             }
-
+            else
+            {
+                result.Dead = false;
+            }
+            return result;
         }
 
         private static int GetHits(int diceCount, EnumCombat roll)

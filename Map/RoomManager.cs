@@ -255,7 +255,8 @@ namespace AI_GM.Map
                             if (availableActions.Contains(Characters.Action.Attack))
                             {
                                 Console.WriteLine("Player attacks");
-                                Combat.Combat.PlayerAttackAction(ref campaign, i);
+                                PlayerAttackResult result = Combat.Combat.PlayerAttackAction(ref campaign, i);
+                                Combat.CombatUI.PlayerAttackUI(result);
                                 campaign.PlayerCharacters[i].ActionsTaken++;
 
                             }
@@ -808,7 +809,8 @@ namespace AI_GM.Map
             int target = FindTarget(campaign, a);
             MoveToTarget(campaign, target, i);
             PrintRoomLayout(campaign);
-            Combat.Combat.MonsterAttack(ref campaign, target, i);
+            MonsterAttackResult result = Combat.Combat.MonsterAttack(ref campaign, target, i);
+            Combat.CombatUI.MonsterAttackUI(result);
         }
 
         /// <summary>
