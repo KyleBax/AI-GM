@@ -37,7 +37,7 @@ namespace AI_GM.Items
             return item;
         }
 
-        public static Campaign AddNewItem(Campaign campaign, int i, bool searched)
+        public static Campaign AddNewItem(Campaign campaign, int activePlayer, bool searched)
         {
             item = new Item();
             GetRandomItem();
@@ -50,7 +50,7 @@ namespace AI_GM.Items
             {
                 Console.WriteLine($"The monster has dropped a {item.Name}");
             }
-            campaign.PlayerCharacters[i] = EquipItem(campaign.PlayerCharacters[i], item);          
+            campaign.PlayerCharacters[activePlayer] = EquipItem(campaign.PlayerCharacters[activePlayer], item);          
             return campaign;
         }
 

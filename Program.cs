@@ -32,7 +32,7 @@ namespace AI_GM
                 }
                 else
                 {
-                    Console.WriteLine("Something went wrong");
+                    UI.ErrorMessage();
                 }
 
             }
@@ -57,7 +57,8 @@ namespace AI_GM
                             campaign = RoomManager.PlayersTurn(campaign, i);
                             if (campaign.PlayerCharacters.Count <= 0)
                             {
-                                Console.WriteLine("Game Over");
+                                UI.GameOver();
+                                
                                 campaignActive = false;
                                 break;
                             }

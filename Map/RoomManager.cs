@@ -176,40 +176,40 @@ namespace AI_GM.Map
         public static Campaign HandlePlayerActions(ConsoleKeyInfo keyInfo, Campaign campaign,
             List<Characters.Action> availableActions)
         {
-            int i = campaign.ActivePlayer;
-            int currentX = campaign.PlayerCharacters[i].X;
-            int currentY = campaign.PlayerCharacters[i].Y;
+            int activePlayer = campaign.ActivePlayer;
+            int currentX = campaign.PlayerCharacters[activePlayer].X;
+            int currentY = campaign.PlayerCharacters[activePlayer].Y;
             bool canDoAction;
             Console.WriteLine();
             switch (keyInfo.Key)
             {
                 case ConsoleKey.W:
                     // Move up logic
-                    campaign.PlayerCharacters[i].AvailableMovement = TryMovePlayer(campaign, campaign.PlayerCharacters[i], currentX, currentY - 1, campaign.PlayerCharacters[i].AvailableMovement);
+                    campaign.PlayerCharacters[activePlayer].AvailableMovement = TryMovePlayer(campaign, campaign.PlayerCharacters[activePlayer], currentX, currentY - 1, campaign.PlayerCharacters[activePlayer].AvailableMovement);
                     break;
 
                 case ConsoleKey.A:
                     // Move left logic
-                    campaign.PlayerCharacters[i].AvailableMovement = TryMovePlayer(campaign, campaign.PlayerCharacters[i], currentX - 1, currentY, campaign.PlayerCharacters[i].AvailableMovement);
+                    campaign.PlayerCharacters[activePlayer].AvailableMovement = TryMovePlayer(campaign, campaign.PlayerCharacters[activePlayer], currentX - 1, currentY, campaign.PlayerCharacters[activePlayer].AvailableMovement);
                     break;
 
                 case ConsoleKey.S:
                     // Move down logic
-                    campaign.PlayerCharacters[i].AvailableMovement = TryMovePlayer(campaign, campaign.PlayerCharacters[i], currentX, currentY + 1, campaign.PlayerCharacters[i].AvailableMovement);
+                    campaign.PlayerCharacters[activePlayer].AvailableMovement = TryMovePlayer(campaign, campaign.PlayerCharacters[activePlayer], currentX, currentY + 1, campaign.PlayerCharacters[activePlayer].AvailableMovement);
                     break;
 
                 case ConsoleKey.D:
                     // Move right logic
-                    campaign.PlayerCharacters[i].AvailableMovement = TryMovePlayer(campaign, campaign.PlayerCharacters[i], currentX + 1, currentY, campaign.PlayerCharacters[i].AvailableMovement);
+                    campaign.PlayerCharacters[activePlayer].AvailableMovement = TryMovePlayer(campaign, campaign.PlayerCharacters[activePlayer], currentX + 1, currentY, campaign.PlayerCharacters[activePlayer].AvailableMovement);
                     break;
 
                 case ConsoleKey.T:
                     // Search for traps logic
-                    canDoAction = AvailableActionCheck(campaign, i);
+                    canDoAction = AvailableActionCheck(campaign, activePlayer);
                     if (canDoAction)
                     {
                         trapsSearched = true;
-                        campaign.PlayerCharacters[i].ActionsTaken++;
+                        campaign.PlayerCharacters[activePlayer].ActionsTaken++;
                         Console.WriteLine("Player searches for traps.");
                     }
 
@@ -217,7 +217,7 @@ namespace AI_GM.Map
 
                 case ConsoleKey.F:
                     // Search for treasure logic
-                    canDoAction = AvailableActionCheck(campaign, i);
+                    canDoAction = AvailableActionCheck(campaign, activePlayer);
 
                     if (canDoAction)
                     {
@@ -231,9 +231,9 @@ namespace AI_GM.Map
                             {
                                 roomSearched = true;
 
-                                campaign.PlayerCharacters[i].ActionsTaken++;
+                                campaign.PlayerCharacters[activePlayer].ActionsTaken++;
                                 Console.WriteLine("Player searches for treasure.");
-                                campaign = Items.Loot.AddNewItem(campaign, i, true);
+                                campaign = Items.Loot.AddNewItem(campaign, activePlayer, true);
                             }
                             else
                             {
@@ -246,19 +246,21 @@ namespace AI_GM.Map
 
                 case ConsoleKey.V:
                     // combat logic
-                    canDoAction = AvailableActionCheck(campaign, i);
+                    canDoAction = AvailableActionCheck(campaign, activePlayer);
                     if (canDoAction)
                     {
 
                         if (campaign.CombatParticipants.Count > campaign.PlayerCharacters.Count)
                         {
                             if (availableActions.Contains(Characters.Action.Attack))
-                            {
-                                Console.WriteLine("Player attacks");
-                                PlayerAttackResult result = Combat.Combat.PlayerAttackAction(ref campaign, i);
-                                Combat.CombatUI.PlayerAttackUI(result);
-                                campaign.PlayerCharacters[i].ActionsTaken++;
-
+                            {                              
+                                PlayerAttackResult result = Combat.Combat.PlayerAttackAction(ref campaign, activePlayer);
+                                CombatUI.PlayerAttackUI(result);
+                                if (result.Dead)
+                                {
+                                    campaign = Items.Loot.AddNewItem(campaign, activePlayer, false);
+                                }
+                                campaign.PlayerCharacters[activePlayer].ActionsTaken++;
                             }
                             else
                             {
@@ -274,13 +276,13 @@ namespace AI_GM.Map
                     break;
                 case ConsoleKey.R:
                     //Roll for movement logic
-                    canDoAction = AvailableActionCheck(campaign, i);
+                    canDoAction = AvailableActionCheck(campaign, activePlayer);
                     if (canDoAction)
                     {
                         int roll = Dice.DiceCount("2d4");
-                        campaign.PlayerCharacters[i].AvailableMovement += roll;
-                        campaign.PlayerCharacters[i].ActionsTaken++;
-                        Console.WriteLine($"You have rolled {roll}, {campaign.PlayerCharacters[i].AvailableMovement} movement available");
+                        campaign.PlayerCharacters[activePlayer].AvailableMovement += roll;
+                        campaign.PlayerCharacters[activePlayer].ActionsTaken++;
+                        Console.WriteLine($"You have rolled {roll}, {campaign.PlayerCharacters[activePlayer].AvailableMovement} movement available");
                     }
 
                     break;
@@ -290,7 +292,7 @@ namespace AI_GM.Map
                     endTurnEarly = UI.GetConfirmation("Are you sure you want to end your turn?");
                     if (endTurnEarly)
                     {
-                        campaign.PlayerCharacters[i].AvailableMovement = 0;
+                        campaign.PlayerCharacters[activePlayer].AvailableMovement = 0;
                         Console.WriteLine("Ending turn");
                     }
                     break;
@@ -426,7 +428,7 @@ namespace AI_GM.Map
                             character.Y = targetY;
                             break;
                         case 'K':
-                            character = Items.Shop.EnterShop(character);
+                            character = Items.Shop.ShopMain(character);
                             break;
                         default:
                             character.X = targetX;

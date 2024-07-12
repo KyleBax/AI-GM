@@ -11,13 +11,12 @@ namespace AI_GM.Items
 {
     internal class Shop
     {
-        public static Character EnterShop(Character character)
+        public static Character ShopMain(Character character)
         {
             int shopSaleIncrease = 2;
             Item selectedItem = new Item();
             List<Item> instock = new List<Item>();
-            Console.WriteLine();
-            bool sell = UI.GetConfirmation("Would you like to sell your junk items?");
+            bool sell = ShopUI.EnterShop();
             if (sell)
             {
                 int saleCost = 0;
@@ -25,7 +24,7 @@ namespace AI_GM.Items
                 {
                     saleCost += character.Inventory[i].Cost;
                 }
-                Console.WriteLine($"You have sold your junk for {saleCost} coins");
+                ShopUI.SoldItems(saleCost);
                 character.Inventory.Clear();
                 character.Coins += saleCost;
             }

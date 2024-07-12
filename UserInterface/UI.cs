@@ -1,5 +1,7 @@
 ﻿
 
+
+
 namespace AI_GM.UserInterface
 {
     internal class UI
@@ -26,6 +28,16 @@ namespace AI_GM.UserInterface
             Console.WriteLine("Select which monster to attack by pressing the number corresponding to it followed by enter");
             Console.WriteLine("Search a room for traps by pressing T");
             Console.WriteLine("Search a room with a chest in it by pressing F");
+        }
+
+        internal static void ErrorMessage()
+        {
+            Console.WriteLine("Something went wrong");
+        }
+
+        internal static void GameOver()
+        {
+            Console.WriteLine("Game Over");
         }
     }
 }

@@ -28,6 +28,7 @@ namespace AI_GM.Combat
 
         internal static void PlayerAttackUI(PlayerAttackResult result)
         {
+            Console.WriteLine("Player attacks");
             Console.WriteLine($"You have {result.Hits} hits");
             Console.WriteLine($"The Monster has defended {result.DefendDice} hits ");
             Console.WriteLine($"You have dealt {result.Damage} damage to the monster");

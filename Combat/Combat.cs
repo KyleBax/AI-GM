@@ -118,8 +118,7 @@ namespace AI_GM.Combat
             {
                 result.Dead = true;
                 //removes the selectedMonster from combatParticipants
-                campaign.CombatParticipants.Remove(selectedMonster);
-                campaign = Items.Loot.AddNewItem(campaign, activeCharactaer, false);                
+                campaign.CombatParticipants.Remove(selectedMonster);               
             }
             else
             {
