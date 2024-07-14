@@ -253,8 +253,9 @@ namespace AI_GM.Map
                         if (campaign.CombatParticipants.Count > campaign.PlayerCharacters.Count)
                         {
                             if (availableActions.Contains(Characters.Action.Attack))
-                            {                              
-                                PlayerAttackResult result = Combat.Combat.PlayerAttackAction(ref campaign, activePlayer);
+                            {
+                                IFightable selectedMonster = CombatUI.SelectMonsterFromParticipants(campaign.CombatParticipants);
+                                PlayerAttackResult result = Combat.Combat.PlayerAttackAction(ref campaign, activePlayer, selectedMonster);
                                 CombatUI.PlayerAttackUI(result);
                                 if (result.Dead)
                                 {

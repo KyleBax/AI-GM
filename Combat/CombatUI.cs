@@ -37,5 +37,42 @@ namespace AI_GM.Combat
                 Console.WriteLine("you have killed this monster");
             }
         }
+
+        public static IFightable SelectMonsterFromParticipants(List<IFightable> combatParticipants)
+        {
+            Console.WriteLine("choose a target");
+
+            var selections = combatParticipants.Where(p => p.Identifier == Identifier.Monster).ToList();
+            while (true)
+            {
+                for (int i = 0; i < selections.Count; i++)
+                {
+                    if (selections[i].Identifier == Identifier.Monster)
+                    {
+                        Console.WriteLine(i + 1 + " " + selections[i].Identifier);
+                    }
+
+                }
+                try
+                {
+                    int selection = int.Parse(Console.ReadLine());
+
+                    if (selection >= 1 && selection <= selections.Count)
+                    {
+                        return selections[selection - 1];
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid Selection");
+                        Console.WriteLine("Select one of these options");
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("Please enter a valid number");
+                }
+
+            }
+        }
     }
 }
