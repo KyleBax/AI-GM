@@ -156,9 +156,6 @@ namespace AI_GM.Combat
 
             }
             return hits;
-        }
-
-        //TODO check to ensure there is no Logic in this method
-        
+        }        
     }
 }

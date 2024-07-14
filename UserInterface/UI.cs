@@ -19,6 +19,12 @@ namespace AI_GM.UserInterface
             return input;
         }
 
+        public static int GetIntInput()
+        {
+            int input = int.Parse(Console.ReadLine());
+            return input;
+        }
+
         public static void PrintControls()
         {
             Console.WriteLine("Controls:");

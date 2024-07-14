@@ -32,7 +32,7 @@ namespace AI_GM.Items
                 item.Name = "Beginner shirt";
                 item.AttackRange = 0;
             }
-            
+
 
             return item;
         }
@@ -41,56 +41,27 @@ namespace AI_GM.Items
         {
             item = new Item();
             GetRandomItem();
+            LootUI.ItemFound(searched, item.Name);
 
-            if (searched == true)
+            bool equipItem = LootUI.EquipItem(campaign.PlayerCharacters[activePlayer], item);
+            if (equipItem)
             {
-                Console.WriteLine($"You have found {item.Name}");
+                switch (item.Type)
+                {
+                    case ItemType.Armour:
+                        campaign.PlayerCharacters[activePlayer].Armour = item;
+                        break;
+                    case ItemType.Weapon:
+                        campaign.PlayerCharacters[activePlayer].Weapon = item;
+                        break;
+                }
             }
             else
             {
-                Console.WriteLine($"The monster has dropped a {item.Name}");
+                campaign.PlayerCharacters[activePlayer].Inventory.Add(item);
             }
-            campaign.PlayerCharacters[activePlayer] = EquipItem(campaign.PlayerCharacters[activePlayer], item);          
+
             return campaign;
-        }
-
-        public static Character EquipItem(Character character, Item item)
-        {
-            ConsoleKeyInfo input = new ConsoleKeyInfo();
-            switch (item.Type)
-            {
-                case ItemType.Armour:
-                    Console.WriteLine("Would you like to swap armours?");
-                    Console.WriteLine($"Current {character.Armour.Name} bonus +{character.Armour.ExtraDice}");
-                    Console.WriteLine($"new {item.Name} bonus +{item.ExtraDice}");
-                    input = Console.ReadKey();
-                    Console.WriteLine();
-                    if (input.Key == ConsoleKey.Y)
-                    {
-                        character.Armour = item;
-                        Console.WriteLine($"You Have equipped {item.Name}");
-                    }
-
-                    break;
-                case ItemType.Weapon:
-                    Console.WriteLine("Would you like to swap weapons?");
-                    Console.WriteLine($"Current {character.Weapon.Name} bonus +{character.Weapon.ExtraDice}");
-                    Console.WriteLine($"new {item.Name} bonus +{item.ExtraDice}");
-                    input = Console.ReadKey();
-                    Console.WriteLine();
-                    if (input.Key == ConsoleKey.Y)
-                    {
-                        character.Weapon = item;
-                        Console.WriteLine($"You Have equipped {item.Name}");
-                    }
-
-                    break;
-                default:
-                    character.Inventory.Add(item);
-                    Console.WriteLine($"{item.Name} has been added to your inventory");
-                    break;
-            }
-            return character;
         }
 
         public static void GetRandomItem()
@@ -194,7 +165,7 @@ namespace AI_GM.Items
                 case Rarity.VeryRare:
                     cost = Dice.DiceRoll(20) + 30;
                     break;
-                    case Rarity.Epic:
+                case Rarity.Epic:
                     cost = Dice.DiceRoll(50) + 50;
                     break;
                 default:
@@ -309,7 +280,7 @@ namespace AI_GM.Items
                 {
                     break;
                 }
-            }          
+            }
             item.Cost = GetRandomCost();
             item.Weight = GetRandomWeight();
             item.ExtraDice = GetRandomExtraDice();

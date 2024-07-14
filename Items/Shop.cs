@@ -33,54 +33,72 @@ namespace AI_GM.Items
             {
                 instock.Add(Loot.GetRandomShopItem(i));
             }
-            for (int i = 0; i < instock.Count; i++)
+            ShopUI.PrintShopItems(instock, shopSaleIncrease);
+
+            bool gotCoin = CoinCheck(character.Coins);
+            ShopUI.CoinCheck(character.Coins, gotCoin);
+            if (gotCoin)
             {
-                
-                Console.WriteLine($"item {i + 1} Name: {instock[i].Name}, Type: {instock[i].Type}, Bonus Dice: {instock[i].ExtraDice}, Rarity: {instock[i].Rarity}, Cost: {instock[i].Cost * shopSaleIncrease}");
-            }
-            if (character.Coins > 0)
-            {
-                Console.WriteLine($"You have {character.Coins} coins");
-                Console.WriteLine("Would you like to buy anything?");
                 try
                 {
-                    int selection = int.Parse(Console.ReadLine());
+                    int selection = UI.GetIntInput();
 
                     if (selection >= 1 && selection <= instock.Count)
                     {
                         selectedItem = instock[selection - 1];
+                        bool purchasedItem = false;
                         if (character.Coins >= selectedItem.Cost * shopSaleIncrease)
                         {
                             character.Coins = character.Coins - selectedItem.Cost * shopSaleIncrease;
-                            Console.WriteLine($"you have purchased {selectedItem.Name}");
-                            character = Loot.EquipItem(character, selectedItem);
-                        }
+                            purchasedItem = true;
+                            bool equipItem = LootUI.EquipItem(character, selectedItem);
+                            if (equipItem)
+                            {
+                                switch (selectedItem.Type)
+                                {
+                                    case ItemType.Armour:
+                                        character.Armour = selectedItem;
+                                        break;
+                                    case ItemType.Weapon:
+                                        character.Weapon = selectedItem;
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                character.Inventory.Add(selectedItem);
+                            }
+                        }  
                         else
                         {
-                            Console.WriteLine("You lack coins, return when you can afford something");
+                            purchasedItem = false;
                         }
-
+                        ShopUI.PurchaseShopItem(selectedItem.Name, purchasedItem);
                     }
                     else
                     {
-                        Console.WriteLine("Invalid Selection");
-                        Console.WriteLine("Select one of these options");
+                        ShopUI.InvalidSelection();
+
                     }
                 }
                 catch
                 {
-                    Console.WriteLine("Please enter a valid number");
+                    ShopUI.InvalidSelection();
                 }
+            }
+            return character;
+        }
+
+        private static bool CoinCheck(int coins)
+        {
+            if(coins < 0)
+            {
+                return true;
             }
             else
             {
-                Console.WriteLine("You lack coins, return when you can afford something");
+                return false;
             }
-
-
-
-
-            return character;
         }
     }
 }
