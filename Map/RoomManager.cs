@@ -43,7 +43,7 @@ namespace AI_GM.Map
             }
             else
             {
-                Console.WriteLine("No character has been found, starting a new campaign");
+                RoomManagerUI.NoPlayerFound();
                 return false;
             }
         }
@@ -66,8 +66,6 @@ namespace AI_GM.Map
                         character.Y = i;
 
                         room.Layout[i, j] = ' ';
-
-                        Console.WriteLine($"{character.X}, {character.Y}");
 
                         playerCount++;
 
@@ -639,8 +637,6 @@ namespace AI_GM.Map
                         monster.Y = i;
                         campaign.CombatParticipants.Add(monster);
                         campaign.ActiveMonsters.Add(monster);
-
-                        Console.WriteLine($"{monster.X}, {monster.Y}");
                     }
                 }
             }
@@ -694,28 +690,31 @@ namespace AI_GM.Map
             {
                 for (int j = 0; j < room.Layout.GetLength(1); j++)
                 {
-                    PrintRoomCell(i, j, campaign);
+                    Char roomCell = GetRoomCell(i, j, campaign);
+                    RoomManagerUI.PrintRoomCell(roomCell);
                 }
                 Console.WriteLine();
             }
 
         }
-        public static void PrintRoomCell(int i, int j, Campaign campaign)
-        {
 
+
+
+        public static Char GetRoomCell(int i, int j, Campaign campaign)
+        {
+            Char roomCell = ' ';
             for (int a = 0; a < campaign.CombatParticipants.Count; a++)
             {
                 if (i == campaign.CombatParticipants[a].Y && j == campaign.CombatParticipants[a].X)
                 {
                     if (campaign.CombatParticipants[a].Identifier == Identifier.Player)
                     {
-                        Console.Write('X');
+                        return 'X';
                     }
                     if (campaign.CombatParticipants[a].Identifier == Identifier.Monster)
                     {
-                        Console.Write('M');
+                        return 'M';
                     }
-                    return;
                 }
             }
 
@@ -724,21 +723,24 @@ namespace AI_GM.Map
                 case 'T':
                     if (trapsSearched)
                     {
-                        Console.Write(room.Layout[i, j]);
+                        roomCell = room.Layout[i, j];
                     }
                     else
                     {
-                        Console.Write(' ');
+                        roomCell = ' ';
                     }
                     break;
                 case 'm':
-                    Console.Write(' ');
+                    roomCell = ' ';
                     break;
                 default:
-                    Console.Write(room.Layout[i, j]);
+                    roomCell = room.Layout[i, j];
                     break;
             }
+            return roomCell;
         }
+
+        
 
         public static void DisplayAvailableActions(List<Characters.Action> availableActions, Campaign campaign)
         {
