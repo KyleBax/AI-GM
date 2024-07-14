@@ -87,8 +87,7 @@ namespace AI_GM.Map
                     }
                 }
             }
-
-            Console.WriteLine($"Could not find enough 'S' in the room layout for all players. Found: {playerCount}");
+            RoomManagerUI.PlayerSpawnError(playerCount);
             return;
         }
 
@@ -210,6 +209,10 @@ namespace AI_GM.Map
                         campaign.PlayerCharacters[activePlayer].ActionsTaken++;
                         Console.WriteLine("Player searches for traps.");
                     }
+                    else
+                    {
+                        RoomManagerUI.OutOfActions();
+                    }
 
                     break;
 
@@ -238,6 +241,10 @@ namespace AI_GM.Map
                                 Console.WriteLine("Room is already searched try something else");
                             }
                         }
+                    }
+                    else
+                    {
+                        RoomManagerUI.OutOfActions();
                     }
 
                     break;
@@ -271,6 +278,10 @@ namespace AI_GM.Map
                             Console.WriteLine("There are no monsters to attack");
                         }
                     }
+                    else
+                    {
+                        RoomManagerUI.OutOfActions();
+                    }
 
                     break;
                 case ConsoleKey.R:
@@ -282,6 +293,10 @@ namespace AI_GM.Map
                         campaign.PlayerCharacters[activePlayer].AvailableMovement += roll;
                         campaign.PlayerCharacters[activePlayer].ActionsTaken++;
                         Console.WriteLine($"You have rolled {roll}, {campaign.PlayerCharacters[activePlayer].AvailableMovement} movement available");
+                    }
+                    else
+                    {
+                        RoomManagerUI.OutOfActions();
                     }
 
                     break;
@@ -309,7 +324,6 @@ namespace AI_GM.Map
         {
             if (campaign.PlayerCharacters[i].ActionsTaken >= 3)
             {
-                Console.WriteLine("You are out of actions, move or end turn with N");
                 return false;
             }
             else
