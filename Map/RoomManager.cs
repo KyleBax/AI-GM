@@ -170,9 +170,10 @@ namespace AI_GM.Map
         /// t = search for traps, f = search for treasure v = attack
         /// </summary>
         /// <param name="keyInfo"></param>
-        public static Campaign HandlePlayerActions(ConsoleKeyInfo keyInfo, Campaign campaign,
+        public static PlayerAction HandlePlayerActions(ConsoleKeyInfo keyInfo, Campaign campaign,
             List<Characters.Action> availableActions)
         {
+            PlayerAction action = new PlayerAction();
             int activePlayer = campaign.ActivePlayer;
             int currentX = campaign.PlayerCharacters[activePlayer].X;
             int currentY = campaign.PlayerCharacters[activePlayer].Y;
@@ -317,7 +318,9 @@ namespace AI_GM.Map
                     Console.WriteLine($"Unknown key: {keyInfo.Key}");
                     break;
             }
-            return campaign;
+
+            action.Campaign = campaign;
+            return action;
         }
 
         private static bool AvailableActionCheck(Campaign campaign, int i)
@@ -332,7 +335,7 @@ namespace AI_GM.Map
             }
         }
 
-        private static int TryMovePlayer(Campaign campaign, Character character, int targetX, int targetY, int availableMovementSpaces)
+        private static BlockedBy CanPlayerMoveThere(Campaign campaign, Character character, int targetX, int targetY, int availableMovementSpaces)
         {
             if (availableMovementSpaces > 0)
             {
@@ -342,122 +345,144 @@ namespace AI_GM.Map
                     {
                         if (campaign.CombatParticipants[i].X == targetX && campaign.CombatParticipants[i].Y == targetY)
                         {
-                            Console.WriteLine("There is a monster in the way");
-                            return availableMovementSpaces;
+                            return BlockedBy.Monster;
                         }
                     }
-
                     switch (room.Layout[targetY, targetX])
                     {
 
                         case 'C':
-                            Console.WriteLine("The path is blocked by a chest");
-                            break;
+                            return BlockedBy.Chest;
                         case 'T':
-                            Console.WriteLine("You have triggered a trap");
-                            Console.WriteLine("You have taken 1 damage");
-                            Console.WriteLine($"You have {character.MaxHitPoints = character.DamageTaken} health remain");
-                            character.X = targetX;
-                            character.Y = targetY;
-                            //deal damage to player here
-                            character.DamageTaken += 1;
-                            break;
+                            return BlockedBy.Trap;
                         case 'D':
-                            campaign.CombatParticipants.RemoveRange(campaign.PlayerCount,
-                                campaign.CombatParticipants.Count - campaign.PlayerCount);
-                            if (campaign.inTown)
-                            {
-                                GetRandomRoom(startingRooms);
-                            }
-                            else
-                            {
-                                int exitChance = floorLevel * 5 + 5;
-                                if (exitChance >= 100)
-                                {
-                                    exitChance = 100;
-                                }
-                                //TODO change the set integer of 100 so it adjust depending on the floor you're on
-                                //creates a chance of an exit rooom spawning
-                                int ranNum = Dice.DiceRoll(exitChance);
-                                if (ranNum >= exitChance)
-                                {
-                                    GetRandomRoom(exitRooms);
-                                }
-                                else
-                                {
-                                    GetRandomRoom(mainRooms);
-                                }
-                            }
-                            trapsSearched = false;
-                            chestFound = false;
-                            newRoom = true;
-                            playerLocationUpdated = false;
-                            break;
-                        case 'M':
-                            Console.WriteLine("There is a monster in the way");
-                            break;
+                            return BlockedBy.Door;
                         case 'E':
-                            bool leaveFloor = UI.GetConfirmation("Are you sure you want to leave this floor?");
-                            if (leaveFloor)
-                            {
-                                bool nextFloor = UI.GetConfirmation("Do you want to go to the next floor?");
-                                if (nextFloor)
-                                {
-                                    floorLevel += 1;
-                                    Console.WriteLine("Heading to the next floor");
-                                    if (floorLevel % 5 == 0)
-                                    {
-                                        GetRandomRoom(bossRooms);
-                                        bossRoom = true;
-                                    }
-                                    else
-                                    {
-                                        GetRandomRoom(startingRooms);
-                                        bossRoom = false;
-                                    }
-
-                                    chestFound = false;
-                                    newRoom = true;
-                                    playerLocationUpdated = false;
-                                    campaign.inTown = true;
-                                    break;
-                                }
-                                bool leaveDungeon = UI.GetConfirmation("Do you want to return to town?");
-                                if (leaveDungeon)
-                                {
-                                    bossRoom = false;
-                                    floorLevel = 1;
-                                    Console.WriteLine("Returning to town");
-                                    GetRandomRoom(town);
-                                    chestFound = false;
-                                    newRoom = true;
-                                    playerLocationUpdated = false;
-                                    campaign.inTown = true;
-                                    break;
-                                }
-                            }
-                            Console.WriteLine("staying on this floor");
-                            character.X = targetX;
-                            character.Y = targetY;
-                            break;
+                            return BlockedBy.NewFloor;
                         case 'K':
-                            character = Items.Shop.ShopMain(character);
-                            break;
+                            return BlockedBy.Shop;
                         default:
-                            character.X = targetX;
-                            character.Y = targetY;
-                            break;
+                            return BlockedBy.None;
                     }
-                    availableMovementSpaces--;
                 }
                 else
                 {
-                    Console.WriteLine("The path is blocked");
+                    return BlockedBy.Wall;
                 }
             }
             else
             {
-                Console.WriteLine("Please Roll before moving");
+                return BlockedBy.Movement;
+            }
+        }
+
+        private static int TryMovePlayer(Campaign campaign, Character character, int targetX, int targetY, int availableMovementSpaces)
+        {
+            bool changeFloorCheck = false;
+            BlockedBy blockedBy = new BlockedBy();
+            blockedBy = CanPlayerMoveThere(campaign, character, targetX, targetY, availableMovementSpaces);
+            switch (blockedBy)
+            {
+                case BlockedBy.None:
+                    character.X = targetX;
+                    character.Y = targetY;
+                    availableMovementSpaces--;
+                    break;
+                case BlockedBy.Wall:
+                    break;
+                case BlockedBy.Door:
+                    newRoom = true;
+                    campaign.CombatParticipants.RemoveRange(campaign.PlayerCount,
+                                campaign.CombatParticipants.Count - campaign.PlayerCount);
+                    if (campaign.inTown)
+                    {
+                        GetRandomRoom(startingRooms);
+                    }
+                    else
+                    {
+                        int exitChance = floorLevel * 5 + 5;
+                        if (exitChance >= 100)
+                        {
+                            exitChance = 100;
+                        }
+                        //creates a chance of an exit rooom spawning
+                        int ranNum = Dice.DiceRoll(exitChance);
+                        if (ranNum >= exitChance)
+                        {
+                            GetRandomRoom(exitRooms);
+                        }
+                        else
+                        {
+                            GetRandomRoom(mainRooms);
+                        }
+                    }
+                    availableMovementSpaces--;
+                    trapsSearched = false;
+                    chestFound = false;
+                    newRoom = true;
+                    playerLocationUpdated = false;
+                    break;
+                case BlockedBy.NewFloor:
+                    changeFloorCheck = true; 
+                    break;
+                case BlockedBy.Trap:
+                    character.X = targetX;
+                    character.Y = targetY;
+                    //deal damage to player here
+                    character.DamageTaken += 1;
+                    availableMovementSpaces --;
+                    break;
+                case BlockedBy.Shop:
+                    character = Items.Shop.ShopMain(character);
+                    break;
+                case BlockedBy.Movement:
+                    break;
+                case BlockedBy.Monster:
+                    break;
+                case BlockedBy.Chest:
+                    break;
+            }
+            RoomManagerUI.PrintPlayerCanMove(blockedBy, character);
+            if (changeFloorCheck)
+            {
+                ChangeFloor changeFloor = new ChangeFloor();
+                changeFloor = RoomManagerUI.GetFloorChangeConfirmation();
+                if (changeFloor.LeaveFloor)
+                {
+                    if (changeFloor.NextFloor)
+                    {
+                        floorLevel += 1;
+                        if (floorLevel % 5 == 0)
+                        {
+                            GetRandomRoom(bossRooms);
+                            bossRoom = true;
+                        }
+                        else
+                        {
+                            GetRandomRoom(startingRooms);
+                            bossRoom = false;
+                        }
+                        chestFound = false;
+                        newRoom = true;
+                        playerLocationUpdated = false;
+                        campaign.inTown = true;
+                    }
+                    if (changeFloor.LeaveDungeon)
+                    {
+                        bossRoom = false;
+                        floorLevel = 1;
+                        GetRandomRoom(town);
+                        chestFound = false;
+                        newRoom = true;
+                        playerLocationUpdated = false;
+                        campaign.inTown = true;
+                    }
+                }
+                else
+                {
+                    character.X = targetX;
+                    character.Y = targetY;
+                }
             }
             return availableMovementSpaces;
         }
@@ -754,7 +779,7 @@ namespace AI_GM.Map
             return roomCell;
         }
 
-        
+
 
         public static void DisplayAvailableActions(List<Characters.Action> availableActions, Campaign campaign)
         {
@@ -785,7 +810,9 @@ namespace AI_GM.Map
                     campaign.PlayerCharacters.Clear();
                     return campaign;
                 }
-                campaign = HandlePlayerActions(keyInfo, campaign, availableActions);
+                PlayerAction action;
+                action = HandlePlayerActions(keyInfo, campaign, availableActions);
+                campaign = action.Campaign;
                 if (endTurnEarly)
                 {
                     campaign.PlayerCharacters[i].ActionsTaken = 0;
