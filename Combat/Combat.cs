@@ -63,6 +63,7 @@ namespace AI_GM.Combat
                     if (campaign.CombatParticipants[target].DamageTaken >= campaign.CombatParticipants[target].MaxHitPoints)
                     {
                         RoomManager.PlayerDeath();
+                        RoomManagerUI.PlayerDeath();
                     }
 
                     break;

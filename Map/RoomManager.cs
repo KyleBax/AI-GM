@@ -177,28 +177,40 @@ namespace AI_GM.Map
             int activePlayer = campaign.ActivePlayer;
             int currentX = campaign.PlayerCharacters[activePlayer].X;
             int currentY = campaign.PlayerCharacters[activePlayer].Y;
-            bool canDoAction;
-            Console.WriteLine();
+            bool move = false;
+            bool canDoAction = false;
+            bool monsterPresent = false;
+            bool playerSearched = false;
+            bool playerAttacked = false;
+            bool endTurn = false;
+            int roll = 0;
+           
+
+            
             switch (keyInfo.Key)
             {
                 case ConsoleKey.W:
                     // Move up logic
                     campaign.PlayerCharacters[activePlayer].AvailableMovement = TryMovePlayer(campaign, campaign.PlayerCharacters[activePlayer], currentX, currentY - 1, campaign.PlayerCharacters[activePlayer].AvailableMovement);
+                    move = true;
                     break;
 
                 case ConsoleKey.A:
                     // Move left logic
                     campaign.PlayerCharacters[activePlayer].AvailableMovement = TryMovePlayer(campaign, campaign.PlayerCharacters[activePlayer], currentX - 1, currentY, campaign.PlayerCharacters[activePlayer].AvailableMovement);
+                    move = true;
                     break;
 
                 case ConsoleKey.S:
                     // Move down logic
                     campaign.PlayerCharacters[activePlayer].AvailableMovement = TryMovePlayer(campaign, campaign.PlayerCharacters[activePlayer], currentX, currentY + 1, campaign.PlayerCharacters[activePlayer].AvailableMovement);
+                    move = true;
                     break;
 
                 case ConsoleKey.D:
                     // Move right logic
                     campaign.PlayerCharacters[activePlayer].AvailableMovement = TryMovePlayer(campaign, campaign.PlayerCharacters[activePlayer], currentX + 1, currentY, campaign.PlayerCharacters[activePlayer].AvailableMovement);
+                    move = true;
                     break;
 
                 case ConsoleKey.T:
@@ -208,13 +220,7 @@ namespace AI_GM.Map
                     {
                         trapsSearched = true;
                         campaign.PlayerCharacters[activePlayer].ActionsTaken++;
-                        Console.WriteLine("Player searches for traps.");
                     }
-                    else
-                    {
-                        RoomManagerUI.OutOfActions();
-                    }
-
                     break;
 
                 case ConsoleKey.F:
@@ -225,28 +231,23 @@ namespace AI_GM.Map
                     {
                         if (campaign.CombatParticipants.Count > campaign.PlayerCharacters.Count)
                         {
-                            Console.WriteLine("Unable to search while monsters are present");
+                            monsterPresent = true;
                         }
                         else
                         {
                             if (roomSearched == false)
                             {
                                 roomSearched = true;
-
+                                playerSearched = true;
                                 campaign.PlayerCharacters[activePlayer].ActionsTaken++;
-                                Console.WriteLine("Player searches for treasure.");
-                                campaign = Items.Loot.AddNewItem(campaign, activePlayer, true);
                             }
                             else
                             {
-                                Console.WriteLine("Room is already searched try something else");
+                                playerSearched = false;
                             }
                         }
                     }
-                    else
-                    {
-                        RoomManagerUI.OutOfActions();
-                    }
+
 
                     break;
 
@@ -260,6 +261,7 @@ namespace AI_GM.Map
                         {
                             if (availableActions.Contains(Characters.Action.Attack))
                             {
+                                playerAttacked = true;
                                 IFightable selectedMonster = CombatUI.SelectMonsterFromParticipants(campaign.CombatParticipants);
                                 PlayerAttackResult result = Combat.Combat.PlayerAttackAction(ref campaign, activePlayer, selectedMonster);
                                 CombatUI.PlayerAttackUI(result);
@@ -269,19 +271,7 @@ namespace AI_GM.Map
                                 }
                                 campaign.PlayerCharacters[activePlayer].ActionsTaken++;
                             }
-                            else
-                            {
-                                Console.WriteLine("No monsters are within range");
-                            }
                         }
-                        else
-                        {
-                            Console.WriteLine("There are no monsters to attack");
-                        }
-                    }
-                    else
-                    {
-                        RoomManagerUI.OutOfActions();
                     }
 
                     break;
@@ -290,33 +280,31 @@ namespace AI_GM.Map
                     canDoAction = AvailableActionCheck(campaign, activePlayer);
                     if (canDoAction)
                     {
-                        int roll = Dice.DiceCount("2d4");
+                        roll = Dice.DiceCount("2d4");
                         campaign.PlayerCharacters[activePlayer].AvailableMovement += roll;
                         campaign.PlayerCharacters[activePlayer].ActionsTaken++;
-                        Console.WriteLine($"You have rolled {roll}, {campaign.PlayerCharacters[activePlayer].AvailableMovement} movement available");
-                    }
-                    else
-                    {
-                        RoomManagerUI.OutOfActions();
                     }
 
                     break;
                 case ConsoleKey.N:
-                    //End turn early
-                    Console.WriteLine("All your available actions and movement will be reset");
-                    endTurnEarly = UI.GetConfirmation("Are you sure you want to end your turn?");
-                    if (endTurnEarly)
-                    {
-                        campaign.PlayerCharacters[activePlayer].AvailableMovement = 0;
-                        Console.WriteLine("Ending turn");
-                    }
+                    endTurn = true;
                     break;
-                // Add more cases for other keys as needed
-
                 default:
-                    // Handle other keys or provide a message for unknown keys
-                    Console.WriteLine($"Unknown key: {keyInfo.Key}");
                     break;
+            }
+            RoomManagerUI.PrintPlayerAction(keyInfo, canDoAction, move, monsterPresent, playerSearched, playerAttacked, roll, campaign.PlayerCharacters[activePlayer].AvailableMovement);
+            if (endTurn)
+            {
+                endTurnEarly = RoomManagerUI.EndTurn();
+            }
+            if (endTurnEarly)
+            {
+                campaign.PlayerCharacters[activePlayer].AvailableMovement = 0;
+            }
+
+            if (playerSearched)
+            {
+                campaign = Items.Loot.AddNewItem(campaign, activePlayer, true);
             }
 
             action.Campaign = campaign;
@@ -583,7 +571,7 @@ namespace AI_GM.Map
             }
             else
             {
-                Console.WriteLine("empty room. Unable to create room.");
+                RoomManagerUI.RoomCreationError();
             }
             return newRoom;
         }
@@ -779,16 +767,6 @@ namespace AI_GM.Map
             return roomCell;
         }
 
-
-
-        public static void DisplayAvailableActions(List<Characters.Action> availableActions, Campaign campaign)
-        {
-            for (int i = 0; i < availableActions.Count; i++)
-            {
-                Console.WriteLine(availableActions[i]);
-            }
-        }
-
         public static Campaign PlayersTurn(Campaign campaign, int i)
         {
             if (playerDead)
@@ -798,7 +776,7 @@ namespace AI_GM.Map
                 return campaign;
             }
             List<Characters.Action> availableActions = GetListAvailablePlayerActions(campaign, campaign.PlayerCharacters[i].AvailableMovement);
-            DisplayAvailableActions(availableActions, campaign);
+            RoomManagerUI.DisplayAvailableActions(availableActions, campaign);
 
             ConsoleKeyInfo keyInfo;
 
@@ -835,7 +813,7 @@ namespace AI_GM.Map
                     campaign.PlayerCharacters[i].ActionsTaken = 0;
                     break;
                 }
-                DisplayAvailableActions(availableActions, campaign);
+                RoomManagerUI.DisplayAvailableActions(availableActions, campaign);
 
             }
             return campaign;
@@ -844,13 +822,12 @@ namespace AI_GM.Map
         //TODO make it so that player death can be done on a multiplayer game
         public static void PlayerDeath()
         {
-            Console.WriteLine("You have died");
             playerDead = true;
         }
 
         internal static void MonstersTurn(Campaign campaign, int i)
         {
-            Console.WriteLine("monster turn");
+            UI.MonsterTurnStart();
             int a = i - campaign.PlayerCount;
             int target = FindTarget(campaign, a);
             MoveToTarget(campaign, target, i);
@@ -995,7 +972,6 @@ namespace AI_GM.Map
                             {
                                 if (target.Identifier == Identifier.Player)
                                 {
-                                    Console.WriteLine("target acquired");
                                     return b;
                                 }
                             }

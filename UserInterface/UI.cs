@@ -45,5 +45,10 @@ namespace AI_GM.UserInterface
         {
             Console.WriteLine("Game Over");
         }
+        
+        internal static void MonsterTurnStart()
+        {
+            Console.WriteLine("monster turn");
+        }
     }
 }
